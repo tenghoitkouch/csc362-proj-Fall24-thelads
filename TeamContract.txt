@@ -101,7 +101,7 @@ your contract.  It is OK to leave this blank.]
 WE HELD OUR INITIAL TEAM MEETING ON [enter date and time]:
 AT [type location/provide meeting link of meeting; e.g., Olin 208]:
 
-
+Undecided Time at Olin 211
 
 "BY TYPING OUR NAMES, EACH OF US INDICATES OUR AGREEMENT WITH THIS
 CONTRACT. WE UNDERSTAND THAT TO MODIFY THIS CONTRACT, WE WILL HAVE TO
@@ -109,7 +109,7 @@ HAVE UNANIMOUS AGREEMENT AT A MEETING WHEN ALL MEMBERS ARE PRESENT."
 
 SIGNED (Full name and date):
 
-
+Tenghoit Kouch   09/17/2024
 
 
 
