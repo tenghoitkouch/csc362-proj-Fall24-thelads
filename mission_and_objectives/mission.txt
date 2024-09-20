@@ -1,1 +1,5 @@
 <our mission statement>
+prompt: Write a mission statement and a statement of the objectives that the database will support. The mission statement should be general, describing the overarching purpose of the database. The Database Design book has some examples of good and bad mission statements; read through them as you work on this. Just because the missions statement is short, doesn't mean it is easy.
+
+Short statements require more precision and word-smithing than long ones. Try to keep your mission statement to 2-3 sentences, and certainly no more than 100 words.
+
