@@ -1,0 +1,14 @@
+Greetings,
+
+On behalf of Kendianawa University, I am pleased to accept your bid for the design and implementation of our course registration system. We look forward to working with you to ensure that the kinds of scheduling events which recently saw the university on the national news do not happen again.
+
+KU has a proud history of offering a broad array of academic and preprofessional programs in the arts, humanities, social and natural sciences. These courses are held in our many historic campus buildings, where we must effectively schedule classes according to their needs, while respecting the capacity of classrooms, and other constraints. Naturally, this schedule must not have any conflicts, for rooms, instructors, or students.
+
+As you may already know, students have traditionally submitted course schedules using paper forms. We would like to enable students to schedule through our web site, while respecting the course size caps, credit hour requirements, scheduling conflicts, and pre-requisite courses for each.
+
+Naturally, this is just the beginning of what we hope to accomplish, but I hope that gives you some idea of our most pressing needs. I, and the rest of the registrar's office, look forward to working with you.
+
+Best,
+
+Reginald M. Foredawn
+Kendianawa University Registrar
