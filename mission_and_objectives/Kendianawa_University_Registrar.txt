@@ -12,3 +12,10 @@ Best,
 
 Reginald M. Foredawn
 Kendianawa University Registrar
+
+Notes:
+  - offering a broad array of academic and preprofessional programs
+  - many campus buildings 
+  - schedule constrints (room capacity, instructors, students)
+  - enable students to schedule through website
+  - tool for students to see course size caps, credit hour requirements, scheduling conflicts, and pre-requisite courses 
