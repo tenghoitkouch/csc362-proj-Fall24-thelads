@@ -52,7 +52,7 @@ TEAM MEMBERS AND CONTACT INFO:
    MEMBER              MOBILE PHONE           PREFERRED EMAIL
 1. Tenghoit Kouch             8593192061        tenghoit.kouch@centre.edu
 2. Nathan Varner              5025337080        varnern23@zphazeone.org
-3. Cole Whitt                 8593198844        
+3. Cole Whitt                 8593198844        cole.whitt@centre.edu
 4. Iqbolkhoja Temirkhojaev    5169207988    
 
 
@@ -111,7 +111,7 @@ SIGNED (Full name and date):
 Tenghoit Kouch   09/17/2024
 Iqbol Temirkhojaev  09/16/2024
 Nathan Varner 09/17/2024
-
+Cole Whitt 09/23/2024
 
 [Type your name above to indicate agreement.  Note: Each team member should
 type and commit his or her own name.  Please do not sign this agreement 
