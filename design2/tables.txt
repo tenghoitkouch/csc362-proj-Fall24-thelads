@@ -1,0 +1,43 @@
+Tables
+    courses
+    professors
+    students
+    buildings
+    degree_requirements
+    general_requirements
+    schedules
+    terms
+    abroads
+    pre-requirements
+    
+    
+fields
+    classroom
+    start_time
+    end_time
+    professor_name
+    professor_desired_name
+    class_name
+    room_name
+    class_id
+    term_name
+    class_capacity
+    major_name
+    student_id
+    professor_id
+    discipline_type
+    office_hours
+    professor_email
+    student_email
+    course_level
+    course_description
+    building_class_capacity
+    ap_credits
+    credit_hours
+    
+    
+    
+    
+    
+    
+    
