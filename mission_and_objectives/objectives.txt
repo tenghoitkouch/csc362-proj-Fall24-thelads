@@ -1,3 +1,10 @@
 <our objectives>
 prompt: The objectives, by contrast, should be specific tasks that require information to be completed. A bullet-pointed list is fine, but please use complete sentences, and be sure to contextualize these objectives by referencing high-level needs of the client. If you are unclear on the needs of your client, you should ask them!
 
+  - offering broad array of programs
+  - managing courses conflicting
+  - manage the transitioning of phyiscal student information to a digital format
+  - assiting students during their selecting process by showing requirements
+  - respect course size caps
+  - show students what prequisites they may need for desired classes and if they meet said prerequisites
+  -
