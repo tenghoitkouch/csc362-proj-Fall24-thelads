@@ -86,7 +86,12 @@ Tenghoit:
     time_start
     
     
-    
+Nathan:
+    class_id
+    student_email
+    office_hours
+    time_end
+    major_name
     
     
     
