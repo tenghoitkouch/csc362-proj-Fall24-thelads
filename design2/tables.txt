@@ -1,14 +1,55 @@
 Tables
     courses
+        course_id
+        course_discipline (ex. CSC)
+        course_number (ex. 110)       
+        course_description
+        course_capacity
+        course_credits
     professors
+        professor_id
+        professor_first_name
+        professor_last_name
+        professor_email
+        professor_address
+        professor_student_capacity
+        professor_office_hours
+        professor_office_location
     students
+        student_id
+        student_first_name
+        student_last_name
+        student_email
+        student_phone_number
+        student_address
+        student_total_credits
     buildings
-    degree_requirements
+        building_id
+        building_name
+        building_location
+    rooms
+        room_id
+        building_id
+        room_capacity
+    degrees
+        degree_id
+        degree_name
+    degree_requirements: linking table
+        degree_id
+        course_id
     general_requirements
+        course_id
     schedules
     terms
     abroads
     pre-requirements
+        course_id, pk
+        course_id, fk (i'm think like a class requires another class, and then that class could need another class, etc)
+    time_blocks: specific time slots throughout the day that can be assigned to a class, vaildation tbl
+        time_block_id
+        time_start
+        time_end
+        time_duration
     
     
 fields
@@ -34,7 +75,15 @@ fields
     building_class_capacity
     ap_credits
     credit_hours
-    
+
+
+
+Tenghoit:
+    room_capacity
+    course_number
+    professor_email
+    student_first_name
+    time_start
     
     
     
