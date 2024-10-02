@@ -1,0 +1,60 @@
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           student_first_name
+Parent Table:         students
+Alias(es):            _ 
+Specification Type:
+  Unique:  [x]
+  Generic: _ 
+  Replica: _ 
+Source Specification: _ 
+Shared By:            _ 
+Description:          this is the student's first name
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            VARCHAR
+Length:               _ 
+Decimal Places:       _  
+Character Support:
+  Letters (A-Z):      [x]
+  Numbers (0-9):      _ 
+  Keyboard (.,/$#%):  _ 
+  Special (©®™Σπ):    _ 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        [x]
+               Primary:    _ 
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     _ 
+               Composite:  _ 
+
+Uniqueness:    Non-unique: _ 
+               Unique:     [x]
+
+Null Support:  Nulls OK:   _ 
+               No nulls:   [x]
+
+Values Entered By: User:   [x]
+                   System: _ 
+
+Required Value:    No:     _ 
+                   Yes:    [x]
+
+Range of Values:   _ 
+
+Edit Rule:
+  Enter now, edits allowed:       [x]
+  Enter now, edits not allowed:   _ 
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: _
