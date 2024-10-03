@@ -89,9 +89,9 @@ Tenghoit:
 Nathan:
     class_id
     student_email
-    office_hours
+    professor_office_hours
     time_end
-    major_name
+    degree_name
     
 Iqbolkhoja:
     course_level
