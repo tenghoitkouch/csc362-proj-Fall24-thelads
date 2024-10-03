@@ -100,3 +100,9 @@ Iqbolkhoja:
     ap_credits
     credit_hours
     
+Cole:
+    discipline_type
+    term_name
+    class_name
+    professor_desired_name
+    student_id
