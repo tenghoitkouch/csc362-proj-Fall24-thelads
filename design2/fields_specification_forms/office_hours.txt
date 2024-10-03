@@ -1,0 +1,60 @@
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           professor_office_hours 
+Parent Table:         Professors
+Alias(es):            office_hours 
+Specification Type:
+  Unique:  [X] 
+  Generic: _ 
+  Replica: _ 
+Source Specification: _ 
+Shared By:            _ 
+Description:          keeps track of when professors will have office hours. 
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            VARCHAR 
+Length:               400 
+Decimal Places:       _  
+Character Support:
+  Letters (A-Z):      [X] 
+  Numbers (0-9):      [X] 
+  Keyboard (.,/$#%):  [X] 
+  Special (©®™Σπ):    _ 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        [X] 
+               Primary:    _ 
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     - 
+               Composite:  _ 
+
+Uniqueness:    Non-unique: _ 
+               Unique:     [X] 
+
+Null Support:  Nulls OK:   [X] 
+               No nulls:   _ 
+
+Values Entered By: User:   [X] 
+                   System: _ 
+
+Required Value:    No:     [X] 
+                   Yes:    _ 
+
+Range of Values:   _ 
+
+Edit Rule:
+  Enter now, edits allowed:       [X] 
+  Enter now, edits not allowed:   _ 
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: example = "Monday 9:20 - 10:50"
