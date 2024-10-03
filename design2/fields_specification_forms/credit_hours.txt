@@ -1,1 +1,61 @@
 
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           credit_hours
+Parent Table:         courses
+Alias(es):            credits 
+Specification Type:
+  Unique:  _ 
+  Generic: YES 
+  Replica: _ 
+Source Specification: _ 
+Shared By:           Student Information System 
+Description:          Number of credit hours assigned to the course.
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            INT
+Length:               3
+Decimal Places:       -  
+Character Support:
+  Letters (A-Z):      - 
+  Numbers (0-9):      YES
+  Keyboard (.,/$#%):  - 
+  Special (©®™Σπ):    _ 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        YES
+               Primary:    _ 
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     YES 
+               Composite:  _ 
+
+Uniqueness:    Non-unique: YES
+               Unique:     _ 
+
+Null Support:  Nulls OK:   _ 
+               No nulls:   YES
+
+Values Entered By: User:   _ 
+                   System: YES
+
+Required Value:    No:     - 
+                   Yes:    YES
+
+Range of Values:   1-6 
+
+Edit Rule:
+  Enter now, edits allowed:       -
+  Enter now, edits not allowed:   YES 
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: Typical values are 1.0, 3.0, or 4.0 depending on course type.
