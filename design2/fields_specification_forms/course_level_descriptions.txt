@@ -57,4 +57,4 @@ Edit Rule:
   Enter later, edits not allowed: _ 
   Not determined at this time:    _ 
 
-NOTES: should only be 3 numbers long, but many if there's a lot of class, might need 4
+NOTES: Edits allowed until the course is published in the catalog.
