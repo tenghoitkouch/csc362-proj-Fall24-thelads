@@ -11,7 +11,7 @@ Specification Type:
   Replica: _ 
 Source Specification: _ 
 Shared By:            _ 
-Description:          this number denote the level of the course
+Description:          Detailed description of the course contents, objectives, and prerequisites.
 
 
 PHYSICAL ELEMENTS
