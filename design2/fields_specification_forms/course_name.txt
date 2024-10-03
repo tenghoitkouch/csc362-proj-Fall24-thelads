@@ -6,8 +6,8 @@ Field Name:           course_name
 Parent Table:         courses
 Alias(es):            class_name
 Specification Type:
-  Unique:  _ 
-  Generic: YES 
+  Unique:  YES 
+  Generic: _ 
   Replica: _ 
 Source Specification: _ 
 Shared By:            _ 
