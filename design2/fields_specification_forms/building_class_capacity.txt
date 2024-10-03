@@ -1,1 +1,60 @@
--
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           building_class_capacity
+Parent Table:         buildings
+Alias(es):            max_capacity 
+Specification Type:
+  Unique:  _ 
+  Generic: [x] 
+  Replica: _ 
+Source Specification: _ 
+Shared By:            _ 
+Description:          this number denote the level of the course
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            INTEGER
+Length:               3
+Decimal Places:       _  
+Character Support:
+  Letters (A-Z):      - 
+  Numbers (0-9):      YES
+  Keyboard (.,/$#%):  -
+  Special (©®™Σπ):    - 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        [x]
+               Primary:    _ 
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     _ 
+               Composite:  _ 
+
+Uniqueness:    Non-unique: [x]
+               Unique:     _ 
+
+Null Support:  Nulls OK:   YES 
+               No nulls:   -
+
+Values Entered By: User:   _ 
+                   System: [x]
+
+Required Value:    No:     _ 
+                   Yes:    [x]
+
+Range of Values:   1-999 
+
+Edit Rule:
+  Enter now, edits allowed:       [x]
+  Enter now, edits not allowed:   _ 
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: -
