@@ -1,0 +1,60 @@
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           course_descriptions
+Parent Table:         courses
+Alias(es):            description 
+Specification Type:
+  Unique:  _ 
+  Generic: [x] 
+  Replica: _ 
+Source Specification: _ 
+Shared By:            _ 
+Description:          this number denote the level of the course
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            TEXT (VARCHAR)
+Length:               500
+Decimal Places:       _  
+Character Support:
+  Letters (A-Z):      YES 
+  Numbers (0-9):      YES
+  Keyboard (.,/$#%):  YES
+  Special (©®™Σπ):    YES 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        [x]
+               Primary:    _ 
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     _ 
+               Composite:  _ 
+
+Uniqueness:    Non-unique: [x]
+               Unique:     _ 
+
+Null Support:  Nulls OK:   YES 
+               No nulls:   -
+
+Values Entered By: User:   _ 
+                   System: [x]
+
+Required Value:    No:     _ 
+                   Yes:    [x]
+
+Range of Values:   _ 
+
+Edit Rule:
+  Enter now, edits allowed:       [x]
+  Enter now, edits not allowed:   _ 
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: should only be 3 numbers long, but many if there's a lot of class, might need 4
