@@ -1,0 +1,60 @@
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           course_discipline
+Parent Table:         courses
+Alias(es):            discipline_type
+Specification Type:
+  Unique:  _ 
+  Generic: [X]
+  Replica: _ 
+Source Specification: _ 
+Shared By:            _ 
+Description:          This identifies the specific discipline attributed to the course (e.g. CSC). 
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            VARCHAR
+Length:               3
+Decimal Places:       _  
+Character Support:
+  Letters (A-Z):      YES
+  Numbers (0-9):      _ 
+  Keyboard (.,/$#%):  _ 
+  Special (©®™Σπ):    _ 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        [X}
+               Primary:    _ 
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     [X]
+               Composite:  _ 
+
+Uniqueness:    Non-unique: [X]
+               Unique:     _ 
+
+Null Support:  Nulls OK:   _ 
+               No nulls:   [X]
+
+Values Entered By: User:   _ 
+                   System: [X]
+
+Required Value:    No:     _ 
+                   Yes:    [X]
+
+Range of Values:   _ 
+
+Edit Rule:
+  Enter now, edits allowed:       [X]
+  Enter now, edits not allowed:   _ 
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: _
