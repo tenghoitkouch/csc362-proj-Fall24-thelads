@@ -10,7 +10,7 @@ Specification Type:
   Generic: _ 
   Replica: _ 
 Source Specification: _ 
-Shared By:            _ 
+Shared By:            degree_requirements, general_requirements, pre-requirements 
 Description:          A unique integer given to each course that automatically increments and is used to identify each course. 
 
 
