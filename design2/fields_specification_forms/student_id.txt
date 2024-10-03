@@ -1,0 +1,60 @@
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           student_id
+Parent Table:         students
+Alias(es):            
+Specification Type:
+  Unique:  YES 
+  Generic: _ 
+  Replica: _ 
+Source Specification: _ 
+Shared By:            _ 
+Description:          This uniquely identifies each student with an integer.
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            INT
+Length:               6
+Decimal Places:       _  
+Character Support:
+  Letters (A-Z):      _ 
+  Numbers (0-9):      YES
+  Keyboard (.,/$#%):  _
+  Special (©®™Σπ):    _ 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        _
+               Primary:    YES 
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     YES 
+               Composite:  _ 
+
+Uniqueness:    Non-unique: _
+               Unique:     YES 
+
+Null Support:  Nulls OK:   _ 
+               No nulls:   YES
+
+Values Entered By: User:   _ 
+                   System: YES
+
+Required Value:    No:     _ 
+                   Yes:    YES
+
+Range of Values:   _ 
+
+Edit Rule:
+  Enter now, edits allowed:       _
+  Enter now, edits not allowed:   YES 
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: _
