@@ -93,5 +93,10 @@ Nathan:
     time_end
     major_name
     
-    
+Iqbolkhoja:
+    course_level
+    course_description
+    building_class_capacity
+    ap_credits
+    credit_hours
     
