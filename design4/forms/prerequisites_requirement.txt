@@ -1,0 +1,54 @@
+BUSINESS RULE SPECIFICATIONS
+
+RULE INFORMATION
+
+Statement:  For courses with a prerequisite, student must have completed that prerequisite before being allow to enroll in the course
+
+Constraint: Enrollment for a course with course_prerequisites requires the course_id to exist in student_class_history with an adequate grade
+
+Type:     Database Oriented:     [x]
+          Application Oriented   _ 
+
+Category: Field Specific:        _ 
+          Relationship Specific: [x]
+
+Test On:  Insert:                [x]
+          Delete:                _ 
+          Update:                [x]
+
+
+STRUCTURES AFFECTED
+
+Field Names: _ 
+
+Table Names: student_class_history, course_prerequisites, courses
+
+
+FIELD ELEMENTS AFFECTED
+
+Physical Elements: Data Type:           _ 
+                   Length:              _ 
+                   Character Support:   _ 
+
+Logical Elements:  Key Type:            _ 
+                   Key Structure:       _ 
+                   Uniqueness:          _ 
+                   Null Support:        _ 
+                   Values Entered By:   _ 
+                   Range of Values:     _ 
+                   Edit Rule:           _ 
+
+
+RELATIONSHIP CHARACTERISTICS AFFECTED
+
+    Deletion rule:              _
+    Type of participation:      [x]
+    Degree of participation:    [x]
+
+    
+ACTION TAKEN
+    have check to make sure that prerequisite courses exist in student_class_history with an adequate grade
+_ 
+
+
+NOTES: _
