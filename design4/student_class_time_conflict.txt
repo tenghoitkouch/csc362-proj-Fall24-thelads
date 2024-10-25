@@ -1,0 +1,54 @@
+BUSINESS RULE SPECIFICATIONS
+
+RULE INFORMATION
+
+Statement:  A student cannot take classes that are occuring at the same time
+
+Constraint: An active class in student_class_history cannot have the same time_block
+
+Type:     Database Oriented:     [x]
+          Application Oriented   _ 
+
+Category: Field Specific:        _ 
+          Relationship Specific: [x]
+
+Test On:  Insert:                [x]
+          Delete:                _ 
+          Update:                _
+
+
+STRUCTURES AFFECTED
+
+Field Names: _ 
+
+Table Names: student_class_history, time_blocks
+
+
+FIELD ELEMENTS AFFECTED
+
+Physical Elements: Data Type:           _ 
+                   Length:              _ 
+                   Character Support:   _ 
+
+Logical Elements:  Key Type:            _ 
+                   Key Structure:       _ 
+                   Uniqueness:          _ 
+                   Null Support:        _ 
+                   Values Entered By:   _ 
+                   Range of Values:     _ 
+                   Edit Rule:           _ 
+
+
+RELATIONSHIP CHARACTERISTICS AFFECTED
+
+    Deletion rule:              _
+    Type of participation:      [x]
+    Degree of participation:    [x]
+
+    
+ACTION TAKEN
+    have a check in place upon insertion of a class, making that time_block does not overlap with any other class the student is currently taking
+_ 
+
+
+NOTES: an active class in student_class_history is a class that does not yet have a grade
