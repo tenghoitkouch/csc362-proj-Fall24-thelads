@@ -1,0 +1,52 @@
+BUSINESS RULE SPECIFICATIONS
+
+RULE INFORMATION
+
+Statement: A student must complete all required courses and associated credit hours in the degree_requirements table to meet the minimum credit hour requirement for their degree.
+Constraint: Students must complete the required number of credit hours defined by the degree program.
+
+Type:     Database Oriented:     Yes 
+          Application Oriented:  No 
+
+Category: Field Specific:        No 
+          Relationship Specific: Yes 
+
+Test On:  Insert:                Yes 
+          Delete:                No 
+          Update:                Yes 
+
+
+STRUCTURES AFFECTED
+
+Field Names: course_credits, course_id
+Table Names: courses, degree_requirements
+
+
+FIELD ELEMENTS AFFECTED
+
+Physical Elements: Data Type:           Integer 
+                   Length:              Depends on credit hour scale
+                   Character Support:   N/A 
+
+Logical Elements:  Key Type:            Primary Key for course_id, degree_id in degree_requirements
+                   Key Structure:       Composite Key (degree_id, course_id)
+                   Uniqueness:          Yes 
+                   Null Support:        No 
+                   Values Entered By:   Database Administrator or System 
+                   Range of Values:     Depends on credit hours assigned per course
+                   Edit Rule:           Changes in credit requirements should not affect previously earned credits 
+
+
+RELATIONSHIP CHARACTERISTICS AFFECTED
+
+    Deletion rule:              Restrict deletion of courses that are part of a degree's requirements.
+    Type of participation:      Mandatory for each degree.
+    Degree of participation:    One-to-Many (one degree can have multiple courses as requirements).
+
+    
+ACTION TAKEN
+
+The system should enforce credit hour validation checks during registration and before graduation.
+
+
+NOTES: This rule is essential for ensuring students meet the academic credit requirements for degree completion.

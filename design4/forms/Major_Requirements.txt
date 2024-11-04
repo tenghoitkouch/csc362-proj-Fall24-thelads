@@ -1,0 +1,53 @@
+BUSINESS RULE SPECIFICATIONS
+
+RULE INFORMATION
+
+Statement: To fulfill the major requirements for a degree, a student must complete all mandatory courses and satisfy any prerequisites listed in the degree_requirements and course_prerequisites tables for that degree.
+
+Constraint: Students must complete all required courses and prerequisites as defined for their degree.
+
+Type:     Database Oriented:     Yes 
+          Application Oriented:  No 
+
+Category: Field Specific:        No 
+          Relationship Specific: Yes 
+
+Test On:  Insert:                Yes 
+          Delete:                No 
+          Update:                Yes 
+
+
+STRUCTURES AFFECTED
+
+Field Names: course_id
+Table Names: degree_requirements, course_prerequisites
+
+
+FIELD ELEMENTS AFFECTED
+
+Physical Elements: Data Type:           Integer 
+                   Length:              Varies (depends on ID structure)
+                   Character Support:   N/A 
+
+Logical Elements:  Key Type:            Primary Key for degree_id in degrees, Composite Key (degree_id, course_id) in degree_requirements
+                   Key Structure:       Composite Key
+                   Uniqueness:          Yes 
+                   Null Support:        No 
+                   Values Entered By:   System or Administrator 
+                   Range of Values:     Defined by degree program requirements
+                   Edit Rule:           Changes to requirements should not affect students already on a prior requirement track.
+
+
+RELATIONSHIP CHARACTERISTICS AFFECTED
+
+    Deletion rule:              Restrict deletion of required courses if students are actively enrolled in the degree program.
+    Type of participation:      Mandatory for students pursuing a degree.
+    Degree of participation:    Many-to-Many (one course can be required for multiple degrees, and each degree requires multiple courses).
+
+    
+ACTION TAKEN
+
+The system should verify prerequisite completion before allowing registration in advanced courses and check for major requirements before graduation.
+
+
+NOTES: Ensuring students meet major requirements is crucial for academic integrity and degree validity.
