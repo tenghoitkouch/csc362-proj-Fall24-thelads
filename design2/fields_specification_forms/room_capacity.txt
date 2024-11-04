@@ -2,9 +2,9 @@ FIELD SPECIFICATIONS
 
 GENERAL ELEMENTS
 
-Field Name:           building_class_capacity
-Parent Table:         buildings
-Alias(es):            max_capacity 
+Field Name:           room_capacity
+Parent Table:         locations
+Alias(es):             
 Specification Type:
   Unique:  _ 
   Generic: [x] 
