@@ -3,15 +3,15 @@ FIELD SPECIFICATIONS
 GENERAL ELEMENTS
 
 Field Name:           time_end 
-Parent Table:         Time_Blocks 
-Alias(es):            class_end 
+Parent Table:         meeting_times
+Alias(es):             
 Specification Type:
   Unique:  [X] 
   Generic: _ 
   Replica: _ 
 Source Specification: _ 
-Shared By:            _ 
-Description:          Keeps track of when a class ends in a validation table. 
+Shared By:            classes 
+Description:          a time used to indicate the end of a class
 
 
 PHYSICAL ELEMENTS
@@ -28,16 +28,16 @@ Character Support:
 
 LOGICAL ELEMENTS
 
-Key Type:      Non:        [X] 
-               Primary:    _ 
+Key Type:      Non:        _
+               Primary:    [x]
                Foreign:    _ 
                Alternate:  _ 
 
 Key Structure: Simple:     _ 
-               Composite:  _ 
+               Composite:  [x]
 
-Uniqueness:    Non-unique: _ 
-               Unique:     [X] 
+Uniqueness:    Non-unique: [x]
+               Unique:     _
 
 Null Support:  Nulls OK:   _ 
                No nulls:   [X] 
@@ -51,8 +51,8 @@ Required Value:    No:     _
 Range of Values:   _ 
 
 Edit Rule:
-  Enter now, edits allowed:       [X] 
-  Enter now, edits not allowed:   _ 
+  Enter now, edits allowed:       _
+  Enter now, edits not allowed:   [x] 
   Enter later, edits allowed:     _ 
   Enter later, edits not allowed: _ 
   Not determined at this time:    _ 
