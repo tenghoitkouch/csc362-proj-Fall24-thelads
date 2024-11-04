@@ -3,7 +3,7 @@ FIELD SPECIFICATIONS
 GENERAL ELEMENTS
 
 Field Name:           student_email 
-Parent Table:         Students
+Parent Table:         students
 Alias(es):            _ 
 Specification Type:
   Unique:  _[x]
