@@ -1,0 +1,54 @@
+BUSINESS RULE SPECIFICATIONS
+
+RULE INFORMATION
+
+Statement:  A Class can only have so many students. 
+
+Constraint: A Class may only have so many students that have that same Class in their student_class_history.
+
+Type:     Database Oriented:     [X]
+          Application Oriented   _ 
+
+Category: Field Specific:        _ 
+          Relationship Specific: [X] 
+
+Test On:  Insert:                [X] 
+          Delete:                _ 
+          Update:                _
+
+
+STRUCTURES AFFECTED
+
+Field Names: location, room_capacity
+
+Table Names: Class, Locations, student_class_history 
+
+
+FIELD ELEMENTS AFFECTED
+
+Physical Elements: Data Type:           _ 
+                   Length:              _ 
+                   Character Support:   _ 
+
+Logical Elements:  Key Type:            _ 
+                   Key Structure:       _ 
+                   Uniqueness:          _ 
+                   Null Support:        _ 
+                   Values Entered By:   User 
+                   Range of Values:     _ 
+                   Edit Rule:           _ 
+
+
+RELATIONSHIP CHARACTERISTICS AFFECTED
+
+    Deletion rule:              _
+    Type of participation:      _
+    Degree of participation:    [X]
+
+    
+ACTION TAKEN
+
+When a student attempts to sign up For a Class the database checks If there is room in the Class according to its location. It then accepts or denies the request to join the Class.
+
+
+NOTES: _
