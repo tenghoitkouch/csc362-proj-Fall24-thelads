@@ -3,9 +3,9 @@ FIELD SPECIFICATIONS
 
 GENERAL ELEMENTS
 
-Field Name:           credit_hours
+Field Name:           course_credits
 Parent Table:         courses
-Alias(es):            credits 
+Alias(es):             
 Specification Type:
   Unique:  _ 
   Generic: YES 
