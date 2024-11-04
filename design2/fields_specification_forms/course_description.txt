@@ -2,9 +2,9 @@ FIELD SPECIFICATIONS
 
 GENERAL ELEMENTS
 
-Field Name:           course_descriptions
+Field Name:           course_description
 Parent Table:         courses
-Alias(es):            description 
+Alias(es):             
 Specification Type:
   Unique:  _ 
   Generic: [x] 
