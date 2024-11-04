@@ -3,15 +3,15 @@ FIELD SPECIFICATIONS
 GENERAL ELEMENTS
 
 Field Name:           time_start
-Parent Table:         time_blocks
+Parent Table:         meeting_times
 Alias(es):            _ 
 Specification Type:
   Unique:  [x]
   Generic: _ 
   Replica: _ 
 Source Specification: _ 
-Shared By:            _ 
-Description:          this is the start time for a particular time_block
+Shared By:            classes
+Description:          a time used to indicate the start of a class
 
 
 PHYSICAL ELEMENTS
@@ -28,16 +28,16 @@ Character Support:
 
 LOGICAL ELEMENTS
 
-Key Type:      Non:        [x]
-               Primary:    _ 
+Key Type:      Non:        _
+               Primary:    [x] 
                Foreign:    _ 
                Alternate:  _ 
 
 Key Structure: Simple:     _ 
-               Composite:  _ 
+               Composite:  [x]
 
-Uniqueness:    Non-unique: _ 
-               Unique:     [x]
+Uniqueness:    Non-unique: [x] 
+               Unique:     -
 
 Null Support:  Nulls OK:   _ 
                No nulls:   [x]
@@ -51,12 +51,12 @@ Required Value:    No:     _
 Range of Values:   _ 
 
 Edit Rule:
-  Enter now, edits allowed:       [x]
-  Enter now, edits not allowed:   _ 
+  Enter now, edits allowed:       _
+  Enter now, edits not allowed:   [x] 
   Enter later, edits allowed:     _ 
   Enter later, edits not allowed: _ 
   Not determined at this time:    _ 
 
 NOTES: 
   should not be changed easily,
-  might have a business rule of how early a time_block can be
+  might have a business rule of how early a time_start can be
