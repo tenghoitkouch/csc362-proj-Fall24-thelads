@@ -2,7 +2,7 @@ FIELD SPECIFICATIONS
 
 GENERAL ELEMENTS
 
-Field Name:           term_name
+Field Name:           term_id
 Parent Table:         terms
 Alias(es):            _ 
 Specification Type:
@@ -11,48 +11,48 @@ Specification Type:
   Replica: _ 
 Source Specification: _ 
 Shared By:            _ 
-Description:          This identifies the name of the term
+Description:          An auto incrementing number used to identify a specific academic term
 
 
 PHYSICAL ELEMENTS
 
-Data Type:            VARCHAR
-Length:               16
+Data Type:            INT
+Length:               _
 Decimal Places:       _  
 Character Support:
-  Letters (A-Z):      YES 
-  Numbers (0-9):      YES
+  Letters (A-Z):      _ 
+  Numbers (0-9):      _
   Keyboard (.,/$#%):  _ 
   Special (©®™Σπ):    _ 
 
 
 LOGICAL ELEMENTS
 
-Key Type:      Non:        YES
-               Primary:    _ 
+Key Type:      Non:        _
+               Primary:    [x]
                Foreign:    _ 
                Alternate:  _ 
 
 Key Structure: Simple:     YES 
                Composite:  _ 
 
-Uniqueness:    Non-unique: YES
-               Unique:     _ 
+Uniqueness:    Non-unique: _
+               Unique:     [x]
 
 Null Support:  Nulls OK:   _ 
-               No nulls:   YES
+               No nulls:   [x]
 
 Values Entered By: User:   _ 
-                   System: YES
+                   System: [x]
 
 Required Value:    No:     _ 
-                   Yes:    YES
+                   Yes:    [x]
 
 Range of Values:   _ 
 
 Edit Rule:
-  Enter now, edits allowed:       YES
-  Enter now, edits not allowed:   _ 
+  Enter now, edits allowed:       _
+  Enter now, edits not allowed:   [x]
   Enter later, edits allowed:     _ 
   Enter later, edits not allowed: _ 
   Not determined at this time:    _ 
