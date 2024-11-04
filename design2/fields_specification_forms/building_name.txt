@@ -1,0 +1,60 @@
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           building_name
+Parent Table:         buildings
+Alias(es):            _ 
+Specification Type:
+  Unique:  [x]
+  Generic: _ 
+  Replica: _ 
+Source Specification: _ 
+Shared By:            classes
+Description:          A string of letters corresponding to an academic building on the university campus
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            VARCHAR
+Length:               64
+Decimal Places:       _  
+Character Support:
+  Letters (A-Z):      [x]
+  Numbers (0-9):      _ 
+  Keyboard (.,/$#%):  _ 
+  Special (©®™Σπ):    _ 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        [x]
+               Primary:    _ 
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     _ 
+               Composite:  _ 
+
+Uniqueness:    Non-unique: _ 
+               Unique:     [x]
+
+Null Support:  Nulls OK:   _ 
+               No nulls:   [x]
+
+Values Entered By: User:   _ 
+                   System: [x]
+
+Required Value:    No:     _ 
+                   Yes:    [x]
+
+Range of Values:   _ 
+
+Edit Rule:
+  Enter now, edits allowed:       _ 
+  Enter now, edits not allowed:   [x]
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: _

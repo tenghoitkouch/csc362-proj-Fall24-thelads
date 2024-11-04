@@ -1,0 +1,60 @@
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           section
+Parent Table:         classes
+Alias(es):            _ 
+Specification Type:
+  Unique:  _ 
+  Generic: _ 
+  Replica: _ 
+Source Specification: _ 
+Shared By:            _ 
+Description:          An additional identifier for a class used to distinguish between courses that are being taught in the same term
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            VARCHAR
+Length:               1
+Decimal Places:       _  
+Character Support:
+  Letters (A-Z):      [x]
+  Numbers (0-9):      _ 
+  Keyboard (.,/$#%):  _ 
+  Special (©®™Σπ):    _ 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        [x]
+               Primary:    _ 
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     _ 
+               Composite:  _ 
+
+Uniqueness:    Non-unique: [x]
+               Unique:     _ 
+
+Null Support:  Nulls OK:   [x]
+               No nulls:   _ 
+
+Values Entered By: User:   _ 
+                   System: [x]
+
+Required Value:    No:     [x]
+                   Yes:    _ 
+
+Range of Values:   _ 
+
+Edit Rule:
+  Enter now, edits allowed:       _ 
+  Enter now, edits not allowed:   [x]
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: _

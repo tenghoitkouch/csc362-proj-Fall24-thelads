@@ -1,0 +1,60 @@
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           meeting_days_id
+Parent Table:         meeting_days
+Alias(es):            _ 
+Specification Type:
+  Unique:  [x]
+  Generic: _ 
+  Replica: _ 
+Source Specification: _ 
+Shared By:            classes
+Description:          A unique number used to indicate the days a class will be taught on
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            INT
+Length:               _ 
+Decimal Places:       _  
+Character Support:
+  Letters (A-Z):      _ 
+  Numbers (0-9):      _ 
+  Keyboard (.,/$#%):  _ 
+  Special (©®™Σπ):    _ 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        _ 
+               Primary:    [x]
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     [x]
+               Composite:  _ 
+
+Uniqueness:    Non-unique: _ 
+               Unique:     [x]
+
+Null Support:  Nulls OK:   _ 
+               No nulls:   [x]
+
+Values Entered By: User:   _ 
+                   System: [x]
+
+Required Value:    No:     _ 
+                   Yes:    [x]
+
+Range of Values:   _ 
+
+Edit Rule:
+  Enter now, edits allowed:       _ 
+  Enter now, edits not allowed:   [x]
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: _

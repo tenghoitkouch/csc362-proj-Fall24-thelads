@@ -1,0 +1,60 @@
+FIELD SPECIFICATIONS
+
+GENERAL ELEMENTS
+
+Field Name:           class_max_capacity
+Parent Table:         classes
+Alias(es):            _ 
+Specification Type:
+  Unique:  _ 
+  Generic: _ 
+  Replica: _ 
+Source Specification: _ 
+Shared By:            _ 
+Description:          A number indicating the maximum student enrollment for a class
+
+
+PHYSICAL ELEMENTS
+
+Data Type:            INT
+Length:               _ 
+Decimal Places:       _  
+Character Support:
+  Letters (A-Z):      _ 
+  Numbers (0-9):      _ 
+  Keyboard (.,/$#%):  _ 
+  Special (©®™Σπ):    _ 
+
+
+LOGICAL ELEMENTS
+
+Key Type:      Non:        [x]
+               Primary:    _ 
+               Foreign:    _ 
+               Alternate:  _ 
+
+Key Structure: Simple:     _ 
+               Composite:  _ 
+
+Uniqueness:    Non-unique: [x]
+               Unique:     _ 
+
+Null Support:  Nulls OK:   _ 
+               No nulls:   [x]
+
+Values Entered By: User:   _ 
+                   System: [x]
+
+Required Value:    No:     _ 
+                   Yes:    [x]
+
+Range of Values:   _ 
+
+Edit Rule:
+  Enter now, edits allowed:       [x]
+  Enter now, edits not allowed:   _ 
+  Enter later, edits allowed:     _ 
+  Enter later, edits not allowed: _ 
+  Not determined at this time:    _ 
+
+NOTES: _
