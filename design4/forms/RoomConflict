@@ -1,0 +1,54 @@
+BUSINESS RULE SPECIFICATIONS
+
+RULE INFORMATION
+
+Statement:  Two classes cannot take place In the same room during the same time slot.
+
+Constraint: The Time_block For 2 different classes can only be the same If the classes have different locations.
+
+Type:     Database Oriented:     [X] 
+          Application Oriented   _ 
+
+Category: Field Specific:        _ 
+          Relationship Specific: [X]
+
+Test On:  Insert:                [X] 
+          Delete:                _ 
+          Update:                [X]
+
+
+STRUCTURES AFFECTED
+
+Field Names: location, Meeting_times
+
+Table Names: Class, Locations
+
+
+FIELD ELEMENTS AFFECTED
+
+Physical Elements: Data Type:           _ 
+                   Length:              _ 
+                   Character Support:   _ 
+
+Logical Elements:  Key Type:            _ 
+                   Key Structure:       _ 
+                   Uniqueness:          [X] 
+                   Null Support:        _ 
+                   Values Entered By:   _ 
+                   Range of Values:     [X] 
+                   Edit Rule:           [X] 
+
+
+RELATIONSHIP CHARACTERISTICS AFFECTED
+
+    Deletion rule:              [X]
+    Type of participation:      _
+    Degree of participation:    _
+
+    
+ACTION TAKEN
+
+When classes are created the system assures that there are no conflicts in settingf among classes by not allowing 2 different classes for the same time and the same location.
+
+
+NOTES: _
