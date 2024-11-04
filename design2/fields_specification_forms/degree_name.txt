@@ -4,7 +4,7 @@ GENERAL ELEMENTS
 
 Field Name:           degree_name 
 Parent Table:         degrees 
-Alias(es):            major_name 
+Alias(es):             
 Specification Type:
   Unique:  [X] 
   Generic: _ 
