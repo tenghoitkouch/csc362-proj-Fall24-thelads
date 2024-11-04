@@ -3,8 +3,8 @@ FIELD SPECIFICATIONS
 GENERAL ELEMENTS
 
 Field Name:           course_id
-Parent Table:         Courses 
-Alias(es):            class_id
+Parent Table:         courses 
+Alias(es):            
 Specification Type:
   Unique:  [X] 
   Generic: _ 
