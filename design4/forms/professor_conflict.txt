@@ -1,0 +1,54 @@
+BUSINESS RULE SPECIFICATIONS
+
+RULE INFORMATION
+
+Statement:  A professor cannot taught more than one class at the same time
+
+Constraint: For a specific meeting_days and meeting_times combination in a term, professor cannot have more than one record in classes
+
+Type:     Database Oriented:     [x]
+          Application Oriented   _ 
+
+Category: Field Specific:        _ 
+          Relationship Specific: [x]
+
+Test On:  Insert:                [x]
+          Delete:                _ 
+          Update:                _
+
+
+STRUCTURES AFFECTED
+
+Field Names: professor_id, meeting_days_id, time_start, time_end
+
+Table Names: professors, classes, meeting_days, meeting_times 
+
+
+FIELD ELEMENTS AFFECTED
+
+Physical Elements: Data Type:           _ 
+                   Length:              _ 
+                   Character Support:   _ 
+
+Logical Elements:  Key Type:            _ 
+                   Key Structure:       _ 
+                   Uniqueness:          _ 
+                   Null Support:        _ 
+                   Values Entered By:   _ 
+                   Range of Values:     _ 
+                   Edit Rule:           _ 
+
+
+RELATIONSHIP CHARACTERISTICS AFFECTED
+
+    Deletion rule:              _
+    Type of participation:      _
+    Degree of participation:    [x]
+
+    
+ACTION TAKEN
+
+_ 
+
+
+NOTES: _
