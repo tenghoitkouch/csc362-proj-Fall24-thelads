@@ -1,0 +1,23 @@
+SQL Files
+
+  Cole: meeting_days, days, meeting_times, terms, course_prereqs
+  Nathan: courses, buildings, locations, dégrées
+  Iqbol: professors, students
+  Tenghoit: classes, student_class_history, degree_requirements
+
+  Todos
+    create files for each table
+    insert, update, delete code (use judgement to determine if nesscessary)
+    examples/test data for tables
+
+
+PHP files
+
+  Reports: student_schedule
+  data management: course registration 
+
+  ROLES TBD
+
+Server
+
+  set up a webuser
