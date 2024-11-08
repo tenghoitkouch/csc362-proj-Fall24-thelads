@@ -1,15 +1,16 @@
 DOCUMENTATION TEMPLATE
- - 
+
+file_name - description
     INPUT: 
     OUTPUT: 
-    NOTES: None
+    NOTES: 
 
 ----------------------
 
 classes_insert.sql - adds a class
     INPUT: course_id, section, term_id, professor_id, building_name, room_number, meeting_days_id, time_start, time_end
     OUTPUT: None
-    NOTES: by default, use 'a' for section, go up the letters when needed
+    NOTES: by default use 'a' for section, go up the letters when needed
 
 classes_delete.sql - delete a class
     INPUT: class_id
@@ -44,6 +45,6 @@ student_class_history_delete - delete a class from student_class_history
 student_class_history_update - update a class from student_class_history
     INPUT: grade, student_id, class_id
     OUTPUT: None
-    NOTES: grade will be the only thing changed, (student_id, class_id) is used as key, grade is a float
+    NOTES: grade will be the only thing changed, (student_id, class_id) is used as key, 
 
 

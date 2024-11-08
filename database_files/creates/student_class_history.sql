@@ -9,7 +9,8 @@ CREATE TABLE student_class_history(
 
 CREATE VIEW student_class_history_view AS
 SELECT  CONCAT(student_first_name, ' ', student_last_name) AS student_name,
-        class_name, 
+        class_code, 
+        course_name,
         term,
         grade
 FROM    student_class_history
@@ -18,6 +19,6 @@ FROM    student_class_history
         JOIN classes_view
         USING (class_id)
 ORDER BY    term_id DESC,
-            course_name ASC;
+            class_code ASC;
 
         
