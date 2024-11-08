@@ -3,8 +3,7 @@ CREATE DATABASE ku_registrar;
 
 USE ku_registrar;
 
-
---insert creates
+--creates statments
 SOURCE creates/classes.sql;
 SOURCE creates/degree_requirements.sql;
 SOURCE creates/student_class_history.sql;
