@@ -7,6 +7,6 @@ CREATE VIEW degrees_view (
   SELECT  degree_id,
           degree_name
   FROM    degrees
-  GROUP BY degree_id ASC
+  GROUP BY degree_id 
   ORDER BY degree_name ASC
 )
