@@ -1,9 +1,9 @@
 CREATE TABLE days (
-  day  CHAR(8)
-  PRIMARY KEY (day)
+  day_letter  CHAR(8)
+  PRIMARY KEY (day_letter)
 );
 
-INSERT INTO days (day)
+INSERT INTO days (day_letter)
 VALUES ('M'),
        ('T'),
        ('W'),
