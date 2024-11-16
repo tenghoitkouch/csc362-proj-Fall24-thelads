@@ -4,6 +4,8 @@ CREATE DATABASE ku_registrar;
 USE ku_registrar;
 
 --creates statments
+SOURCE creates/days.sql;
+SOURCE creates/terms.sql;
 SOURCE creates/classes.sql;
 SOURCE creates/degree_requirements.sql;
 SOURCE creates/student_class_history.sql;
@@ -11,3 +13,6 @@ SOURCE creates/buildings.sql;
 SOURCE creates/locations.sql;
 SOURCE creates/courses.sql;
 SOURCE creates/degrees.sql;
+SOURCE creates/meeting_times.sql;
+SOURCE creates/meeting_days.sql;
+SOURCE creates/course_prerequisites.sql;
