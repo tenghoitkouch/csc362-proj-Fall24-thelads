@@ -64,6 +64,14 @@
     }
 
     //more sql setups
+    $query = "SELECT * FROM classes_view";
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        echo "Couldn't prepare statement!";
+        echo exit;
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
 
 
 ?>
@@ -104,9 +112,9 @@
     ?>
     
     <!-- more html -->  
-
+    <?php result_to_html_table($result); ?>
     
-
     <?php $conn->close(); ?>
+
 </body>
 </html>
