@@ -47,4 +47,7 @@ student_class_history_update - update a class from student_class_history
     OUTPUT: None
     NOTES: grade will be the only thing changed, (student_id, class_id) is used as key, 
 
-
+student_class_history_select - returns the transcript of a student
+    INPUT: student_id
+    OUTPUT: transcript
+    NOTES: 
