@@ -32,15 +32,18 @@ SELECT  class_id,
         CONCAT(time_start, ' ', time_end) AS meeting_times,
         CONCAT(term_start_date, ' - ', term_end_date) AS term, 
         class_max_capacity,
-FROM    classes
-        JOIN courses
-        USING (course_id)
+        FROM classes AS cls
+        JOIN courses as crs
+            ON cls.course_id = crs.course_id
         JOIN terms
-        USING (term_id)
+            USING (term_id)
         JOIN professors
-        USING (professor_id)
+            USING (professor_id)
         JOIN meeting_days
-        USING (meeting_days_id)
+            USING (meeting_days_id)
+        LEFT OUTER JOIN course_prerequisites AS prereq
+            ON crs.course_id = prereq.course_id
+        JOIN courses
 GROUP BY (class_id)
 ORDER BY    term_id DESC,
             class_name ASC;
