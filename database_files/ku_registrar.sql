@@ -16,3 +16,16 @@ SOURCE creates/degrees.sql;
 SOURCE creates/meeting_times.sql;
 SOURCE creates/meeting_days.sql;
 SOURCE creates/course_prerequisites.sql;
+
+--test data
+SOURCE test_data/courses_data.sql;
+SOURCE test_data/terms_data.sql;
+SOURCE test_data/professors_data.sql;
+SOURCE test_data/buildings_data.sql;
+SOURCE test_data/locations_data.sql;
+SOURCE test_data/meeting_days_data.sql;
+SOURCE test_data/meeting_times_data.sql;
+SOURCE test_data/courses_data.sql;
+SOURCE test_data/course_prerequisites_data.sql;
+SOURCE test_data/classes_data.sql;
+
