@@ -9,7 +9,8 @@ CREATE TABLE course_prerequisites(
 CREATE VIEW course_prerequisites_view AS
 SELECT  course_prerequisites.course_id,
         CONCAT(primary_course.course_discipline, ' ', primary_course.course_number) AS course,
-        GROUP_CONCAT(prerequisite_course.course_discipline, ' ', prerequisite_course.course_number) AS prerequisite
+        GROUP_CONCAT( DISTINCT CONCAT(prerequisite_course.course_discipline, ' ', prerequisite_course.course_number)
+                      ORDER BY prerequisite_course.course_discipline, prerequisite_course.course_number ASC ) AS prerequisite
       FROM course_prerequisites
       JOIN courses AS primary_course
         ON course_prerequisites.course_id = primary_course.course_id

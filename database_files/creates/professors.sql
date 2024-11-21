@@ -13,7 +13,7 @@ CREATE TABLE professors (
 );
 
 -- Optional view for listing professor details
-CREATE VIEW professor_details AS
+CREATE VIEW professors_view AS
 SELECT 
     professor_id, 
     CONCAT(professor_first_name, ' ', professor_last_name) AS full_name,
