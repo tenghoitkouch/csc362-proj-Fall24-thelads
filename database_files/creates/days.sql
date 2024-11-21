@@ -1,5 +1,5 @@
 CREATE TABLE days (
-  day_letter  CHAR(8)
+  day_letter  CHAR(8),
   PRIMARY KEY (day_letter)
 );
 

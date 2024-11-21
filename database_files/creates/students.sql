@@ -1,6 +1,6 @@
 -- Creating the students table
 CREATE TABLE students (
-    student_id INT PRIMARY KEY,
+    student_id INT AUTO_INCREMENT,
     student_first_name VARCHAR(50) NOT NULL,
     student_last_name VARCHAR(50) NOT NULL,
     student_email VARCHAR(100) NOT NULL,
@@ -10,7 +10,8 @@ CREATE TABLE students (
     student_state VARCHAR(50),
     student_zip_code VARCHAR(10),
     professor_id INT,
-    FOREIGN KEY (professor_id) REFERENCES professors(professor_id) ON DELETE SET NULL
+    FOREIGN KEY (professor_id) REFERENCES professors(professor_id) ON DELETE SET NULL,
+    PRIMARY KEY (student_id)
 );
 
 -- Optional view for listing student details
