@@ -32,7 +32,7 @@ SELECT  cls.class_id,
         CONCAT(time_start, ' ', time_end) AS meeting_times,
         CONCAT(term_start_date, ' - ', term_end_date) AS term, 
         class_max_capacity,
-        GROUP_CONCAT(cpr.prerequisite) AS course_prerequisites
+        cpr.prerequisite AS prerequisites
         FROM classes AS cls
         JOIN terms
             USING (term_id)
