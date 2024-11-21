@@ -7,6 +7,7 @@ CREATE TABLE courses (
   course_description  VARCHAR(200),
   PRIMARY KEY (course_id)
 );
+
 CREATE VIEW courses_view AS
 SELECT  course_id,
         course_discipline,

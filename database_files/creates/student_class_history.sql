@@ -4,7 +4,7 @@ CREATE TABLE student_class_history(
     grade       FLOAT(4) DEFAULT NULL,
     PRIMARY KEY (student_id, class_id),
     FOREIGN KEY (student_id) REFERENCES students (student_id) ON DELETE RESTRICT,
-    FOREIGN KEY (class_id) REFERENCES classes (class_id) ON DELETE RESTRICT,
+    FOREIGN KEY (class_id) REFERENCES classes (class_id) ON DELETE RESTRICT
 );
 
 CREATE VIEW student_class_history_view AS
@@ -18,7 +18,7 @@ FROM    student_class_history
         USING (student_id)
         JOIN classes_view
         USING (class_id)
-ORDER BY    term_id DESC,
+ORDER BY    term DESC,
             class_code ASC;
 
         
