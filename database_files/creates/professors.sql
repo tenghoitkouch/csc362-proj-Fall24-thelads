@@ -1,6 +1,6 @@
 -- Creating the professors table
 CREATE TABLE professors (
-    professor_id INT PRIMARY KEY,
+    professor_id INT AUTO_INCREMENT,
     professor_first_name VARCHAR(50) NOT NULL,
     professor_last_name VARCHAR(50) NOT NULL,
     professor_email VARCHAR(100) NOT NULL,
@@ -8,7 +8,8 @@ CREATE TABLE professors (
     professor_street VARCHAR(100),
     professor_city VARCHAR(50),
     professor_state VARCHAR(50),
-    professor_zip_code VARCHAR(10)
+    professor_zip_code VARCHAR(10),
+    PRIMARY KEY (professor_id)
 );
 
 -- Optional view for listing professor details
