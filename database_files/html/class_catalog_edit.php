@@ -141,7 +141,11 @@
     ?>
     
     <!-- more html -->  
-    <?php result_to_html_table_with_del_checkbox($result); ?>
+    <?php 
+        $select_stmt->execute();
+        $result = $select_stmt->get_result();
+        result_to_html_table_with_del_checkbox($result); 
+    ?>
     
     <?php $conn->close(); ?>
 
