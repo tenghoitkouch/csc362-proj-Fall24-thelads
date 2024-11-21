@@ -19,7 +19,7 @@ SOURCE creates/course_prerequisites.sql;
 SOURCE creates/classes.sql;
 SOURCE creates/student_class_history.sql;
 
--- test data
+-- test data, order matters here
 SOURCE test_data/courses_data.sql;
 SOURCE test_data/terms_data.sql;
 SOURCE test_data/professors_data.sql;
@@ -32,17 +32,6 @@ SOURCE test_data/course_prerequisites_data.sql;
 SOURCE test_data/classes_data.sql;
 
 -- checking if everythings good
-
--- SELECT * FROM buildings_view;
--- SELECT * FROM classes_view;
--- SELECT * FROM course_prerequisites_view;
--- SELECT * FROM courses_view;
--- SELECT * FROM locations_view;
--- SELECT * FROM meeting_days_view;
--- SELECT * FROM meeting_times_view;
--- SELECT * FROM professors_view;
--- SELECT * FROM terms_view;
-
 SELECT * FROM buildings_view;
 SELECT * FROM locations_view;
 SELECT * FROM meeting_days_view;
