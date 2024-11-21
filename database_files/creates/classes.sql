@@ -23,27 +23,27 @@ CREATE TABLE classes (
 
 
 CREATE VIEW classes_view AS
-SELECT  class_id, 
-        CONCAT(course_discipline, ' ', course_number, section) AS class_code, 
-        course_name,
+SELECT  cls.class_id, 
+        CONCAT(crs.course_discipline, ' ', crs.course_number, cls.section) AS class_code, 
+        crs.course_name,
         CONCAT(professor_first_name, ' ', professor_last_name) AS professor_name, 
         CONCAT(building_name, ' ', room_number) AS 'location', 
         GROUP_CONCAT(day) AS meeting_days,
         CONCAT(time_start, ' ', time_end) AS meeting_times,
         CONCAT(term_start_date, ' - ', term_end_date) AS term, 
         class_max_capacity,
+        GROUP_CONCAT(cpr.prerequisite) AS course_prerequisites
         FROM classes AS cls
-        JOIN courses as crs
-            ON cls.course_id = crs.course_id
         JOIN terms
             USING (term_id)
         JOIN professors
             USING (professor_id)
         JOIN meeting_days
             USING (meeting_days_id)
-        LEFT OUTER JOIN course_prerequisites AS prereq
-            ON crs.course_id = prereq.course_id
-        JOIN courses
-GROUP BY (class_id)
+        JOIN courses as crs
+            ON cls.course_id = crs.course_id
+        LEFT OUTER JOIN course_prerequisites_view AS cpr
+            ON cls.course_id = cpr.course_id
+GROUP BY cls.class_id
 ORDER BY    term_id DESC,
-            class_name ASC;
+            class_code ASC;
