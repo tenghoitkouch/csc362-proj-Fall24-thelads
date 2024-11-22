@@ -1,2 +1,3 @@
 INSERT INTO buildings(building_name)
-VALUES  ("OLIN");
+VALUES  ("OLIN"),
+        ("YOUNG");
