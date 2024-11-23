@@ -29,7 +29,11 @@ SOURCE test_data/meeting_days_data.sql;
 SOURCE test_data/meeting_times_data.sql;
 SOURCE test_data/courses_data.sql;
 SOURCE test_data/course_prerequisites_data.sql;
+SOURCE test_data/degrees_data.sql;
+SOURCE test_data/degree_requirements_data.sql;
+SOURCE test_data/students_data.sql;
 SOURCE test_data/classes_data.sql;
+SOURCE test_data/student_class_history_data.sql;
 
 -- checking if everythings good
 SELECT * FROM buildings_view;
