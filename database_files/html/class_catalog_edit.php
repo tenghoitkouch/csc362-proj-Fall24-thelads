@@ -113,9 +113,9 @@
     <title>Class Catalog</title>
     <?php
         if($_COOKIE[$mode] == $light){
-            ?><link rel="stylesheet" href="../css/basic.css"><?php
+            ?><link rel="stylesheet" href="css/basic.css"><?php
         }elseif($_COOKIE[$mode] == $dark){
-            ?><link rel="stylesheet" href="../css/darkmode.css"><?php
+            ?><link rel="stylesheet" href="css/darkmode.css"><?php
         }
     ?>
 </head>

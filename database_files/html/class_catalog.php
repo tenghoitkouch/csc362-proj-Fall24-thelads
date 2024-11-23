@@ -82,14 +82,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Catalog</title>
-    <!-- <?php
+    <?php
         if($_COOKIE[$mode] == $light){
-            ?><link rel="stylesheet" href="../css/basic.css"><?php
+            ?><link rel="stylesheet" href="css/basic.css"><?php
         }elseif($_COOKIE[$mode] == $dark){
-            ?><link rel="stylesheet" href="../css/darkmode.css"><?php
+            ?><link rel="stylesheet" href="css/darkmode.css"><?php
         }
-    ?> -->
-    <link rel="stylesheet" href="../css/basic.css">
+    ?>
 </head>
 <body>
     <h1>Class Catalog</h1>
