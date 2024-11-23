@@ -107,7 +107,20 @@ $requirements = $conn->query("
         <input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode">
     </form>
 
-    <?php session_display(); ?>
+    <?php
+        if(isset($_SESSION['username'])){
+            ?><p>Welocome <?php echo $_SESSION['username']; ?></p>
+            <form method="POST">
+                <input type="submit" name="logout" value="Logout">
+            </form><?php
+        }else{
+            ?><p>Enter name to start/resume session: </p>
+            <form method="POST">
+                <input type="text" name="username" placeholder="Enter name...">
+                <input type="submit" value="Remember Me">
+            </form><?php 
+        }
+    ?>
 
     <h2>Add or Remove Degree Requirements</h2>
     <form method="POST">
