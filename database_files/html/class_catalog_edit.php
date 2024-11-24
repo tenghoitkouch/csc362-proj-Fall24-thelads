@@ -123,8 +123,7 @@
     <h1>Class Catalog</h1>
     <form method="post">
         <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
-    </form>
-
+    </form> 
     <?php
         if(isset($_SESSION['username'])){
             ?><p>Welocome <?php echo $_SESSION['username']; ?></p>
@@ -139,8 +138,13 @@
             </form><?php 
         }
     ?>
+
+    <h2>Add Classes</h2>
+    
+
     
     <!-- more html -->  
+    <h2>Delete Classes</h2>
     <?php 
         $select_stmt->execute();
         $result = $select_stmt->get_result();
