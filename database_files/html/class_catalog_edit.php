@@ -63,6 +63,29 @@
         exit();
     }
 
+    //add recs
+    if(array_key_exists('add_records', $_POST)){
+
+        $course_id = (int) $_POST["courses"];
+        $section = $_POST["section"];
+        $term_id = (int) $_POST["terms"];
+        $professor_id = (int) $_POST["professors"];
+        list($building_name, $room_number) = explode(',', $_POST["locations"]);
+        $room_number = (int) $room_number;
+        $meeting_day_id = (int) $_POST["meeting_days"];
+        list($time_start, $time_end) = explode(',', $_POST["locations"]);
+
+        //query
+        $add_query = file_get_contents($queries_dir . 'classes_insert.sql');
+        $add_stmt = $conn->prepare($add_query);
+        $add_stmt->bind_param('isiisiiss', $course_id, $section, $term_id, $professor_id, $building_name, $room_number, $meeting_day_id, $time_start, $time_end);
+        $add_stmt->execute();
+        
+        //refresh
+        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
+        exit();
+    }
+
     //more sql setups
     $query = "SELECT * FROM classes_view";
     $select_stmt = $conn->prepare($query);
@@ -140,7 +163,9 @@
     ?>
 
     <h2>Add Classes</h2>
-    
+    <?php
+        add_new_records($conn, ["courses", "section", "terms", "professors", "locations", "meeting_days", "meeting_times"]);
+    ?>
 
     
     <!-- more html -->  

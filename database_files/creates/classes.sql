@@ -23,7 +23,7 @@ CREATE TABLE classes (
 
 
 CREATE VIEW classes_view AS
-SELECT  cls.class_id, 
+SELECT  class_id, 
         CONCAT(crs.course_discipline, ' ', crs.course_number, cls.section) AS class_code, 
         crs.course_name AS course_name,
         CONCAT(professor_first_name, ' ', professor_last_name) AS professor_name, 
@@ -44,6 +44,6 @@ SELECT  cls.class_id,
             ON cls.course_id = crs.course_id
         LEFT OUTER JOIN course_prerequisites_view AS cpr
             ON cls.course_id = cpr.course_id
-GROUP BY cls.class_id
+GROUP BY    class_id
 ORDER BY    term_id DESC,
             class_code ASC;

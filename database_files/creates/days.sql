@@ -9,3 +9,7 @@ VALUES ('M'),
        ('W'),
        ('R'),
        ('F');
+
+CREATE VIEW days_view AS
+SELECT day_letter
+FROM  days;

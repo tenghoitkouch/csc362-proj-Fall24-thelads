@@ -98,7 +98,7 @@
 
     <?php
         if(isset($_SESSION['username'])){
-            ?><p>Welocome <?php echo $_SESSION['username']; ?></p>
+            ?><p>Welcome <?php echo $_SESSION['username']; ?></p>
             <form method="POST">
                 <input type="submit" name="logout" value="Logout">
             </form><?php

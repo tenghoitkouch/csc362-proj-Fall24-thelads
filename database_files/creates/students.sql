@@ -15,7 +15,7 @@ CREATE TABLE students (
 );
 
 -- Optional view for listing student details
-CREATE VIEW student_details AS
+CREATE VIEW students_view AS
 SELECT 
     student_id, 
     CONCAT(student_first_name, ' ', student_last_name) AS full_name,
