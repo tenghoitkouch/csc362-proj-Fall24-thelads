@@ -73,7 +73,7 @@
         list($building_name, $room_number) = explode(',', $_POST["locations"]);
         $room_number = (int) $room_number;
         $meeting_day_id = (int) $_POST["meeting_days"];
-        list($time_start, $time_end) = explode(',', $_POST["locations"]);
+        list($time_start, $time_end) = explode(',', $_POST["meeting_times"]);
 
         //query
         $add_query = file_get_contents($queries_dir . 'classes_insert.sql');

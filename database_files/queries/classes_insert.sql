@@ -10,5 +10,5 @@ INSERT INTO classes (course_id,
                     )
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
---make section 'a'
---if want to edit class_capacity, do on alters
+-- make section 'a'
+-- if want to edit class_capacity, do on alters

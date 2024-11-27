@@ -117,7 +117,9 @@
                         $result_dict = $result->fetch_all(MYSQLI_ASSOC); //gives us a dict/map
                         
                         //this name below will be appended to $_POST
-                        ?> <select name="<?php echo $table; ?>" required> 
+                        ?> 
+                            <label for="<?php echo $table; ?>"><?php echo $table; ?></label>
+                            <select name="<?php echo $table; ?>" id="<?php echo $table; ?>" required> 
                             <?php 
                                 foreach($result_dict as $record){
                                     echo generate_options($table, $record);
@@ -144,9 +146,9 @@
             "locations" => '<option value="' . $record['building_name'] . ',' . $record['room_number'] . '">' . $record['building_name'] . ' ' . $record['room_number'] . '</option>',
             "meeting_days" => '<option value="' . $record['meeting_days_id'] . '">' . $record['schedule'] . '</option>',
             "meeting_times" => '<option value="' . $record['time_start'] . ',' . $record['time_end'] . '">' . $record['time_start'] . ' - ' . $record['time_end'] . '</option>',
-            "professors" => '<option value="' . $record['professor_id'] . '">' . $result['full_name'] . '</option>',
+            "professors" => '<option value="' . $record['professor_id'] . '">' . $record['full_name'] . '</option>',
             "student_class_history" => null,
-            "students" => '<option value="' . $record['student_id'] . '">' . $result['full_name'] . '</option>',
+            "students" => '<option value="' . $record['student_id'] . '">' . $record['full_name'] . '</option>',
             "terms" => '<option value="' . $record['term_id'] . '">' . $record['term_start_date'] . ' - ' . $record['term_end_date'] . '</option>',
         ];
 
