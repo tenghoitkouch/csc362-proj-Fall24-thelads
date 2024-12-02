@@ -75,25 +75,29 @@
 <?php } ?>
 
 
+
+
 <?php
-    function add_new_records($conn, $tables){
-        
-        $table_queries = [
-            "buildings" => "SELECT * FROM buildings_view;", 
-            "classes" => "SELECT * FROM classes_view;",
-            "course_prerequisites" => null,
-            "courses" => "SELECT * FROM courses_view;",
-            "days" => "SELECT * FROM days_view;",
-            "degree_requirements" => null,
-            "degrees" => "SELECT * FROM degrees_view;",
-            "locations" => "SELECT * FROM locations_view;",
-            "meeting_days" => "SELECT * FROM meeting_days_view;",
-            "meeting_times" => "SELECT * FROM meeting_times_view;",
-            "professors" => "SELECT * FROM professors_view",
-            "student_class_history" => null,
-            "students" => "SELECT * FROM students_view",
-            "terms" => "SELECT * FROM terms_view;"
-        ];
+
+    $table_queries = [
+        "buildings" => "SELECT * FROM buildings_view;", 
+        "classes" => "SELECT * FROM classes_view;",
+        "course_prerequisites" => null,
+        "courses" => "SELECT * FROM courses_view;",
+        "days" => "SELECT * FROM days_view;",
+        "degree_requirements" => null,
+        "degrees" => "SELECT * FROM degrees_view;",
+        "locations" => "SELECT * FROM locations_view;",
+        "meeting_days" => "SELECT * FROM meeting_days_view;",
+        "meeting_times" => "SELECT * FROM meeting_times_view;",
+        "professors" => "SELECT * FROM professors_view",
+        "student_class_history" => null,
+        "students" => "SELECT * FROM students_view",
+        "terms" => "SELECT * FROM terms_view;"
+    ];
+
+    function generate_select_fields($conn, $tables, $original_record=NULL){
+        global $table_queries;
 
         ?>
             <form method="post">
@@ -104,7 +108,7 @@
                         if(!array_key_exists($table, $table_queries)){
                             ?>
                             <label for="<?php echo $table; ?>"> <?php echo $table; ?> </label>
-                            <input type="text" name="<?php echo $table; ?>" id="<?php echo $table; ?>">
+                            <input type="text" name="<?php echo $table; ?>" id="<?php echo $table; ?>" value="<?php echo $original_record ? $original_record[$table] : ''; ?>" required>
                             <?php
                             continue;
                         }
@@ -122,41 +126,149 @@
                             <select name="<?php echo $table; ?>" id="<?php echo $table; ?>" required> 
                             <?php 
                                 foreach($result_dict as $record){
-                                    echo generate_options($table, $record);
+                                    echo generate_options($table, $record, $original_record);
                                 }
                             ?>
                         </select>
                     <?php } ?>
-                    <input type="submit" value="add_records" name="add_records">
+                    <?php 
+                        if(is_null($original_record)){
+                            echo '<input type="submit" value="add_records" name="add_records">';
+                        }else{
+                            echo '<input type="submit" value="edit_records" name="edit_records">';
+                        }
+                    ?>
+                    
             </form>
 <?php } ?>
 
 <?php 
-    function generate_options($table_name, $record){
+    function generate_options($table_name, $record, $original_record=null){
         
-        $option_statements = [
-            "buildings" => '<option value="' . $record['building_name'] . '">' . $record['building_name'] . '</option>',
-            "classes" => '<option value="' . $record['class_id'] . '">' 
-                            . $record['class_code'] . ': ' . $record['course_name'] . ', ' . $record['professor_name'] . ', ' . $record['term'] .'</option>',
-            "course_prerequisites" => null,
-            "courses" => '<option value="' . $record['course_id'] . '">' . $record['course_discipline'] . ' ' . $record['course_number'] . '</option>',
-            "days" => '<option value="' . $record['day_letter'] . '">' . $record['day_letter'] . '</option>',
-            "degree_requirements" => null,
-            "degrees" => '<option value="' . $record['degree_id'] . '">' . $record['degree_name'] . '</option>',
-            "locations" => '<option value="' . $record['building_name'] . ',' . $record['room_number'] . '">' . $record['building_name'] . ' ' . $record['room_number'] . '</option>',
-            "meeting_days" => '<option value="' . $record['meeting_days_id'] . '">' . $record['schedule'] . '</option>',
-            "meeting_times" => '<option value="' . $record['time_start'] . ',' . $record['time_end'] . '">' . $record['time_start'] . ' - ' . $record['time_end'] . '</option>',
-            "professors" => '<option value="' . $record['professor_id'] . '">' . $record['full_name'] . '</option>',
-            "student_class_history" => null,
-            "students" => '<option value="' . $record['student_id'] . '">' . $record['full_name'] . '</option>',
-            "terms" => '<option value="' . $record['term_id'] . '">' . $record['term_start_date'] . ' - ' . $record['term_end_date'] . '</option>',
+        // $option_statements = [
+        //     "buildings" => '<option value="' . $record['building_name'] . '">' . $record['building_name'] . '</option>',
+        //     "classes" => '<option value="' . $record['class_id'] . '">' 
+        //                     . $record['class_code'] . ': ' . $record['course_name'] . ', ' . $record['professor_name'] . ', ' . $record['term'] .'</option>',
+        //     "course_prerequisites" => null,
+        //     "courses" => '<option value="' . $record['course_id'] . '">' . $record['course_discipline'] . ' ' . $record['course_number'] . '</option>',
+        //     "days" => '<option value="' . $record['day_letter'] . '">' . $record['day_letter'] . '</option>',
+        //     "degree_requirements" => null,
+        //     "degrees" => '<option value="' . $record['degree_id'] . '">' . $record['degree_name'] . '</option>',
+        //     "locations" => '<option value="' . $record['building_name'] . ',' . $record['room_number'] . '">' . $record['building_name'] . ' ' . $record['room_number'] . '</option>',
+        //     "meeting_days" => '<option value="' . $record['meeting_days_id'] . '">' . $record['schedule'] . '</option>',
+        //     "meeting_times" => '<option value="' . $record['time_start'] . ',' . $record['time_end'] . '">' . $record['time_start'] . ' - ' . $record['time_end'] . '</option>',
+        //     "professors" => '<option value="' . $record['professor_id'] . '">' . $record['full_name'] . '</option>',
+        //     "student_class_history" => null,
+        //     "students" => '<option value="' . $record['student_id'] . '">' . $record['full_name'] . '</option>',
+        //     "terms" => '<option value="' . $record['term_id'] . '">' . $record['term_start_date'] . ' - ' . $record['term_end_date'] . '</option>',
+        // ];
+
+        $option_fields = [
+            "buildings" => [
+                "value" => ['building_name'],
+                "label" => ['building_name']
+            ], 
+            "classes" => [
+                "value" => ['class_id'],
+                "label" => ['class_code', 'course_name', 'professor_name', 'term']
+            ],
+            "course_prerequisites" => [
+                "value" => [],
+                "label" => []
+            ],
+            "courses" => [
+                "value" => ['course_id'],
+                "label" => ['course_discipline', 'course_number']
+            ],
+            "days" => [
+                "value" => ['day_letter'],
+                "label" => ['day_letter']
+            ],
+            "degree_requirements" => [
+                "value" => [],
+                "label" => []
+            ],
+            "degrees" => [
+                "value" => ['degree_id'],
+                "label" => ['degree_name']
+            ],
+            "locations" => [
+                "value" => ['building_name', 'room_number'],
+                "label" => ['building_name', 'room_number']
+            ],
+            "meeting_days" => [
+                "value" => ['meeting_days_id'],
+                "label" => ['schedule']
+            ],
+            "meeting_times" => [
+                "value" => ['time_start', 'time_end'],
+                "label" => ['time_start', 'time_end']
+            ],
+            "professors" => [
+                "value" => ['professor_id'],
+                "label" => ['full_name']
+            ],
+            "student_class_history" => [
+                "value" => [],
+                "label" => []
+            ],
+            "students" => [
+                "value" => ['student_id'],
+                "label" => ['full_name']
+            ],
+            "terms" => [
+                "value" => ['term_id'],
+                "label" => ['term_start_date', 'term_end_date']
+            ]
         ];
+        
+        $value = array_map(function($key) use ($record){
+            return $record[$key];
+        }, $option_fields[$table_name]['value']);
+
+        $label = array_map(function($key) use ($record){
+            return $record[$key];
+        }, $option_fields[$table_name]['label']);
+
+        if($original_record === NULL){ return '<option value="' . implode(',', $value) . '">' . implode(' - ', $label) . '</option>'; }
+        
+        $original_value = array_map(function($key) use ($original_record){
+            return $original_record[$key];
+        }, $option_fields[$table_name]['value']);
+
+        if($original_value == $value){
+            return '<option value="' . implode(',', $value) . '" selected >' . implode(' - ', $label) . '</option>';
+        }else{
+            return '<option value="' . implode(',', $value) . '">' . implode(' - ', $label) . '</option>';
+        }
+
 
         //IMPORTANT: locations, meeting_times have 2 values, which will need spliting
-        return $option_statements[$table_name];
+        // return $option_statements[$table_name];
     }
 ?>
 
+<?php
+
+    function generate_edit_selections($result){
+        
+        ?><form method="get">
+            <label for="selected_record">Select: </label>
+            <select name="selected_record" id="selected_record" required>
+                <?php
+                    for($row = 0; $row < $result->num_rows; $row++){
+                        $row_data = $result->fetch_assoc();
+                        $option_str = implode(" | ", array_values($row_data));
+                        echo '<option value="' . $row . '">' . $option_str . '</option>';
+                    }
+                ?>
+            </select>
+            <input type="submit" name="edit_records" value="edit_records">
+        </form>
+
+    <?php }
+
+?>
 
 
 

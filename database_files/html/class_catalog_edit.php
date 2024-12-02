@@ -86,6 +86,9 @@
         exit();
     }
 
+
+
+
     //more sql setups
     $query = "SELECT * FROM classes_view";
     $select_stmt = $conn->prepare($query);
@@ -95,7 +98,7 @@
     }
     $select_stmt->execute();
     $result = $select_stmt->get_result();
-    $classes_list = $result->fetch_all();
+    $classes_list = $result->fetch_all(MYSQLI_BOTH);
 
     $need_reload = FALSE;
     //del rec
@@ -164,7 +167,7 @@
 
     <h2>Add Classes</h2>
     <?php
-        add_new_records($conn, ["courses", "section", "terms", "professors", "locations", "meeting_days", "meeting_times"]);
+        generate_select_fields($conn, ["courses", "section", "terms", "professors", "locations", "meeting_days", "meeting_times"]);
     ?>
 
     
@@ -174,6 +177,21 @@
         $select_stmt->execute();
         $result = $select_stmt->get_result();
         result_to_html_table_with_del_checkbox($result); 
+    ?>
+
+    <h2>Edit Classes</h2>
+    <?php
+        //edit recs
+        $select_stmt->execute();
+        $result = $select_stmt->get_result();
+
+        if(array_key_exists('edit_records', $_GET)){
+            $row_index = $_GET['selected_record'];
+            $result_dict = $result->fetch_all(MYSQLI_ASSOC);
+            generate_select_fields($conn, ["courses", "section", "terms", "professors", "locations", "meeting_days", "meeting_times", "class_max_capacity"], $result_dict[$row_index]);
+        }else{
+            generate_edit_selections($result);
+        }
     ?>
     
     <?php $conn->close(); ?>

@@ -24,7 +24,8 @@ CREATE TABLE classes (
 
 CREATE VIEW classes_view AS
 SELECT  class_id, 
-        CONCAT(crs.course_discipline, ' ', crs.course_number, cls.section) AS class_code, 
+        CONCAT(crs.course_discipline, ' ', crs.course_number) AS course_code, 
+        cls.section AS section,
         crs.course_name AS course_name,
         CONCAT(professor_first_name, ' ', professor_last_name) AS professor_name, 
         CONCAT(building_name, ' ', room_number) AS 'location', 
