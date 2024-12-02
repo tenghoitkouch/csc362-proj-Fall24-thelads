@@ -47,4 +47,5 @@ SELECT  class_id,
             ON cls.course_id = cpr.course_id
 GROUP BY    class_id
 ORDER BY    term_id DESC,
-            class_code ASC;
+            course_code ASC,
+            section ASC;
