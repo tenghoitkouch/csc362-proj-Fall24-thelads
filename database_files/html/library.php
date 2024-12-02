@@ -135,6 +135,7 @@
                         if(is_null($original_record)){
                             echo '<input type="submit" value="add_records" name="add_records">';
                         }else{
+                            
                             echo '<input type="submit" value="edit_records" name="edit_records">';
                         }
                     ?>

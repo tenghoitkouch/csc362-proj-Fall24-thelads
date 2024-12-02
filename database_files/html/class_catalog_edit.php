@@ -86,28 +86,7 @@
         exit();
     }
 
-    if(array_key_exists('edit_records', $_POST)){
-
-        $course_id = (int) $_POST["courses"];
-        $section = $_POST["section"];
-        $term_id = (int) $_POST["terms"];
-        $professor_id = (int) $_POST["professors"];
-        list($building_name, $room_number) = explode(',', $_POST["locations"]);
-        $room_number = (int) $room_number;
-        $meeting_day_id = (int) $_POST["meeting_days"];
-        list($time_start, $time_end) = explode(',', $_POST["meeting_times"]);
-        $class_max_capacity = (int) $_POST["class_max_capacity"];
-
-        //query
-        $edit_query = file_get_contents($queries_dir . 'classes_update.sql');
-        $edit_stmt = $conn->prepare($edit_query);
-        $edit_stmt->bind_param('isiisiissi', $course_id, $section, $term_id, $professor_id, $building_name, $room_number, $meeting_day_id, $time_start, $time_end, $class_max_capacity);
-        $edit_stmt->execute();
-        
-        //refresh
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
+    
 
 
     //more sql setups
@@ -146,6 +125,29 @@
 
     // ----- Reload this page if the database was changed.
     if($need_reload){ // This needs to be done before any output, to guarantee that it works.
+        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
+        exit();
+    }
+
+    if(array_key_exists('edit_records', $_POST)){
+
+        $course_id = (int) $_POST["courses"];
+        $section = $_POST["section"];
+        $term_id = (int) $_POST["terms"];
+        $professor_id = (int) $_POST["professors"];
+        list($building_name, $room_number) = explode(',', $_POST["locations"]);
+        $room_number = (int) $room_number;
+        $meeting_day_id = (int) $_POST["meeting_days"];
+        list($time_start, $time_end) = explode(',', $_POST["meeting_times"]);
+        $class_max_capacity = (int) $_POST["class_max_capacity"];
+
+        //query
+        $edit_query = file_get_contents($queries_dir . 'classes_update.sql');
+        $edit_stmt = $conn->prepare($edit_query);
+        $edit_stmt->bind_param('isiisiissi', $course_id, $section, $term_id, $professor_id, $building_name, $room_number, $meeting_day_id, $time_start, $time_end, $class_max_capacity);
+        $edit_stmt->execute();
+        
+        //refresh
         header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
         exit();
     }
