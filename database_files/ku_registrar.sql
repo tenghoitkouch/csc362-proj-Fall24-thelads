@@ -18,6 +18,7 @@ SOURCE creates/meeting_days.sql;
 SOURCE creates/course_prerequisites.sql;
 SOURCE creates/classes.sql;
 SOURCE creates/student_class_history.sql;
+SOURCE creates/users.sql;
 
 -- test data, order matters here
 SOURCE test_data/courses_data.sql;
@@ -33,6 +34,7 @@ SOURCE test_data/degree_requirements_data.sql;
 SOURCE test_data/students_data.sql;
 SOURCE test_data/classes_data.sql;
 SOURCE test_data/student_class_history_data.sql;
+SOURCE test_data/users_data.sql;
 
 -- checking if everythings good
 SELECT * FROM buildings_view;
@@ -48,3 +50,5 @@ SELECT * FROM degree_requirements_view;
 SELECT * FROM students_view;
 SELECT * FROM classes_view;
 SELECT * FROM student_class_history_view;
+SELECT * FROM users_view;
+
