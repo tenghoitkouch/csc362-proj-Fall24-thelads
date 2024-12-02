@@ -140,11 +140,12 @@
         $meeting_day_id = (int) $_POST["meeting_days"];
         list($time_start, $time_end) = explode(',', $_POST["meeting_times"]);
         $class_max_capacity = (int) $_POST["class_max_capacity"];
+        $class_id = (int) $_POST["original_class_id"];
 
         //query
         $edit_query = file_get_contents($queries_dir . 'classes_update.sql');
         $edit_stmt = $conn->prepare($edit_query);
-        $edit_stmt->bind_param('isiisiissi', $course_id, $section, $term_id, $professor_id, $building_name, $room_number, $meeting_day_id, $time_start, $time_end, $class_max_capacity);
+        $edit_stmt->bind_param('isiisiissii', $course_id, $section, $term_id, $professor_id, $building_name, $room_number, $meeting_day_id, $time_start, $time_end, $class_max_capacity, $class_id);
         $edit_stmt->execute();
         
         //refresh
@@ -211,6 +212,7 @@
         if(array_key_exists('edit_records', $_GET)){
             $row_index = $_GET['selected_record'];
             $result_dict = $result->fetch_all(MYSQLI_ASSOC);
+            $_POST['original_class_id'] = $result_dict[$row_index]['class_id'];
             generate_select_fields($conn, ["courses", "section", "terms", "professors", "locations", "meeting_days", "meeting_times", "class_max_capacity"], $result_dict[$row_index]);
         }else{
             generate_edit_selections($result);
