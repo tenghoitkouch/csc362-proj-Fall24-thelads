@@ -48,8 +48,24 @@
         exit();
     }
 
-    // START SESSION
-    session_start();
+    if(array_key_exists("login", $_POST)){
+        $query = file_get_contents($queries_dir . "users_select.sql");
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('s', $_POST['user_name']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $result_dict = $result->fetch_assoc();
+        $stored_hash_password = $result_dict['user_password'];
+
+        if(password_verify($_POST['user_password'], $stored_hash_password)){
+            session_start();
+
+            foreach($result_dict as $key => $value){
+                $_SESSION[$key] = $value;
+            }
+
+        }
+    }
 
     if(array_key_exists('logout', $_POST)){
         session_unset();
@@ -73,40 +89,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <?php
-        if($_COOKIE[$mode] == $light){
-            ?><link rel="stylesheet" href="css/basic.css"><?php
-        }elseif($_COOKIE[$mode] == $dark){
-            ?><link rel="stylesheet" href="css/darkmode.css"><?php
-        }
-    ?>
+    <title>KU Registrar</title>
 </head>
 <body>
-    <h1>Title</h1>
-    <form method="post">
-        <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
-    </form>
-
     <?php
-        if(isset($_SESSION['username'])){
-            ?><p>Welocome <?php echo $_SESSION['username']; ?></p>
+        if(session_status() !== PHP_SESSION_ACTIVE){
+            ?>
             <form method="POST">
-                <input type="submit" name="logout" value="Logout">
-            </form><?php
-        }else{
-            ?><p>Enter name to start/resume session: </p>
-            <form method="POST">
-                <input type="text" name="username" placeholder="Enter name...">
-                <input type="submit" value="Remember Me">
-            </form><?php 
+                <label for="user_name">Username</label>
+                <input type="text" name="user_name" id="user_name">
+                <label for="user_password">Password</label>
+                <input type="text" name="user_password" id="user_password">
+                <input type="submit" value="login">
+            </form>
+            <?php
+        }elseif (session_status() == PHP_SESSION_ACTIVE){
+            
         }
+
     ?>
-    
-    <!-- more html -->  
 
-    
-
-    <?php $conn->close(); ?>
+    <h1>Menu Page</h1>
+    <ul>
+        <li><a href="class_catalog.php">Class Catalog</a></li>
+        <li><a href="class_catalog_edit.php">Edit Class Catalog</a></li>
+        <li><a href="degree_requirements.php">Degree Requirements</a></li>
+        <li><a href="transcript.php">Transcript</a></li>
+    </ul>
 </body>
 </html>

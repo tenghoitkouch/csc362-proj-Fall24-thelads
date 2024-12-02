@@ -14,7 +14,8 @@ CREATE TABLE users (
     designation     VARCHAR(64),
     designation_id  INT,
     FOREIGN KEY (designation) REFERENCES roles (designation) ON DELETE RESTRICT,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (user_id),
+    UNIQUE (user_name)
 );
 
 CREATE VIEW users_view AS
