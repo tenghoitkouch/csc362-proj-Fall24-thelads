@@ -48,21 +48,6 @@
         exit();
     }
 
-    // START SESSION
-    session_start();
-
-    if(array_key_exists('logout', $_POST)){
-        session_unset();
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
-    if(isset($_POST['username'])){
-        $_SESSION['username'] = $_POST['username'];
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
     //more sql setups
     $query = "SELECT * FROM classes_view";
     $stmt = $conn->prepare($query);
@@ -72,7 +57,6 @@
     }
     $stmt->execute();
     $result = $stmt->get_result();
-
 
 ?>
 
@@ -95,21 +79,6 @@
     <form method="POST">
         <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
     </form>
-
-    <?php
-        if(isset($_SESSION['username'])){
-            ?><p>Welcome <?php echo $_SESSION['username']; ?></p>
-            <form method="POST">
-                <input type="submit" name="logout" value="Logout">
-            </form><?php
-        }else{
-            ?><p>Enter name to start/resume session: </p>
-            <form method="POST">
-                <input type="text" name="username" placeholder="Enter name...">
-                <input type="submit" value="Remember Me">
-            </form><?php 
-        }
-    ?>
     
     <!-- more html -->  
     <?php result_to_html_table($result); ?>

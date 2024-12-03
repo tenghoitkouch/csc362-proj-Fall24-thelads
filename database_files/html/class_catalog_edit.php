@@ -48,21 +48,6 @@
         exit();
     }
 
-    // START SESSION
-    session_start();
-
-    if(array_key_exists('logout', $_POST)){
-        session_unset();
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
-    if(isset($_POST['username'])){
-        $_SESSION['username'] = $_POST['username'];
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
     //add recs
     if(array_key_exists('add_records', $_POST)){
 
@@ -87,8 +72,6 @@
     }
 
     
-
-
     //more sql setups
     $query = "SELECT * FROM classes_view";
     $select_stmt = $conn->prepare($query);
@@ -170,30 +153,16 @@
     ?>
 </head>
 <body>
+    <a href="home_page.php">Back to Home</a>
     <h1>Class Catalog</h1>
     <form method="post">
         <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
     </form> 
-    <?php
-        if(isset($_SESSION['username'])){
-            ?><p>Welocome <?php echo $_SESSION['username']; ?></p>
-            <form method="POST">
-                <input type="submit" name="logout" value="Logout">
-            </form><?php
-        }else{
-            ?><p>Enter name to start/resume session: </p>
-            <form method="POST">
-                <input type="text" name="username" placeholder="Enter name...">
-                <input type="submit" value="Remember Me">
-            </form><?php 
-        }
-    ?>
 
     <h2>Add Classes</h2>
     <?php
         generate_select_fields($conn, ["courses", "section", "terms", "professors", "locations", "meeting_days", "meeting_times"]);
     ?>
-
     
     <!-- more html -->  
     <h2>Delete Classes</h2>

@@ -1,5 +1,4 @@
 <?php
-
     function result_to_html_table($result) {
         $qryres = $result->fetch_all();
         $n_rows = $result->num_rows;

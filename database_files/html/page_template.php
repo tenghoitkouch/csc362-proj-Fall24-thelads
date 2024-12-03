@@ -48,21 +48,6 @@
         exit();
     }
 
-    // START SESSION
-    session_start();
-
-    if(array_key_exists('logout', $_POST)){
-        session_unset();
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
-    if(isset($_POST['username'])){
-        $_SESSION['username'] = $_POST['username'];
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
     //more sql setups
 
 
@@ -83,25 +68,11 @@
     ?>
 </head>
 <body>
+    <a href="home_page.php">Back to Home</a>
     <h1>Title</h1>
     <form method="post">
         <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
     </form>
-
-    <?php
-        if(isset($_SESSION['username'])){
-            ?><p>Welocome <?php echo $_SESSION['username']; ?></p>
-            <form method="POST">
-                <input type="submit" name="logout" value="Logout">
-            </form><?php
-        }else{
-            ?><p>Enter name to start/resume session: </p>
-            <form method="POST">
-                <input type="text" name="username" placeholder="Enter name...">
-                <input type="submit" value="Remember Me">
-            </form><?php 
-        }
-    ?>
     
     <!-- more html -->  
 
