@@ -99,9 +99,6 @@
             if(array_key_exists('checkbox' . $id, $_POST)){
                 $need_reload = TRUE;
                 $del_stmt->execute();
-                if(session_status() == PHP_SESSION_ACTIVE){
-                    $_SESSION['num_deleted'] = $_SESSION['num_deleted'] + 1;
-                }
             }
         }
     }

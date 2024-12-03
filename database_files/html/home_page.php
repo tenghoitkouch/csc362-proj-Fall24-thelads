@@ -122,7 +122,7 @@
                         <li><a href="">Transcript</a></li>
                         <li><a href="">Degree Requirements</a></li>
                         <li><a href="">Courses</a></li>
-                        <li><a href="class_catalog_edit.php">Classes</a></li>
+                        <li><a href="class_catalog_admin.php">Classes</a></li>
                         <li><a href="">Buildings</a></li>
                         <li><a href="">Locations</a></li>
                         <li><a href="">Professors</a></li>

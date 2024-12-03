@@ -1,0 +1,152 @@
+<?php
+
+    // Show all errors from the PHP interpreter.
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    // Show all errors from the MySQLi Extension.
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);  
+
+    // CONNECTION
+    $config = parse_ini_file('../../../mysql.ini');
+    $queries_dir = "../queries/";
+    $dbname = 'ku_registrar';
+    $conn = new mysqli(
+                $config['mysqli.default_host'],
+                $config['mysqli.default_user'],
+                $config['mysqli.default_pw'],
+                $dbname);
+
+    if ($conn->connect_errno) {
+        echo "Error: Failed to make a MySQL connection, here is why: ". "<br>";
+        echo "Errno: " . $conn->connect_errno . "\n";
+        echo "Error: " . $conn->connect_error . "\n";
+        exit; // Quit this PHP script if the connection fails.
+    }
+
+    // import our custom php functions
+    require "library.php";
+
+    // TOGGLE LIGHT/DARK MODE
+    $mode = 'mode';
+    $light = "light";
+    $dark = "dark";
+
+    if(!array_key_exists($mode, $_COOKIE)){
+        setcookie($mode, $light, 0, "/", "", false, true); //default
+        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
+        exit();
+    }
+
+    if(array_key_exists("toggle_mode", $_POST)){
+        $new_mode = $light;
+        if($_COOKIE[$mode] == $light){ $new_mode = $dark;}
+        if($_COOKIE[$mode] == $dark){ $new_mode = $light;}
+        setcookie($mode, $new_mode, 0, "/", "", false, true);
+        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
+        exit();
+    }
+
+    //more sql setups
+    $select_query = "SELECT * FROM courses_view";
+    $select_stmt = $conn->prepare($select_query);
+    $select_stmt->execute();
+    $result = $select_stmt->get_result();
+    $result_both = $result->fetch_all(MYSQLI_BOTH);
+
+    if(array_key_exists('add_records', $_POST)){
+        $course_discipline = $_POST['course_discipline'];
+        $course_number = (int) $_POST['course_number'];
+        $course_name = $_POST['course_name'];
+        $course_credits = (int) $_POST['course_credits'];
+        $course_description = $_POST['course_description'];
+
+        $add_query = file_get_contents($queries_dir . 'courses_insert.sql');
+        $add_stmt = $conn->prepare($add_query);
+        $add_stmt->bind_param('sisis', $course_discipline, $course_number, $course_name, $course_credits, $course_description);
+        $add_stmt->execute();
+
+        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
+        exit();
+    }
+
+    $need_reload = FALSE;
+
+    if(array_key_exists('delbtn', $_POST)){
+
+        $del_query = file_get_contents($queries_dir . "courses_delete.sql");
+        $del_stmt = $conn->prepare($del_query);
+
+        foreach($result_both as $row){
+            $id = $row['course_id'];
+            if(array_key_exists('checkbox' . $id, $_POST)){
+                $need_reload = TRUE;
+                $del_stmt->bind_param('i', $id);
+                $del_stmt->execute();
+            }
+        }
+    }
+
+    // ----- Reload this page if the database was changed.
+    if($need_reload){ // This needs to be done before any output, to guarantee that it works.
+        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
+        exit();
+    }
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+    <?php
+        if($_COOKIE[$mode] == $light){
+            ?><link rel="stylesheet" href="css/basic.css"><?php
+        }elseif($_COOKIE[$mode] == $dark){
+            ?><link rel="stylesheet" href="css/darkmode.css"><?php
+        }
+    ?>
+</head>
+<body>
+    <a href="home_page.php">Back to Home</a>
+    <h1>Courses</h1>
+    <form method="post">
+        <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
+    </form>
+    
+    <!-- more html -->  
+    <h2>Add Courses</h2>
+        <form method="post">
+        <label for="course_discipline">Course Discipline</label>
+        <input type="text" name="course_discipline" id="course_discipline">
+
+        <label for="course_number">Course Number</label>
+        <input type="number" name="course_number" id="course_number">
+
+        <label for="course_name">Course Name</label>
+        <input type="text" name="course_name" id="course_name">
+
+        <label for="course_credits">Course Credits</label>
+        <input type="number" name="course_credits" id="course_credits">
+
+        <label for="course_description">Course Description</label>
+        <input type="text" name="course_description" id="course_description">
+
+        <input type="submit" value="Add Records">
+    </form>
+
+    <h2>Delete Courses</h2>
+    <?php
+        result_to_html_table_with_del_checkbox($result_both);
+    ?>
+
+
+
+    
+
+    <?php $conn->close(); ?>
+</body>
+</html>
