@@ -49,21 +49,22 @@
     }
 
     if(array_key_exists("login", $_POST)){
-        $query = file_get_contents($queries_dir . "users_select.sql");
+        $query = file_get_contents($queries_dir . 'users_select.sql');
         $stmt = $conn->prepare($query);
         $stmt->bind_param('s', $_POST['user_name']);
         $stmt->execute();
         $result = $stmt->get_result();
         $result_dict = $result->fetch_assoc();
         $stored_hash_password = $result_dict['user_password'];
+        $input_password = $_POST['user_password'];
 
-        if(password_verify($_POST['user_password'], $stored_hash_password)){
+
+        if(password_verify($input_password, $stored_hash_password)){
             session_start();
 
             foreach($result_dict as $key => $value){
                 $_SESSION[$key] = $value;
             }
-
         }
     }
 
@@ -72,16 +73,6 @@
         header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
         exit();
     }
-
-    if(isset($_POST['username'])){
-        $_SESSION['username'] = $_POST['username'];
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
-    //more sql setups
-
-
 ?>
 
 <!DOCTYPE html>
@@ -92,29 +83,58 @@
     <title>KU Registrar</title>
 </head>
 <body>
+    <h1>Home</h1>
     <?php
         if(session_status() !== PHP_SESSION_ACTIVE){
             ?>
+            <h2>Login</h2>
             <form method="POST">
                 <label for="user_name">Username</label>
                 <input type="text" name="user_name" id="user_name">
                 <label for="user_password">Password</label>
-                <input type="text" name="user_password" id="user_password">
-                <input type="submit" value="login">
+                <input type="password" name="user_password" id="user_password">
+                <input type="submit" name="login" value="login">
             </form>
             <?php
         }elseif (session_status() == PHP_SESSION_ACTIVE){
-            
+            echo '<h2>' . $_SESSION['user_name'] . '</h2>';
+            ?>
+                <form method="post">
+                    <input type="submit" name='logout' value="logout">
+                </form>
+            <?php
+
+            if ($_SESSION['designation'] == 'student'){
+                ?>
+                    <h2>Student Links</h2>
+                    <ul>
+                        <li><a href="transcript.php">Transcript</a></li>
+                        <li><a href="">Schedule</a></li>
+                        <li><a href="degree_requirements.php">Degree Requirements</a></li>
+                        <li><a href="class_catalog.php">Class Catalog</a></li>
+                        <li><a href="">Class Registration</a></li>
+                    </ul>
+                <?php
+            }elseif ($_SESSION['designation'] == 'admin'){
+                ?>
+                    <h2>Admin Links</h2>
+                    <ul>
+                        <li><a href="">Transcript</a></li>
+                        <li><a href="">Degree Requirements</a></li>
+                        <li><a href="">Courses</a></li>
+                        <li><a href="class_catalog_edit.php">Classes</a></li>
+                        <li><a href="">Buildings</a></li>
+                        <li><a href="">Locations</a></li>
+                        <li><a href="">Professors</a></li>
+                        <li><a href="">Students</a></li>
+                        <li><a href="">Terms</a></li>
+                        <li><a href="">Meeting Days</a></li>
+                        <li><a href="">Meeting Times</a></li>
+                    </ul>
+                <?php
+            }
         }
 
     ?>
-
-    <h1>Menu Page</h1>
-    <ul>
-        <li><a href="class_catalog.php">Class Catalog</a></li>
-        <li><a href="class_catalog_edit.php">Edit Class Catalog</a></li>
-        <li><a href="degree_requirements.php">Degree Requirements</a></li>
-        <li><a href="transcript.php">Transcript</a></li>
-    </ul>
 </body>
 </html>
