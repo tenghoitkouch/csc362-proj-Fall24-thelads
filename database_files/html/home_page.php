@@ -97,7 +97,7 @@
             </form>
             <?php
         }elseif (session_status() == PHP_SESSION_ACTIVE){
-            echo '<h2>' . $_SESSION['user_name'] . '</h2>';
+            echo '<h2>Hi ' .  $_SESSION['user_name'] . '</h2>';
             ?>
                 <form method="post">
                     <input type="submit" name='logout' value="logout">
