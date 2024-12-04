@@ -92,7 +92,7 @@
 
         foreach($class_ids as $value){
             $class_id = (int) $value;            
-            $add_stmt->execute();
+            $del_stmt->execute();
         }
         $need_reload = TRUE;
     }
