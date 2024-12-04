@@ -75,7 +75,7 @@
 
 <?php
 
-function result_to_html_table_with_add_checkbox($result, $title, $array_name, $field_value, $submit_value, $submit_name){
+function result_to_html_table_with_checkbox($result, $title, $array_name, $field_value, $submit_value, $submit_name){
     ?>
     <form method="post">
         <table>

@@ -148,12 +148,12 @@
             $student_class_history_result = $student_class_history_select_stmt->get_result();
             $student_class_history_result_both = $student_class_history_result->fetch_all(MYSQLI_BOTH);
 
-            result_to_html_table_with_add_checkbox($classes_result_both, 'Add?', 'selected[]', 'class_id', 'Add Records', 'add_records');
+            result_to_html_table_with_checkbox($classes_result_both, 'Add?', 'selected[]', 'class_id', 'Add Records', 'add_records');
 
             $student_class_history_select_stmt->execute();
             $student_class_history_result = $student_class_history_select_stmt->get_result();
             //result_to_html_table_with_del_checkbox($student_class_history_result); 
-            result_to_html_table_with_add_checkbox($student_class_history_result_both, 'Delete?', 'selected[]', 'class_id', 'Delete Records', 'delete_records');
+            result_to_html_table_with_checkbox($student_class_history_result_both, 'Delete?', 'selected[]', 'class_id', 'Delete Records', 'delete_records');
 
 
 
