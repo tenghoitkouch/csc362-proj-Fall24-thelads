@@ -65,7 +65,7 @@
 
     //more sql setups
 
-       $query = "SELECT * FROM student_class_history_view";
+    $query = "SELECT * FROM student_class_history_view";
     $select_stmt = $conn->prepare($query);
     if (!$select_stmt) {
         echo "Couldn't prepare statement!";

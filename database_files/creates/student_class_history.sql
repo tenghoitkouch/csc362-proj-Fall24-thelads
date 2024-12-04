@@ -10,6 +10,7 @@ CREATE TABLE student_class_history(
 CREATE VIEW student_class_history_view AS
 SELECT  sch.student_id as student_id,
         CONCAT(student_first_name, ' ', student_last_name) AS student_name,
+        class_id,
         course_code, 
         section,
         course_name,

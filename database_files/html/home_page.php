@@ -89,7 +89,7 @@
     <h1>Home</h1>
     <?php
 
-        if ($_SESSION['logged_in'] == TRUE){
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == TRUE){
             echo '<h2>Hi ' .  $_SESSION['user_name'] . '</h2>';
             ?>
                 <form method="post">

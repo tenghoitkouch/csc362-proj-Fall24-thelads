@@ -58,6 +58,8 @@
 
     $student_id = (int) $_SESSION['designation_id'];
 
+
+
     //add recs
     if(array_key_exists('add_records', $_POST)){
 
@@ -66,9 +68,10 @@
         //query
         $add_query = file_get_contents($queries_dir . 'student_class_history_insert.sql');
         $add_stmt = $conn->prepare($add_query);
+        $add_stmt->bind_param('ii', $student_id, $class_id);
 
         foreach($class_ids as $value){
-            $add_stmt->bind_param('ii', $student_id, (int) $value);
+            $class_id = (int) $value;            
             $add_stmt->execute();
         }
 
@@ -77,6 +80,28 @@
         exit();
     }
 
+    $need_reload = FALSE;
+    //del rec
+    if(array_key_exists('delete_records', $_POST)){
+
+        $del_query = file_get_contents($queries_dir . "student_class_history_delete.sql");
+        $del_stmt = $conn->prepare($del_query);
+        $del_stmt->bind_param('ii', $student_id, $class_id);
+
+        $class_ids = $_POST['selected'];        
+
+        foreach($class_ids as $value){
+            $class_id = (int) $value;            
+            $add_stmt->execute();
+        }
+        $need_reload = TRUE;
+    }
+
+    // ----- Reload this page if the database was changed.
+    if($need_reload){ // This needs to be done before any output, to guarantee that it works.
+        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
+        exit();
+    }
 
 ?>
 
@@ -123,11 +148,13 @@
             $student_class_history_result = $student_class_history_select_stmt->get_result();
             $student_class_history_result_both = $student_class_history_result->fetch_all(MYSQLI_BOTH);
 
-            result_to_html_table_with_add_checkbox($classes_result_both);
+            result_to_html_table_with_add_checkbox($classes_result_both, 'Add?', 'selected[]', 'class_id', 'Add Records', 'add_records');
 
             $student_class_history_select_stmt->execute();
             $student_class_history_result = $student_class_history_select_stmt->get_result();
-            result_to_html_table_with_del_checkbox($student_class_history_result); 
+            //result_to_html_table_with_del_checkbox($student_class_history_result); 
+            result_to_html_table_with_add_checkbox($student_class_history_result_both, 'Delete?', 'selected[]', 'class_id', 'Delete Records', 'delete_records');
+
 
 
         }else{

@@ -75,17 +75,17 @@
 
 <?php
 
-function result_to_html_table_with_add_checkbox($result){
+function result_to_html_table_with_add_checkbox($result, $title, $array_name, $field_value, $submit_value, $submit_name){
     ?>
     <form method="post">
         <table>
             <thead>
                 <tr>
-                    <td>Add?</td>
+                    <td><?php echo $title; ?></td>
                     <?php
                         foreach(array_keys($result[0]) as $key){
                             if (!is_numeric($key)) {
-                                echo '<td><b>' . htmlspecialchars($key) . '</b></td>';
+                                echo '<td><b>' . $key . '</b></td>';
                             }
                         }
                     ?>
@@ -97,10 +97,10 @@ function result_to_html_table_with_add_checkbox($result){
                         ?>
                             <tr>
                                 <?php
-                                    echo '<td><input type="checkbox" name="selected[]" value="' . $row_data[0] . '"></td>';
+                                    echo '<td><input type="checkbox" name="' . $array_name . '" value="' . $row_data[$field_value] . '"></td>';
                                     foreach($row_data as $key => $value){
                                         if (!is_numeric($key)) {
-                                            echo '<td>' . htmlspecialchars($value) . '</td>';
+                                            echo '<td>' . $value . '</td>';
                                         }
                                     }
                                 ?>
@@ -111,7 +111,7 @@ function result_to_html_table_with_add_checkbox($result){
                 ?>
             </tbody>
         </table>
-        <input type="submit" value="Add Records" name="add_records">
+        <input type="submit" value="<?php echo $submit_value; ?>" name="<?php echo $submit_name; ?>">
     </form>
     <?php
 }
