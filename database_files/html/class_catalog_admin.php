@@ -29,6 +29,12 @@
     require "library.php";
     session_start();
 
+    //go back to home page if
+    if(!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE){
+        header("Location: home_page.php");
+        exit();
+    }
+
 
     // TOGGLE LIGHT/DARK MODE
     $mode = 'mode';
