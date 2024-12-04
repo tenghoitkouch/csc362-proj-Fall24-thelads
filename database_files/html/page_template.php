@@ -27,6 +27,8 @@
 
     // import our custom php functions
     require "library.php";
+    session_start();
+
 
     // TOGGLE LIGHT/DARK MODE
     $mode = 'mode';

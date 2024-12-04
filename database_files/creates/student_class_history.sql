@@ -8,15 +8,16 @@ CREATE TABLE student_class_history(
 );
 
 CREATE VIEW student_class_history_view AS
-SELECT  CONCAT(student_first_name, ' ', student_last_name) AS student_name,
+SELECT  sch.student_id as student_id,
+        CONCAT(student_first_name, ' ', student_last_name) AS student_name,
         course_code, 
         section,
         course_name,
         term,
         grade
-FROM    student_class_history
-        JOIN students
-        USING (student_id)
+FROM    student_class_history as sch
+        JOIN students as s
+        ON sch.student_id = s.student_id
         JOIN classes_view
         USING (class_id)
 ORDER BY    term DESC,

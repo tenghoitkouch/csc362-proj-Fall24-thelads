@@ -27,6 +27,7 @@
 
     // import our custom php functions
     require "library.php";
+    session_start();
 
     // TOGGLE LIGHT/DARK MODE
     $mode = 'mode';
@@ -60,7 +61,7 @@
 
 
         if(password_verify($input_password, $stored_hash_password)){
-            session_start();
+            $_SESSION['logged_in'] = TRUE;
 
             foreach($result_dict as $key => $value){
                 $_SESSION[$key] = $value;
@@ -70,6 +71,8 @@
 
     if(array_key_exists('logout', $_POST)){
         session_unset();
+        $_SESSION['logged_in'] = FALSE;
+
         header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
         exit();
     }
@@ -85,18 +88,8 @@
 <body>
     <h1>Home</h1>
     <?php
-        if(session_status() !== PHP_SESSION_ACTIVE){
-            ?>
-            <h2>Login</h2>
-            <form method="POST">
-                <label for="user_name">Username</label>
-                <input type="text" name="user_name" id="user_name">
-                <label for="user_password">Password</label>
-                <input type="password" name="user_password" id="user_password">
-                <input type="submit" name="login" value="login">
-            </form>
-            <?php
-        }elseif (session_status() == PHP_SESSION_ACTIVE){
+
+        if ($_SESSION['logged_in'] == TRUE){
             echo '<h2>Hi ' .  $_SESSION['user_name'] . '</h2>';
             ?>
                 <form method="post">
@@ -112,7 +105,7 @@
                         <li><a href="">Schedule</a></li>
                         <li><a href="degree_requirements.php">Degree Requirements</a></li>
                         <li><a href="class_catalog.php">Class Catalog</a></li>
-                        <li><a href="">Class Registration</a></li>
+                        <li><a href="class_registration.php">Class Registration</a></li>
                     </ul>
                 <?php
             }elseif ($_SESSION['designation'] == 'admin'){
@@ -133,6 +126,17 @@
                     </ul>
                 <?php
             }
+        }else{
+            ?>
+            <h2>Login</h2>
+            <form method="POST">
+                <label for="user_name">Username</label>
+                <input type="text" name="user_name" id="user_name">
+                <label for="user_password">Password</label>
+                <input type="password" name="user_password" id="user_password">
+                <input type="submit" name="login" value="login">
+            </form>
+            <?php
         }
 
     ?>

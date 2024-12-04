@@ -84,20 +84,24 @@ function result_to_html_table_with_add_checkbox($result){
                     <td>Add?</td>
                     <?php
                         foreach(array_keys($result[0]) as $key){
-                            echo '<td><b>' . $key . '</b></td>';
+                            if (!is_numeric($key)) {
+                                echo '<td><b>' . htmlspecialchars($key) . '</b></td>';
+                            }
                         }
                     ?>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                    foreach($result as $row){
+                    foreach($result as $row => $row_data){
                         ?>
                             <tr>
                                 <?php
-                                    echo '<td><input type="checkbox" name="selected[]" value="' . $row[0] . '"></td>';
-                                    foreach($row as $key => $value){
-                                        echo '<td>' . $value . '</td>';
+                                    echo '<td><input type="checkbox" name="selected[]" value="' . $row_data[0] . '"></td>';
+                                    foreach($row_data as $key => $value){
+                                        if (!is_numeric($key)) {
+                                            echo '<td>' . htmlspecialchars($value) . '</td>';
+                                        }
                                     }
                                 ?>
                             </tr>

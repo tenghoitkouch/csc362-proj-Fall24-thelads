@@ -27,6 +27,7 @@
 
     // import our custom php functions
     require "library.php";
+    session_start();
 
     // TOGGLE LIGHT/DARK MODE
     $mode = 'mode';
@@ -55,7 +56,7 @@
     $terms_result = $terms_select_stmt->get_result();
     $terms_result_both = $terms_result->fetch_all(MYSQLI_BOTH);
 
-    $student_id = $_SESSION['designation_id'];
+    $student_id = (int) $_SESSION['designation_id'];
 
     //add recs
     if(array_key_exists('add_records', $_POST)){
@@ -67,7 +68,7 @@
         $add_stmt = $conn->prepare($add_query);
 
         foreach($class_ids as $value){
-            $add_stmt->bind_param('ii', $student_id, $value);
+            $add_stmt->bind_param('ii', $student_id, (int) $value);
             $add_stmt->execute();
         }
 
@@ -123,6 +124,11 @@
             $student_class_history_result_both = $student_class_history_result->fetch_all(MYSQLI_BOTH);
 
             result_to_html_table_with_add_checkbox($classes_result_both);
+
+            $student_class_history_select_stmt->execute();
+            $student_class_history_result = $student_class_history_select_stmt->get_result();
+            result_to_html_table_with_del_checkbox($student_class_history_result); 
+
 
         }else{
             ?>
