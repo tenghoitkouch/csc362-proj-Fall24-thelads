@@ -94,6 +94,30 @@
         exit();
     }
 
+    if (array_key_exists('edit_records', $_POST)) {
+        // Sanitize and collect form data
+        $course_id = (int) $_POST["course_id"];
+        $course_discipline = $_POST["course_discipline"];
+        $course_number = (int) $_POST["course_number"];
+        $course_name = $_POST["course_name"];
+        $course_credits = (int) $_POST["course_credits"];
+        $course_description = $_POST["course_description"];
+    
+        // Prepare the SQL query
+        $edit_query = file_get_contents($queries_dir . 'courses_update.sql');
+        $edit_stmt = $conn->prepare($edit_query);
+    
+        // Bind the parameters for the prepared statement
+        $edit_stmt->bind_param('sisisi', $course_discipline, $course_number, $course_name, $course_credits, $course_description, $course_id);
+    
+        // Execute the statement
+        $edit_stmt->execute();
+    
+        // Redirect after successful update
+        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
+        exit();
+    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -119,31 +143,62 @@
     
     <!-- more html -->  
     <h2>Add Courses</h2>
-        <form method="post">
+    <form method="post">
         <label for="course_discipline">Course Discipline</label>
-        <input type="text" name="course_discipline" id="course_discipline">
+        <input type="text" name="course_discipline" id="course_discipline" required>
 
         <label for="course_number">Course Number</label>
-        <input type="number" name="course_number" id="course_number">
+        <input type="number" name="course_number" id="course_number" required>
 
         <label for="course_name">Course Name</label>
-        <input type="text" name="course_name" id="course_name">
+        <input type="text" name="course_name" id="course_name" required>
 
         <label for="course_credits">Course Credits</label>
-        <input type="number" name="course_credits" id="course_credits">
+        <input type="number" name="course_credits" id="course_credits" required>
 
         <label for="course_description">Course Description</label>
-        <input type="text" name="course_description" id="course_description">
+        <input type="text" name="course_description" id="course_description" required>
 
-        <input type="submit" value="Add Records">
+        <input type="submit" name="add_records" value="add_records">
     </form>
 
     <h2>Delete Courses</h2>
     <?php
-        result_to_html_table_with_del_checkbox($result_both);
+        $select_stmt->execute();
+        $result = $select_stmt->get_result();
+        result_to_html_table_with_del_checkbox($result);
     ?>
 
+    <h2>Edit Courses</h2>
+    <?php
+        if(array_key_exists('edit_records', $_GET)){
+            $row_index = $_GET['selected_record'];
+            //generate_select_fields($conn, ["course_discipline", "course_number", "course_name", "course_credits", "course_description",], $result_both[$row_index]);
 
+            ?>
+            <form method="post">
+                <label for="course_discipline">Course Discipline</label>
+                <input type="text" name="course_discipline" id="course_discipline" value="<?php echo $_GET['original_course_discipline']; ?>" required>
+
+                <label for="course_number">Course Number</label>
+                <input type="number" name="course_number" id="course_number" value="<?php echo $_GET['original_course_number']; ?>" required>
+
+                <label for="course_name">Course Name</label>
+                <input type="text" name="course_name" id="course_name" value="<?php echo $_GET['original_course_name']; ?>" required>
+
+                <label for="course_credits">Course Credits</label>
+                <input type="number" name="course_credits" id="course_credits" value="<?php echo $_GET['original_course_credits']; ?>" required>
+
+                <label for="course_description">Course Description</label>
+                <input type="text" name="course_description" id="course_description" value="<?php echo $_GET['original_course_description']; ?>" required>
+
+                <input type="submit" name="edit_records" value="Edit Records">
+            </form>
+            <?php
+        }else{
+            generate_edit_selections($result_both);
+        }
+    ?>
 
     
 
