@@ -75,6 +75,7 @@
     ?>
 </head>
 <body>
+    <a href="home_page.php">Back to Home</a>
     <h1>Class Catalog</h1>
     <form method="POST">
         <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>

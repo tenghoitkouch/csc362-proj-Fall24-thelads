@@ -129,7 +129,8 @@
         $edit_stmt->execute();
         
         //refresh
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
+        $redirect_url = strtok($_SERVER['REQUEST_URI'], '?');
+        header("Location: $redirect_url", true, 303);
         exit();
     }
 

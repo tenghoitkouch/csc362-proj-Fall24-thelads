@@ -69,9 +69,50 @@
                     <?php } ?>
                 </tbody>
             </table>
-            <p><input type="submit" name="delbtn" value="Delete Selected Records" /></p>
+            <p><input type="submit" name="delbtn" value="Delete Records" /></p>
         </form>
 <?php } ?>
+
+<?php
+
+function result_to_html_table_with_add_checkbox($result){
+    ?>
+    <form method="post">
+        <table>
+            <thead>
+                <tr>
+                    <td>Add?</td>
+                    <?php
+                        foreach(array_keys($result[0]) as $key){
+                            echo '<td><b>' . $key . '</b></td>';
+                        }
+                    ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    foreach($result as $row){
+                        ?>
+                            <tr>
+                                <?php
+                                    echo '<td><input type="checkbox" name="selected[]" value="' . $row[0] . '"></td>';
+                                    foreach($row as $key => $value){
+                                        echo '<td>' . $value . '</td>';
+                                    }
+                                ?>
+                            </tr>
+                        <?php
+                        
+                    }
+                ?>
+            </tbody>
+        </table>
+        <input type="submit" value="Add Records" name="add_records">
+    </form>
+    <?php
+}
+
+?>
 
 
 
@@ -132,12 +173,12 @@
                     <?php } ?>
                     <?php 
                         if(is_null($original_record)){
-                            echo '<input type="submit" value="add_records" name="add_records">';
+                            echo '<input type="submit" value="Add Records" name="add_records">';
                         }else{
                             foreach($original_record as $key => $value){
                                 echo '<input type="hidden" name="original_' . $key . '" value="' . $value . '">';
                             }
-                            echo '<input type="submit" value="edit_records" name="edit_records">';
+                            echo '<input type="submit" value="Edit Records" name="edit_records">';
                         }
                     ?>
                     
@@ -265,7 +306,7 @@
                     }
                 ?>
             </select>
-            <input type="submit" name="edit_records" value="edit_records">
+            <input type="submit" name="edit_records" value="Edit Records">
         </form>
 
     <?php }
