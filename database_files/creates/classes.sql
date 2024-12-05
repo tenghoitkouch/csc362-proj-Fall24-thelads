@@ -49,3 +49,85 @@ GROUP BY    class_id
 ORDER BY    term_id DESC,
             course_code ASC,
             section ASC;
+
+DROP FUNCTION IF EXISTS get_num_class_by_location_term_time;
+CREATE FUNCTION get_num_class_by_location_term_time(
+    building_name_input VARCHAR, 
+    room_number_input INT, 
+    term_id_input INT,
+    time_start_input TIME, 
+    time_end_input TIME)
+RETURNS INT
+RETURN (
+    SELECT COUNT(class_id)
+        FROM    classes
+        WHERE   building_name = building_name_input
+                AND room_number = room_number_input
+                AND term_id = term_id_input
+                AND (
+                    ((time_start >= time_start_input) AND (time_start <= time_end_input))
+                    OR
+                    ((time_end >= time_start_input) AND (time_end <= time_end_input))
+                )             
+);
+
+DROP FUNCTION IF EXISTS get_num_class_by_professor_term_time;
+CREATE FUNCTION get_num_class_by_professor_term_time(
+    professor_id_input INT, 
+    term_id_input INT,
+    time_start_input TIME, 
+    time_end_input TIME)
+RETURNS INT
+RETURN (
+    SELECT COUNT(class_id)
+        FROM    classes
+        WHERE   professor_id = professor_id_input
+                AND term_id = term_id_input
+                AND (
+                    ((time_start >= time_start_input) AND (time_start <= time_end_input))
+                    OR
+                    ((time_end >= time_start_input) AND (time_end <= time_end_input))
+                )             
+);
+
+
+DELIMITER $$
+CREATE TRIGGER classes_insert
+BEFORE INSERT ON classes FOR EACH ROW
+BEGIN
+
+    -- room conflict
+    SET @location_existing_classes = get_num_class_by_location_term_time(NEW.building_name, NEW.room_number, NEW.term_id, NEW.time_start, NEW.time_end);
+    IF (@location_existing_classes <> 0) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class already exists at that location on that time';
+    END IF;
+
+    --professor conflict
+    SET @professor_existing_classes get_num_class_by_professor_term_time(NEW.professor_id, NEW.term_id, NEW.time_start, NEW.time_end);
+    IF (@professor_existing_classes <> 0) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Professor is already teaching a class on that time';
+    END IF;
+
+END; $$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE TRIGGER classes_update
+BEFORE UPDATE ON classes FOR EACH ROW
+BEGIN
+
+    -- room conflict
+    SET @location_existing_classes = get_num_class_by_location_term_time(NEW.building_name, NEW.room_number, NEW.term_id, NEW.time_start, NEW.time_end);
+    IF (@location_existing_classes <> 0) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class already exists at that location on that time';
+    END IF;
+
+    --professor conflict
+    SET @professor_existing_classes get_num_class_by_professor_term_time(NEW.professor_id, NEW.term_id, NEW.time_start, NEW.time_end);
+    IF (@professor_existing_classes <> 0) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Professor is already teaching a class on that time';
+    END IF;
+
+END; $$
+DELIMITER ;
