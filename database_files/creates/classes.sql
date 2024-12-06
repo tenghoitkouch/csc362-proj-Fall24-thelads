@@ -115,7 +115,7 @@ BEGIN
     END IF;
 
     --professor conflict
-    SET @professor_existing_classes get_num_class_by_professor_term_time(NEW.professor_id, NEW.term_id, NEW.time_start, NEW.time_end);
+    SET @professor_existing_classes = get_num_class_by_professor_term_time(NEW.professor_id, NEW.term_id, NEW.time_start, NEW.time_end);
     IF (@professor_existing_classes <> 0) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Professor is already teaching a class on that time';
     END IF;
@@ -136,7 +136,7 @@ BEGIN
     END IF;
 
     --professor conflict
-    SET @professor_existing_classes get_num_class_by_professor_term_time(NEW.professor_id, NEW.term_id, NEW.time_start, NEW.time_end);
+    SET @professor_existing_classes = get_num_class_by_professor_term_time(NEW.professor_id, NEW.term_id, NEW.time_start, NEW.time_end);
     IF (@professor_existing_classes <> 0) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Professor is already teaching a class on that time';
     END IF;
