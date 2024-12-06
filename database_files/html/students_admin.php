@@ -56,6 +56,12 @@
     $result = $select_stmt->get_result();
     $result_both = $result->fetch_all(MYSQLI_BOTH);
 
+    $professors_select_query = "SELECT * FROM professors";
+    $professors_select_stmt = $conn->prepare($professors_select_query);
+    $professors_select_stmt->execute();
+    $professors_result = $professors_select_stmt->get_result();
+    $professors_result_both = $professors_result->fetch_all(MYSQLI_BOTH);
+
     if (array_key_exists('add_records', $_POST)) {
         $student_first_name = $_POST['student_first_name'];
         $student_last_name = $_POST['student_last_name'];
@@ -65,12 +71,12 @@
         $student_city = $_POST['student_city'];
         $student_state = $_POST['student_state'];
         $student_zip_code = $_POST['student_zip_code'];
-        $student_id = $_POST['professor_id'];
+        $professor_id = $_POST['professor_id'];
     
         $add_query = file_get_contents($queries_dir . 'students_insert.sql');
         $add_stmt = $conn->prepare($add_query);
         $add_stmt->bind_param(
-            'ssssssssii', 
+            'ssssssssi', 
             $student_first_name, 
             $student_last_name, 
             $student_email, 
@@ -182,48 +188,48 @@
         <!-- First Name -->
         <label for="student_first_name">First Name:</label>
         <input type="text" id="student_first_name" name="student_first_name" required>
-        <br><br>
+        <br>
 
         <!-- Last Name -->
         <label for="student_last_name">Last Name:</label>
         <input type="text" id="student_last_name" name="student_last_name" required>
-        <br><br>
+        <br>
 
         <!-- Email -->
         <label for="student_email">Email:</label>
         <input type="email" id="student_email" name="student_email" required>
-        <br><br>
+        <br>
 
         <!-- Phone Number -->
         <label for="student_phone_number">Phone Number:</label>
         <input type="tel" id="student_phone_number" name="student_phone_number">
-        <br><br>
+        <br>
 
         <!-- Street Address -->
         <label for="student_street">Street Address:</label>
         <input type="text" id="student_street" name="student_street">
-        <br><br>
+        <br>
 
         <!-- City -->
         <label for="student_city">City:</label>
         <input type="text" id="student_city" name="student_city">
-        <br><br>
+        <br>
 
         <!-- State -->
         <label for="student_state">State:</label>
         <input type="text" id="student_state" name="student_state">
-        <br><br>
+        <br>
 
         <!-- ZIP Code -->
         <label for="student_zip_code">ZIP Code:</label>
         <input type="text" id="student_zip_code" name="student_zip_code">
-        <br><br>
+        <br>
 
         <!-- Professor -->
         <label for="professor_id">Professor:</label>
         <select id="professor_id" name="professor_id" required>
             <?php
-                foreach ($result_both as $professor) {
+                foreach ($professors_result_both as $professor) {
                     echo '<option value="' . $professor['professor_id'] . '">' . $professor['professor_first_name'] . ' ' . $professor['professor_last_name'] . '</option>';
                 }
             ?>
@@ -284,7 +290,7 @@
                 <label for="professor_id">Professor:</label>
                 <select id="professor_id" name="professor_id" required>
                     <?php
-                        foreach ($result_both as $professor) {
+                        foreach ($professors_result_both as $professor) {
                             $selected = ($professor['professor_id'] == $original_record['professor_id']) ? 'selected' : '';
                             echo '<option value="' . $professor['professor_id'] . '" ' . $selected . '>' . $professor['professor_first_name'] . ' ' . $professor['professor_last_name'] . '</option>';
                         }
