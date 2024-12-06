@@ -26,5 +26,46 @@ ORDER BY    term DESC,
             section ASC;
 
 
+DROP FUNCTION IF EXISTS get_class_current_size;
+CREATE FUNCTION get_class_current_size(class_id_input INT)
+RETURNS INT
+RETURN (
+    SELECT COUNT(student_id)
+    FROM    student_class_history
+    WHERE   class_id = class_id_input
+    GROUP BY class_id
+);
 
-        
+
+DELIMITER $$
+CREATE TRIGGER student_class_history_insert
+BEFORE INSERT ON student_class_history FOR EACH ROW
+BEGIN
+
+    SET @current_class_size = get_class_current_size(NEW.class_id);
+    SET @max_capacity = get_class_max_capacity(NEW.class_id);
+
+    -- class size constraint
+    IF (@current_class_size >= @max_capacity) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class is currently full';
+    END IF;      
+
+END; $$
+DELIMITER ;        
+
+
+DELIMITER $$
+CREATE TRIGGER student_class_history_update
+BEFORE UPDATE ON student_class_history FOR EACH ROW
+BEGIN
+
+    SET @current_class_size = get_class_current_size(NEW.class_id);
+    SET @max_capacity = get_class_max_capacity(NEW.class_id);
+
+    -- class size constraint
+    IF (@current_class_size >= @max_capacity) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class is currently full';
+    END IF;      
+
+END; $$
+DELIMITER ;        

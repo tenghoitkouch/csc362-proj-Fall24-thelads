@@ -50,6 +50,18 @@ ORDER BY    term_id DESC,
             course_code ASC,
             section ASC;
 
+
+
+DROP FUNCTION IF EXISTS get_class_max_capacity;
+CREATE FUNCTION get_class_max_capacity(class_id_input INT)
+RETURNS INT
+RETURN (
+    SELECT class_max_capacity
+    FROM    classes
+    WHERE   class_id = class_id_input
+);
+
+
 DROP FUNCTION IF EXISTS get_num_class_by_location_term_time;
 CREATE FUNCTION get_num_class_by_location_term_time(
     building_name_input VARCHAR, 
