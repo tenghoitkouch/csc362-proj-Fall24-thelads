@@ -26,6 +26,16 @@ ORDER BY    term DESC,
             section ASC;
 
 
+CREATE VIEW student_class_history_view_min AS
+SELECT  *
+FROM    student_class_history
+        JOIN classes
+        USING (class_id)
+ORDER BY    term DESC,
+            course_code ASC,
+            section ASC;
+
+
 DROP FUNCTION IF EXISTS get_class_current_size;
 CREATE FUNCTION get_class_current_size(class_id_input INT)
 RETURNS INT
@@ -36,6 +46,25 @@ RETURN (
     GROUP BY class_id
 );
 
+
+DROP FUNCTION IF EXISTS get_num_student_class_by_term_time;
+CREATE FUNCTION get_num_student_class_by_term_time(
+    term_id_input INT,
+    time_start_input TIME, 
+    time_end_input TIME,
+    student_id_input INT)
+RETURNS INT
+RETURN (
+    SELECT COUNT(class_id)
+        FROM    student_class_history_view_min
+        WHERE   student_id = student_id_input
+                AND term_id = term_id_input
+                AND (
+                    ((time_start >= time_start_input) AND (time_start <= time_end_input))
+                    OR
+                    ((time_end >= time_start_input) AND (time_end <= time_end_input))
+                )             
+);
 
 DELIMITER $$
 CREATE TRIGGER student_class_history_insert
@@ -48,7 +77,10 @@ BEGIN
     -- class size constraint
     IF (@current_class_size >= @max_capacity) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class is currently full';
-    END IF;      
+    END IF;
+
+    --time constraint
+    IF
 
 END; $$
 DELIMITER ;        
