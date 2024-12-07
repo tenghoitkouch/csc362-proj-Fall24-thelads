@@ -50,7 +50,32 @@ ORDER BY    term_id DESC,
             course_code ASC,
             section ASC;
 
+DROP FUNCTION IF EXISTS get_term_id_by_class;
+CREATE FUNCTION get_term_id_by_class(class_id_input INT)
+RETURNS INT
+RETURN (
+    SELECT term_id
+    FROM    classes
+    WHERE   class_id = class_id_input
+);
 
+DROP FUNCTION IF EXISTS get_time_start_by_class;
+CREATE FUNCTION get_time_start_by_class(class_id_input INT)
+RETURNS INT
+RETURN (
+    SELECT time_start
+    FROM    classes
+    WHERE   class_id = class_id_input
+);
+
+DROP FUNCTION IF EXISTS get_time_end_by_class;
+CREATE FUNCTION get_time_end_by_class(class_id_input INT)
+RETURNS INT
+RETURN (
+    SELECT time_end
+    FROM    classes
+    WHERE   class_id = class_id_input
+);
 
 DROP FUNCTION IF EXISTS get_class_max_capacity;
 CREATE FUNCTION get_class_max_capacity(class_id_input INT)
