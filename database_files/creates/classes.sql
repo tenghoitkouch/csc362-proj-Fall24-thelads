@@ -24,11 +24,13 @@ CREATE TABLE classes (
 
 CREATE VIEW classes_view AS
 SELECT  class_id, 
-        CONCAT(crs.course_discipline, ' ', crs.course_number) AS course_code, 
+        crs.course_discipline AS course_discipline
+        crs.course_number AS course_number
         cls.section AS section,
         crs.course_name AS course_name,
         CONCAT(professor_first_name, ' ', professor_last_name) AS professor_name, 
-        CONCAT(building_name, ' ', room_number) AS 'location', 
+        building_name,
+        room_number,
         GROUP_CONCAT(day_letter) AS meeting_days,
         CONCAT(time_start, ' ', time_end) AS meeting_times,
         CONCAT(term_start_date, ' - ', term_end_date) AS term, 
@@ -47,7 +49,8 @@ SELECT  class_id,
             ON cls.course_id = cpr.course_id
 GROUP BY    class_id
 ORDER BY    term_id DESC,
-            course_code ASC,
+            course_discipline ASC,
+            course_number ASC,
             section ASC;
 
 DROP FUNCTION IF EXISTS get_term_id_by_class;

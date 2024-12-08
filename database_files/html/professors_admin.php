@@ -111,7 +111,7 @@
         exit();
     }
 
-    if (array_key_exists('edit_records', $_POST)) {
+    if (array_key_exists('complete_edit_records', $_POST)) {
         $professor_id = (int) $_POST['professor_id']; // Primary key to identify the professor
         $professor_first_name = $_POST['professor_first_name'];
         $professor_last_name = $_POST['professor_last_name'];
@@ -222,18 +222,20 @@
     
     <h2>Delete Professors</h2>
     <?php
-        result_to_html_table_with_checkbox($result_both, 'Delete?', 'selected[]', 'professor_id', 'Delete Records', 'delete_records');
+        result_to_html_table_with_checkbox_edit($result_both, 'Delete?', 'selected[]', 'professor_id', 'Delete Records', 'delete_records');
     ?>
 
-    <h2>Edit Professors</h2>
     <?php
 
-        if(array_key_exists('edit_records', $_GET)){
-            $row_index = $_GET['selected_record'];
+        if(array_key_exists('edit_records', $_POST)){
+            echo '<h2>Edit Professor</h2>';
+            $row_index = $_POST['edit_records'];
             $original_record = $result_both[$row_index];
 
             ?>
             <form method="POST">
+                <label for="professor_id">Professor ID</label>
+                <input type="text" name="professor_id" id="professor_id" value="<?php echo $original_record['professor_id']; ?>" readonly>
                 <!-- First Name -->
                 <label for="professor_first_name">First Name:</label>
                 <input type="text" id="professor_first_name" name="professor_first_name" value="<?php echo $original_record['professor_first_name']; ?>" required>
@@ -266,17 +268,12 @@
                 <label for="professor_zip_code">ZIP Code:</label>
                 <input type="text" id="professor_zip_code" name="professor_zip_code" value="<?php echo $original_record['professor_zip_code']; ?>">
 
-                <input type="hidden" name="professor_id" value="<?php echo $original_record['professor_id']; ?>">
-
                 <!-- Submit Button -->
-                <input type="submit" name="edit_records" value="Edit Records">
+                <button type="submit" name="complete_edit_records">Submit</button>
+
             </form>
 
             <?php
-        }else{
-            $select_stmt->execute();
-            $result = $select_stmt->get_result();
-            generate_edit_selections($result);
         }
 
     ?>

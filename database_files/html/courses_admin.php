@@ -75,19 +75,19 @@
 
     $need_reload = FALSE;
 
-    if(array_key_exists('delbtn', $_POST)){
+    if(array_key_exists('delete_records', $_POST)){
 
         $del_query = file_get_contents($queries_dir . "courses_delete.sql");
         $del_stmt = $conn->prepare($del_query);
+        $del_stmt->bind_param('i', $student_id, $course_id);
 
-        foreach($result_both as $row){
-            $id = $row['course_id'];
-            if(array_key_exists('checkbox' . $id, $_POST)){
-                $need_reload = TRUE;
-                $del_stmt->bind_param('i', $id);
-                $del_stmt->execute();
-            }
+        $course_ids = $_POST['selected'];  
+
+        foreach($course_ids as $value){
+            $course_id = (int) $value;            
+            $del_stmt->execute();
         }
+        $need_reload = TRUE;
     }
 
     // ----- Reload this page if the database was changed.
@@ -96,7 +96,7 @@
         exit();
     }
 
-    if (array_key_exists('edit_records', $_POST)) {
+    if (array_key_exists('complete_edit_records', $_POST)) {
         // Sanitize and collect form data
         $course_id = (int) $_POST["course_id"];
         $course_discipline = $_POST["course_discipline"];
@@ -162,49 +162,45 @@
         <label for="course_description">Course Description</label>
         <input type="text" name="course_description" id="course_description" required>
 
-        <input type="submit" name="add_records" value="add_records">
+        <button type="submit" name="add_records">Submit</button>
     </form>
 
     <h2>Delete Courses</h2>
     <?php
-        $select_stmt->execute();
-        $result = $select_stmt->get_result();
-        result_to_html_table_with_del_checkbox($result);
+        result_to_html_table_with_checkbox_edit($result_both, 'Delete?', 'selected[]', 'course_id', 'Delete Courses', 'delete_records');
     ?>
 
-    <h2>Edit Courses</h2>
     <?php
-        if(array_key_exists('edit_records', $_GET)){
+        if(array_key_exists('edit_records', $_POST)){
             //generate_select_fields($conn, ["course_discipline", "course_number", "course_name", "course_credits", "course_description"], $result_both[$row_index]);
-            $row_index = $_GET['selected_record'];
+            echo '<h2>Edit Course</h2>';
+            $row_index = $_POST['edit_records'];
             $original_record = $result_both[$row_index];
             ?>
             <form method="post">
+                <label for="course_id">Course ID</label>
+                <input type="text" name="course_id" id="course_id" value="<?php echo $original_record['course_id']; ?>" readonly>
+
                 <label for="course_discipline">Course Discipline</label>
                 <input type="text" name="course_discipline" id="course_discipline" value="<?php echo $original_record['course_discipline']; ?>" required>
-            
+                
                 <label for="course_number">Course Number</label>
                 <input type="number" name="course_number" id="course_number" value="<?php echo $original_record['course_number']; ?>" required>
-            
+                
                 <label for="course_name">Course Name</label>
                 <input type="text" name="course_name" id="course_name" value="<?php echo $original_record['course_name']; ?>" required>
-            
+                
                 <label for="course_credits">Course Credits</label>
                 <input type="number" name="course_credits" id="course_credits" value="<?php echo $original_record['course_credits']; ?>" required>
-            
+                
                 <label for="course_description">Course Description</label>
                 <input type="text" name="course_description" id="course_description" value="<?php echo $original_record['course_description']; ?>" required>
-
-                <input type="hidden" name="course_id" value="<?php echo $original_record['course_id']; ?>">
-            
-                <input type="submit" name="edit_records" value="Edit Records">
+                
+                <button type="submit" name="complete_edit_records">Submit</button>
             </form>
             <?php
-        }else{
-            $select_stmt->execute();
-            $result = $select_stmt->get_result();
-            generate_edit_selections($result);
         }
+
     ?>
 
     

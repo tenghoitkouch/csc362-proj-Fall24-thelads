@@ -116,6 +116,50 @@ function result_to_html_table_with_checkbox($result, $title, $array_name, $field
     <?php
 }
 
+function result_to_html_table_with_checkbox_edit($result, $title, $array_name, $field_value, $submit_value, $submit_name){
+    ?>
+    <form method="post">
+        <table>
+            <thead>
+                <tr>
+                    <td><?php echo $title; ?></td>
+                    <?php
+                        foreach(array_keys($result[0]) as $key){
+                            if (!is_numeric($key)) {
+                                echo '<td><b>' . $key . '</b></td>';
+                            }
+                        }
+                    ?>
+                    <td>Edit</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    foreach($result as $row => $row_data){
+                        ?>
+                            <tr>
+                                <?php
+                                    echo '<td><input type="checkbox" name="' . $array_name . '" value="' . $row_data[$field_value] . '"></td>';
+                                    foreach($row_data as $key => $value){
+                                        if (!is_numeric($key)) {
+                                            echo '<td>' . $value . '</td>';
+                                        }
+                                    }
+                                    echo '<td><button type="submit" name="edit_records" value="' . $row . '">Edit</button></td>';
+                                ?>
+                            </tr>
+                        <?php
+                        
+                    }
+                ?>
+            </tbody>
+        </table>
+        <button type="submit" name="<?php echo $submit_name; ?>"><?php echo $submit_value; ?></button>
+
+    </form>
+    <?php
+}
+
 ?>
 
 

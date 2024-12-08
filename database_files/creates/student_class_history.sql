@@ -11,7 +11,8 @@ CREATE VIEW student_class_history_view AS
 SELECT  sch.student_id as student_id,
         CONCAT(student_first_name, ' ', student_last_name) AS student_name,
         class_id,
-        course_code, 
+        course_discipline, 
+        course_number,
         section,
         course_name,
         term,
@@ -22,7 +23,8 @@ FROM    student_class_history as sch
         JOIN classes_view
         USING (class_id)
 ORDER BY    term DESC,
-            course_code ASC,
+            course_discipline ASC,
+            course_number ASC,
             section ASC;
 
 
@@ -32,7 +34,8 @@ FROM    student_class_history
         JOIN classes
         USING (class_id)
 ORDER BY    term DESC,
-            course_code ASC,
+            course_discipline ASC,
+            course_number ASC,
             section ASC;
 
 
