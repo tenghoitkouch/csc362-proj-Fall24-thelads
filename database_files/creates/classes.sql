@@ -48,7 +48,7 @@ SELECT  class_id,
         LEFT OUTER JOIN course_prerequisites_view AS cpr
             ON cls.course_id = cpr.course_id
 GROUP BY    class_id
-ORDER BY    term_id DESC,
+ORDER BY    term DESC,
             course_discipline ASC,
             course_number ASC,
             section ASC;

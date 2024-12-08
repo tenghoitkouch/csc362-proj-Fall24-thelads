@@ -79,12 +79,12 @@ BEGIN
     END IF;
 
     -- time constraint
-    SET @current_term = get_term_id_by_class(NEW.class_id);
+    SET @current_term_id = get_term_id_by_class(NEW.class_id);
     SET @current_time_start = get_time_start_by_class(NEW.class_id);
     SET @current_time_end = get_time_end_by_class(NEW.class_id);
-    SET @num_classes_at_current_time = get_num_student_class_by_term_time(@current_term, @current_time_start, @current_time_end, NEW.student_id);
+    SET @num_classes_at_current_time = get_num_student_class_by_term_time(@current_term_id, @current_time_start, @current_time_end, NEW.student_id);
 
-    IF (@num_classes_at_current_time >= 0) THEN
+    IF (@num_classes_at_current_time <> 0) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Already enrolled in another class at that time';
     END IF;
 
@@ -111,7 +111,7 @@ BEGIN
     SET @current_time_end = get_time_end_by_class(NEW.class_id);
     SET @num_classes_at_current_time = get_num_student_class_by_term_time(@current_term, @current_time_start, @current_time_end, NEW.student_id);
 
-    IF (@num_classes_at_current_time >= 0) THEN
+    IF (@num_classes_at_current_time <> 0) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Already enrolled in another class at that time';
     END IF; 
 
