@@ -111,7 +111,8 @@ function result_to_html_table_with_checkbox($result, $title, $array_name, $field
                 ?>
             </tbody>
         </table>
-        <input type="submit" value="<?php echo $submit_value; ?>" name="<?php echo $submit_name; ?>">
+        <br>
+        <button type="submit" name="<?php echo $submit_name; ?>"><?php echo $submit_value; ?></button>
     </form>
     <?php
 }
@@ -154,19 +155,18 @@ function result_to_html_table_with_checkbox_edit($result, $title, $array_name, $
                 ?>
             </tbody>
         </table>
+        <br>
         <button type="submit" name="<?php echo $submit_name; ?>"><?php echo $submit_value; ?></button>
 
     </form>
     <?php
 }
-
 ?>
 
 
 
 
 <?php
-
     $table_queries = [
         "buildings" => "SELECT * FROM buildings_view;", 
         "classes" => "SELECT * FROM classes_view;",
@@ -340,7 +340,6 @@ function result_to_html_table_with_checkbox_edit($result, $title, $array_name, $
 ?>
 
 <?php
-
     function generate_edit_selections($result){
         
         ?><form method="get">

@@ -29,26 +29,14 @@
     require "library.php";
     session_start();
 
-    // TOGGLE LIGHT/DARK MODE
-    $mode = 'mode';
-    $light = "light";
-    $dark = "dark";
+    if(array_key_exists('logout', $_POST)){
+        session_unset();
+        $_SESSION['logged_in'] = FALSE;
 
-    if(!array_key_exists($mode, $_COOKIE)){
-        setcookie($mode, $light, 0, "/", "", false, true); //default
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
+        header("Location: home.php", true, 303);
+        exit;
     }
-
-    if(array_key_exists("toggle_mode", $_POST)){
-        $new_mode = $light;
-        if($_COOKIE[$mode] == $light){ $new_mode = $dark;}
-        if($_COOKIE[$mode] == $dark){ $new_mode = $light;}
-        setcookie($mode, $new_mode, 0, "/", "", false, true);
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
+    
     //more sql setups
     $terms_query = 'SELECT * FROM terms_view';
     $terms_select_stmt = $conn->prepare($terms_query);
@@ -57,8 +45,6 @@
     $terms_result_both = $terms_result->fetch_all(MYSQLI_BOTH);
 
     $student_id = (int) $_SESSION['designation_id'];
-
-
 
     //add recs
     if(array_key_exists('add_records', $_POST)){
@@ -111,23 +97,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Registration</title>
-    <?php
-        if($_COOKIE[$mode] == $light){
-            ?><link rel="stylesheet" href="css/basic.css"><?php
-        }elseif($_COOKIE[$mode] == $dark){
-            ?><link rel="stylesheet" href="css/darkmode.css"><?php
-        }
-    ?>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <a href="home_page.php">Back to Home</a>
-    <h1>Class Registration</h1>
-    <form method="post">
-        <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
-    </form>
-    
-    <!-- more html -->  
-    <?php
+    <header>
+        <h1>Kendianawa University Registrar</h1>
+        <nav>
+            <?php build_nav(); ?>
+        </nav>
+    </header>
+    <main>
+        <h2>Class Registration</h2>
+
+        <?php
         if(array_key_exists('terms_index', $_GET)){
             $term_start_date = $terms_result_both[$_GET['terms_index']]['term_start_date'];
             $term_end_date = $terms_result_both[$_GET['terms_index']]['term_end_date'];
@@ -148,14 +130,14 @@
             $student_class_history_result = $student_class_history_select_stmt->get_result();
             $student_class_history_result_both = $student_class_history_result->fetch_all(MYSQLI_BOTH);
 
+            echo '<h3>Class Catalog</h3>';
             result_to_html_table_with_checkbox($classes_result_both, 'Add?', 'selected[]', 'class_id', 'Add Records', 'add_records');
 
             $student_class_history_select_stmt->execute();
             $student_class_history_result = $student_class_history_select_stmt->get_result();
             //result_to_html_table_with_del_checkbox($student_class_history_result); 
+            echo '<h3>Student Schedule</h3>';
             result_to_html_table_with_checkbox($student_class_history_result_both, 'Delete?', 'selected[]', 'class_id', 'Delete Records', 'delete_records');
-
-
 
         }else{
             ?>
@@ -169,13 +151,12 @@
                     <?php } ?>
                 </select>
 
-                <input type="submit" value="Submit">
+                <button type="submit">Submit</button>
             </form>
 
-        <?php }
-    ?>
-    
-
+        <?php } ?>
+    </main>
+    <footer><p>&copy; 2024 Kendianawa University. All rights reserved.</p></footer>
     <?php $conn->close(); ?>
 </body>
 </html>

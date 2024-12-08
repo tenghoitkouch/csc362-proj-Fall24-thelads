@@ -29,31 +29,12 @@
     require "library.php";
     session_start();
 
-    //go back to home page if
-    if(!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== TRUE){
-        header("Location: home_page.php");
-        exit();
-    }
+    if(array_key_exists('logout', $_POST)){
+        session_unset();
+        $_SESSION['logged_in'] = FALSE;
 
-
-    // TOGGLE LIGHT/DARK MODE
-    $mode = 'mode';
-    $light = "light";
-    $dark = "dark";
-
-    if(!array_key_exists($mode, $_COOKIE)){
-        setcookie($mode, $light, 0, "/", "", false, true); //default
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
-    if(array_key_exists("toggle_mode", $_POST)){
-        $new_mode = $light;
-        if($_COOKIE[$mode] == $light){ $new_mode = $dark;}
-        if($_COOKIE[$mode] == $dark){ $new_mode = $light;}
-        setcookie($mode, $new_mode, 0, "/", "", false, true);
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
+        header("Location: home.php", true, 303);
+        exit;
     }
 
     //add recs
@@ -219,6 +200,7 @@
             <form method="post">
                 <label for="class_id">Course ID</label>
                 <input type="number" name="class_id" id="class_id" value="<?php echo $original_record['class_id']; ?>" readonly>
+                <br>
 
                 <!-- Course Select -->
                 <label for="course_id">Course</label>
@@ -230,10 +212,12 @@
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <br>
 
                 <!-- Section Input -->
                 <label for="section">Section</label>
                 <input type="text" name="section" id="section" value="<?= $original_record['section'] ?? 'a'; ?>" >
+                <br>
 
                 <!-- Term Select -->
                 <label for="term_id">Term</label>
@@ -245,6 +229,7 @@
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <br>
 
                 <!-- Professor Select -->
                 <label for="professor_id">Professor</label>
@@ -256,6 +241,7 @@
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <br>
 
                 <!-- Location Select -->
                 <label for="location">Location</label>
@@ -267,6 +253,7 @@
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <br>
 
                 <!-- Meeting Days Select -->
                 <label for="meeting_days_id">Schedule</label>
@@ -278,6 +265,7 @@
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <br>
 
                 <!-- Meeting Times Select -->
                 <label for="meeting_times">Meeting Times</label>
@@ -289,10 +277,12 @@
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <br>
 
                 <!-- Max Capacity -->
                 <label for="class_max_capacity">Max Capacity</label>
                 <input type="number" name="class_max_capacity" id="class_max_capacity" value="<?= $original_record['class_max_capacity'] ?? 25 ?>">
+                <br>
 
                 <!-- Submit Button -->
                 <button type="submit" name="complete_edit_records">Submit</button>
@@ -310,10 +300,12 @@
                     <option value="<?= $course['course_id'] ?>"><?= $course['course_discipline'] . ' ' . $course['course_number'] ?></option>
                 <?php endforeach; ?>
             </select>
+            <br>
 
             <!-- Section Select -->
             <label for="section">Section</label>
             <input type="text" name="section" id="section" value="a">
+            <br>
 
             <!-- Term Select -->
             <label for="term_id">Term</label>
@@ -323,6 +315,7 @@
                     <option value="<?= $term['term_id'] ?>"><?= $term['term_start_date'] . ' ' . $term['term_end_date'] ?></option>
                 <?php endforeach; ?>
             </select>
+            <br>
 
             <!-- Professor Select -->
             <label for="professor_id">Professor</label>
@@ -332,6 +325,7 @@
                     <option value="<?= $professor['professor_id'] ?>"><?= $professor['professor_name'] ?></option>
                 <?php endforeach; ?>
             </select>
+            <br>
 
             <!-- Location Select -->
             <label for="location">Location</label>
@@ -341,6 +335,7 @@
                     <option value="<?= $location['building_name'] . ',' . $location['room_number'] ?>"><?= $location['building_name'] . ' ' . $location['room_number'] ?></option>
                 <?php endforeach; ?>
             </select>
+            <br>
 
             <!-- Meeting Days Select -->
             <label for="meeting_days_id">Schedule</label>
@@ -350,6 +345,7 @@
                     <option value="<?php echo $meeting_day['meeting_days_id']; ?>"><?php echo $meeting_day['schedule']; ?></option>
                 <?php endforeach; ?>
             </select>
+            <br>
 
             <!-- Meeting Times Select -->
             <label for="meeting_times">Meeting Times</label>
@@ -359,15 +355,17 @@
                     <option value="<?= $meeting_time['time_start'] . ',' . $meeting_time['time_end'] ?>"><?= $meeting_time['time_start'] . ' ' . $meeting_time['time_end'] ?></option>
                 <?php endforeach; ?>
             </select>
+            <br>
             
             <label for="class_max_capacity">Max Capacity</label>
             <input type="number" name="class_max_capacity" id="class_max_capacity" $value="25">
+            <br>
 
             <!-- Submit Button -->
             <button type="submit" name="add_records">Submit</button>
         </form>
     </main>
-
+    <footer><p>&copy; 2024 Kendianawa University. All rights reserved.</p></footer>
     <?php $conn->close(); ?>
 
 </body>

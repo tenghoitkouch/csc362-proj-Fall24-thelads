@@ -27,6 +27,7 @@ nav{
     flex-direction: row;
 
     min-width: 50%;
+    max-width: 100%;
     margin: 1rem;
 }
 
@@ -46,6 +47,16 @@ footer{
     margin-top: auto;
 }
 
+form{
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    max-width: 100%;         
+    overflow-x: auto;
+    table-layout: auto;    
+}
 
 table, th, td {
     border: 1px solid black;
@@ -53,7 +64,7 @@ table, th, td {
 }
 
 th, td, tr, thead {
-    padding: 5px;
+    padding: 2px;
 }
 
 

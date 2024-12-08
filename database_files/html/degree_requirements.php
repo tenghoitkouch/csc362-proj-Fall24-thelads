@@ -23,34 +23,14 @@ if ($conn->connect_errno) {
 
 // helper functions
 require "library.php";
-
-//  mode toggle
-$mode = 'mode';
-$light = 'light';
-$dark = 'dark';
-if (!array_key_exists($mode, $_COOKIE)) {
-    setcookie($mode, $light, 0, "/", "", false, true);
-    header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-    exit();
-}
-if (array_key_exists('toggle_mode', $_POST)) {
-    $new_mode = $_COOKIE[$mode] == $light ? $dark : $light;
-    setcookie($mode, $new_mode, 0, "/", "", false, true);
-    header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-    exit();
-}
-
-// Start session handling
 session_start();
-if (array_key_exists('logout', $_POST)) {
+
+if(array_key_exists('logout', $_POST)){
     session_unset();
-    header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-    exit();
-}
-if (isset($_POST['username'])) {
-    $_SESSION['username'] = $_POST['username'];
-    header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-    exit();
+    $_SESSION['logged_in'] = FALSE;
+
+    header("Location: home.php", true, 303);
+    exit;
 }
 
 // Handle form submissions
@@ -95,56 +75,41 @@ $requirements = $conn->query("
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Degree Requirements</title>
-    <?php if ($_COOKIE[$mode] == $light) { ?>
-        <link rel="stylesheet" href="../css/basic.css">
-    <?php } else { ?>
-        <link rel="stylesheet" href="../css/darkmode.css">
-    <?php } ?>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Manage Degree Requirements</h1>
-    <form method="post">
-        <input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode">
-    </form>
+    <header>
+        <h1>Kendianawa University Registrar</h1>
+        <nav>
+            <?php build_nav(); ?>
+        </nav>
+    </header>
+    <main>
+        <h2>Manage Degree Requirements</h2>
+        <h2>Add or Remove Degree Requirements</h2>
+        <form method="POST">
+            <label>Degree:</label>
+            <select name="degree_id" required>
+                <?php while ($row = $degrees->fetch_assoc()) { ?>
+                    <option value="<?= $row['degree_id'] ?>"><?= $row['degree_name'] ?></option>
+                <?php } ?>
+            </select>
 
-    <?php
-        if(isset($_SESSION['username'])){
-            ?><p>Welocome <?php echo $_SESSION['username']; ?></p>
-            <form method="POST">
-                <input type="submit" name="logout" value="Logout">
-            </form><?php
-        }else{
-            ?><p>Enter name to start/resume session: </p>
-            <form method="POST">
-                <input type="text" name="username" placeholder="Enter name...">
-                <input type="submit" value="Remember Me">
-            </form><?php 
-        }
-    ?>
+            <label>Course:</label>
+            <select name="course_id" required>
+                <?php while ($row = $courses->fetch_assoc()) { ?>
+                    <option value="<?= $row['course_id'] ?>"><?= $row['course_discipline'] ?> - <?= $row['course_number'] ?></option>
+                <?php } ?>
+            </select>
 
-    <h2>Add or Remove Degree Requirements</h2>
-    <form method="POST">
-        <label>Degree:</label>
-        <select name="degree_id" required>
-            <?php while ($row = $degrees->fetch_assoc()) { ?>
-                <option value="<?= $row['degree_id'] ?>"><?= $row['degree_name'] ?></option>
-            <?php } ?>
-        </select>
+            <button type="submit" name="action" value="add">Add Requirement</button>
+            <button type="submit" name="action" value="delete">Delete Requirement</button>
+        </form>
 
-        <label>Course:</label>
-        <select name="course_id" required>
-            <?php while ($row = $courses->fetch_assoc()) { ?>
-                <option value="<?= $row['course_id'] ?>"><?= $row['course_discipline'] ?> - <?= $row['course_number'] ?></option>
-            <?php } ?>
-        </select>
-
-        <button type="submit" name="action" value="add">Add Requirement</button>
-        <button type="submit" name="action" value="delete">Delete Requirement</button>
-    </form>
-
-    <h2>Current Degree Requirements</h2>
-    <?php result_to_html_table($requirements); ?>
-
+        <h2>Current Degree Requirements</h2>
+        <?php result_to_html_table($requirements); ?>
+    </main>
+    <footer><p>&copy; 2024 Kendianawa University. All rights reserved.</p></footer>
     <?php $conn->close(); ?>
 </body>
 </html>
