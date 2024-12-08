@@ -1,2 +1,21 @@
 INSERT INTO degrees(degree_name)
-VALUES ("Computer Science");
+VALUES  ("Computer Science"),
+        ("Mathematics"),
+        ("Physics"),
+        ("Biology"),
+        ("Chemistry"),
+        ("History"),
+        ("Economics"),
+        ("Psychology"),
+        ("Sociology"),
+        ("Philosophy"),
+        ("English"),
+        ("Accounting"),
+        ("Marketing"),
+        ("Finance"),
+        ("Nursing"),
+        ("Education"),
+        ("Music"),
+        ("Journalism"),
+        ("Anthropology"),
+        ("Linguistics");
