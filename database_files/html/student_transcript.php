@@ -28,39 +28,14 @@
     // import our custom php functions
     require "library.php";
 
-    // TOGGLE LIGHT/DARK MODE
-    $mode = 'mode';
-    $light = "light";
-    $dark = "dark";
-
-    if(!array_key_exists($mode, $_COOKIE)){
-        setcookie($mode, $light, 0, "/", "", false, true); //default
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
-    if(array_key_exists("toggle_mode", $_POST)){
-        $new_mode = $light;
-        if($_COOKIE[$mode] == $light){ $new_mode = $dark;}
-        if($_COOKIE[$mode] == $dark){ $new_mode = $light;}
-        setcookie($mode, $new_mode, 0, "/", "", false, true);
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
     // START SESSION
     session_start();
-
     if(array_key_exists('logout', $_POST)){
         session_unset();
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
+        $_SESSION['logged_in'] = FALSE;
 
-    if(isset($_POST['username'])){
-        $_SESSION['username'] = $_POST['username'];
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
+        header("Location: home.php", true, 303);
+        exit;
     }
 
     //more sql setups
@@ -112,45 +87,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <?php
-        if($_COOKIE[$mode] == $light){
-            ?><link rel="stylesheet" href="../css/basic.css"><?php
-        }elseif($_COOKIE[$mode] == $dark){
-            ?><link rel="stylesheet" href="../css/darkmode.css"><?php
-        }
-    ?>
+    <title>Student Transcripts</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Title</h1>
-    <form method="post">
-        <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
-    </form>
-
-    <?php
-        if(isset($_SESSION['username'])){
-            ?><p>Welocome <?php echo $_SESSION['username']; ?></p>
-            <form method="POST">
-                <input type="submit" name="logout" value="Logout">
-            </form><?php
-        }else{
-            ?><p>Enter name to start/resume session: </p>
-            <form method="POST">
-                <input type="text" name="username" placeholder="Enter name...">
-                <input type="submit" value="Remember Me">
-            </form><?php 
-        }
-    ?>
-    
-    <!-- more html -->  
-    <?php 
+    <header>
+        <h1>Kendianawa University Registrar</h1>
+        <nav>
+            <?php build_nav(); ?>
+        </nav>
+    </header>
+    <main>
+        <h2>Student Transcripts</h2>
+        <?php 
         $select_stmt->execute();
         $result = $select_stmt->get_result();
         result_to_html_table_with_del_checkbox($result); 
-    ?>
-
-    
-
+        ?>
+    </main>
+    <footer><p>&copy; 2024 Kendianawa University. All rights reserved.</p></footer>
     <?php $conn->close(); ?>
 </body>
 </html>

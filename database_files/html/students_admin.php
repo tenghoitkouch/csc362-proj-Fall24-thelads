@@ -29,24 +29,12 @@
     require "library.php";
     session_start();
 
-    // TOGGLE LIGHT/DARK MODE
-    $mode = 'mode';
-    $light = "light";
-    $dark = "dark";
+    if(array_key_exists('logout', $_POST)){
+        session_unset();
+        $_SESSION['logged_in'] = FALSE;
 
-    if(!array_key_exists($mode, $_COOKIE)){
-        setcookie($mode, $light, 0, "/", "", false, true); //default
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
-    if(array_key_exists("toggle_mode", $_POST)){
-        $new_mode = $light;
-        if($_COOKIE[$mode] == $light){ $new_mode = $dark;}
-        if($_COOKIE[$mode] == $dark){ $new_mode = $light;}
-        setcookie($mode, $new_mode, 0, "/", "", false, true);
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
+        header("Location: home.php", true, 303);
+        exit;
     }
 
     //more sql setups
@@ -167,87 +155,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Students</title>
-    <?php
-        if($_COOKIE[$mode] == $light){
-            ?><link rel="stylesheet" href="css/basic.css"><?php
-        }elseif($_COOKIE[$mode] == $dark){
-            ?><link rel="stylesheet" href="css/darkmode.css"><?php
-        }
-    ?>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <a href="home_page.php">Back to Home</a>
-    <h1>Students</h1>
-    <form method="post">
-        <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
-    </form>
-    
-    <!-- more html -->  
-     <h2>Add Student</h2>
-     <form method="POST">
-        <!-- First Name -->
-        <label for="student_first_name">First Name:</label>
-        <input type="text" id="student_first_name" name="student_first_name" required>
-        <br>
-
-        <!-- Last Name -->
-        <label for="student_last_name">Last Name:</label>
-        <input type="text" id="student_last_name" name="student_last_name" required>
-        <br>
-
-        <!-- Email -->
-        <label for="student_email">Email:</label>
-        <input type="email" id="student_email" name="student_email" required>
-        <br>
-
-        <!-- Phone Number -->
-        <label for="student_phone_number">Phone Number:</label>
-        <input type="tel" id="student_phone_number" name="student_phone_number">
-        <br>
-
-        <!-- Street Address -->
-        <label for="student_street">Street Address:</label>
-        <input type="text" id="student_street" name="student_street">
-        <br>
-
-        <!-- City -->
-        <label for="student_city">City:</label>
-        <input type="text" id="student_city" name="student_city">
-        <br>
-
-        <!-- State -->
-        <label for="student_state">State:</label>
-        <input type="text" id="student_state" name="student_state">
-        <br>
-
-        <!-- ZIP Code -->
-        <label for="student_zip_code">ZIP Code:</label>
-        <input type="text" id="student_zip_code" name="student_zip_code">
-        <br>
-
-        <!-- Professor -->
-        <label for="professor_id">Professor:</label>
-        <select id="professor_id" name="professor_id" required>
-            <?php
-                foreach ($professors_result_both as $professor) {
-                    echo '<option value="' . $professor['professor_id'] . '">' . $professor['professor_first_name'] . ' ' . $professor['professor_last_name'] . '</option>';
-                }
-            ?>
-        </select>
-        <br><br>
-
-        <!-- Submit Button -->
-        <button type="submit" name="add_records">Submit</button>
-    </form>
-    
-    <h2>Delete Students</h2>
-    <?php
+    <header>
+        <h1>Kendianawa University Registrar</h1>
+        <nav>
+            <?php build_nav(); ?>
+        </nav>
+    </header>
+    <main>
+        <h2>Students</h2>
+        <?php
         result_to_html_table_with_checkbox_edit($result_both, 'Delete?', 'selected[]', 'student_id', 'Delete Records', 'delete_records');
-    ?>
 
-    <?php
         if(array_key_exists('edit_records', $_POST)){
-            echo '<h2>Edit Student</h2>';
+            echo '<h3>Edit Student</h3>';
             $row_index = $_POST['edit_records'];
             $original_record = $result_both[$row_index];
 
@@ -255,37 +178,47 @@
             <form method="POST">
                 <label for="student_id">Student ID</label>
                 <input type="text" name="student_id" id="student_id" value="<?php echo $original_record['student_id']; ?>" readonly>
+                <br>
+
                 <!-- First Name -->
                 <label for="student_first_name">First Name:</label>
                 <input type="text" id="student_first_name" name="student_first_name" value="<?php echo $original_record['student_first_name']; ?>" required>
+                <br>
 
                 <!-- Last Name -->
                 <label for="student_last_name">Last Name:</label>
                 <input type="text" id="student_last_name" name="student_last_name" value="<?php echo $original_record['student_last_name']; ?>" required>
+                <br>
 
                 <!-- Email -->
                 <label for="student_email">Email:</label>
                 <input type="email" id="student_email" name="student_email" value="<?php echo $original_record['student_email']; ?>" required>
+                <br>
 
                 <!-- Phone Number -->
                 <label for="student_phone_number">Phone Number:</label>
                 <input type="tel" id="student_phone_number" name="student_phone_number" value="<?php echo $original_record['student_phone_number']; ?>">
+                <br>
 
                 <!-- Street Address -->
                 <label for="student_street">Street Address:</label>
                 <input type="text" id="student_street" name="student_street" value="<?php echo $original_record['student_street']; ?>">
+                <br>
 
                 <!-- City -->
                 <label for="student_city">City:</label>
                 <input type="text" id="student_city" name="student_city" value="<?php echo $original_record['student_city']; ?>">
+                <br>
 
                 <!-- State -->
                 <label for="student_state">State:</label>
                 <input type="text" id="student_state" name="student_state" value="<?php echo $original_record['student_state']; ?>">
+                <br>
 
                 <!-- ZIP Code -->
                 <label for="student_zip_code">ZIP Code:</label>
                 <input type="text" id="student_zip_code" name="student_zip_code" value="<?php echo $original_record['student_zip_code']; ?>">
+                <br>
 
                 <!-- Professor -->
                 <label for="professor_id">Professor:</label>
@@ -297,18 +230,72 @@
                         }
                     ?>
                 </select>
+                <br>
 
                 <!-- Submit Button -->
                 <button type="submit" name="complete_edit_records">Submit</button>
 
             </form>
 
-            <?php
-        }
+        <?php } ?>
+        <h3>Add Student</h3>
+        <form method="POST">
+            <!-- First Name -->
+            <label for="student_first_name">First Name:</label>
+            <input type="text" id="student_first_name" name="student_first_name" required>
+            <br>
 
-    ?>
-    
+            <!-- Last Name -->
+            <label for="student_last_name">Last Name:</label>
+            <input type="text" id="student_last_name" name="student_last_name" required>
+            <br>
 
+            <!-- Email -->
+            <label for="student_email">Email:</label>
+            <input type="email" id="student_email" name="student_email" required>
+            <br>
+
+            <!-- Phone Number -->
+            <label for="student_phone_number">Phone Number:</label>
+            <input type="tel" id="student_phone_number" name="student_phone_number">
+            <br>
+
+            <!-- Street Address -->
+            <label for="student_street">Street Address:</label>
+            <input type="text" id="student_street" name="student_street">
+            <br>
+
+            <!-- City -->
+            <label for="student_city">City:</label>
+            <input type="text" id="student_city" name="student_city">
+            <br>
+
+            <!-- State -->
+            <label for="student_state">State:</label>
+            <input type="text" id="student_state" name="student_state">
+            <br>
+
+            <!-- ZIP Code -->
+            <label for="student_zip_code">ZIP Code:</label>
+            <input type="text" id="student_zip_code" name="student_zip_code">
+            <br>
+
+            <!-- Professor -->
+            <label for="professor_id">Professor:</label>
+            <select id="professor_id" name="professor_id" required>
+                <?php
+                    foreach ($professors_result_both as $professor) {
+                        echo '<option value="' . $professor['professor_id'] . '">' . $professor['professor_first_name'] . ' ' . $professor['professor_last_name'] . '</option>';
+                    }
+                ?>
+            </select>
+            <br><br>
+
+            <!-- Submit Button -->
+            <button type="submit" name="add_records">Submit</button>
+        </form>
+    </main>
+    <footer><p>&copy; 2024 Kendianawa University. All rights reserved.</p></footer>
     <?php $conn->close(); ?>
 </body>
 </html>
