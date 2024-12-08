@@ -1,6 +1,5 @@
 INSERT INTO locations(building_name, room_number, room_capacity)
-VALUES  ("OLIN", 201, 25),
-        ("YOUNG", 117, 25), 
+VALUES  ("YOUNG", 117, 25), 
         -- OLIN Building
         ("OLIN", 101, 25),
         ("OLIN", 102, 25),
