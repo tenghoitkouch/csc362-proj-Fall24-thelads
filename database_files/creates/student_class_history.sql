@@ -101,18 +101,25 @@ BEGIN
     SET @max_capacity = get_class_max_capacity(NEW.class_id);
 
     -- class size constraint
-    IF (@current_class_size >= @max_capacity) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class is currently full';
+    IF (NEW.class_id <> OLD.class_id) THEN
+        IF (@current_class_size >= @max_capacity) THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class is currently full';
+        END IF;
     END IF;     
 
     -- time constraint
     SET @current_term = get_term_id_by_class(NEW.class_id);
-    SET @current_time_start = get_time_start_by_class(NEW.class_id);
-    SET @current_time_end = get_time_end_by_class(NEW.class_id);
-    SET @num_classes_at_current_time = get_num_student_class_by_term_time(@current_term, @current_time_start, @current_time_end, NEW.student_id);
+    SET @new_time_start = get_time_start_by_class(NEW.class_id);
+    SET @new_time_end = get_time_end_by_class(NEW.class_id);
+    SET @num_classes_at_current_time = get_num_student_class_by_term_time(@current_term, @new_time_start, @new_time_end, NEW.student_id);
 
-    IF (@num_classes_at_current_time <> 0) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Already enrolled in another class at that time';
+    SET @old_time_start = get_time_start_by_class(OLD.class_id);
+    SET @old_time_end = get_time_end_by_class(OLD.class_id);
+
+    IF (@new_time_start <> @old_time_start) OR (@new_time_end <> @old_time_end) THEN
+        IF (@num_classes_at_current_time <> 0) THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Already enrolled in another class at that time';
+        END IF; 
     END IF; 
 
 END; $$

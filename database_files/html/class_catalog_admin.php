@@ -167,6 +167,7 @@
         $meeting_day_id = (int) $_POST["meeting_days_id"];
         list($time_start, $time_end) = explode(',', $_POST["meeting_times"]);
         $class_max_capacity = (int) $_POST['class_max_capacity'];
+        $class_id = (int) $_POST['class_id'];
 
         //query
         $edit_query = file_get_contents($queries_dir . 'classes_update.sql');
@@ -249,9 +250,9 @@
         </select>
 
         <!-- Meeting Days Select -->
-        <label for="meeting_days_id">Meeting Days</label>
+        <label for="meeting_days_id">Schedule</label>
         <select name="meeting_days_id" id="meeting_days_id" required>
-            <option value="" selected disabled>Select meeting days</option>
+            <option value="" selected disabled>Select schedule</option>
             <?php foreach ($meeting_days_list as $meeting_day) : ?>
                 <option value="<?php echo $meeting_day['meeting_days_id']; ?>"><?php echo $meeting_day['schedule']; ?></option>
             <?php endforeach; ?>
@@ -279,14 +280,22 @@
         result_to_html_table_with_checkbox_edit($classes_list, 'Delete?', 'selected[]', 'class_id', 'Delete Courses', 'delete_records');
     ?>
 
-    <h2>Edit Classes</h2>
     <?php
         if(array_key_exists('edit_records', $_POST)){
+            $query_classes_full = "SELECT * FROM classes_view_full";
+            $select_stmt_classes_full = $conn->prepare($query_classes_full);
+            $select_stmt_classes_full->execute();
+            $result_classes_full = $select_stmt_classes_full->get_result();
+            $classes_full_list = $result_classes_full->fetch_all(MYSQLI_BOTH);
+
             $row_index = $_POST['edit_records'];
-            $original_record = $classes_list[$row_index];
+            $original_record = $classes_full_list[$row_index];
 
             ?>
+            <h2>Edit Classes</h2>
             <form method="post">
+                <label for="class_id">Course ID</label>
+                <input type="number" name="class_id" id="class_id" value="<?php echo $original_record['class_id']; ?>" readonly>
 
                 <!-- Course Select -->
                 <label for="course_id">Course</label>
@@ -337,7 +346,7 @@
                 </select>
 
                 <!-- Meeting Days Select -->
-                <label for="meeting_days_id">Meeting Days</label>
+                <label for="meeting_days_id">Schedule</label>
                 <select name="meeting_days_id" id="meeting_days_id" required>
                     <?php foreach ($meeting_days_list as $meeting_day) : ?>
                         <option value="<?= $meeting_day['meeting_days_id'] ?>" 

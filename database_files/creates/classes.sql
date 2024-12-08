@@ -31,8 +31,45 @@ SELECT  class_id,
         CONCAT(professor_first_name, ' ', professor_last_name) AS professor_name, 
         building_name,
         room_number,
-        GROUP_CONCAT(day_letter) AS meeting_days,
+        GROUP_CONCAT(day_letter) AS schedule,
         CONCAT(time_start, ' ', time_end) AS meeting_times,
+        CONCAT(term_start_date, ' - ', term_end_date) AS term, 
+        class_max_capacity,
+        cpr.prerequisite AS prerequisites
+        FROM classes AS cls
+        JOIN terms
+            USING (term_id)
+        JOIN professors
+            USING (professor_id)
+        JOIN meeting_days
+            USING (meeting_days_id)
+        JOIN courses as crs
+            ON cls.course_id = crs.course_id
+        LEFT OUTER JOIN course_prerequisites_view AS cpr
+            ON cls.course_id = cpr.course_id
+GROUP BY    class_id
+ORDER BY    term DESC,
+            course_discipline ASC,
+            course_number ASC,
+            section ASC;
+
+CREATE VIEW classes_view_full AS
+SELECT  class_id, 
+        crs.course_id AS course_id,
+        crs.course_discipline AS course_discipline,
+        crs.course_number AS course_number,
+        cls.section AS section,
+        crs.course_name AS course_name,
+        professor_id,
+        CONCAT(professor_first_name, ' ', professor_last_name) AS professor_name, 
+        building_name,
+        room_number,
+        meeting_days_id,
+        GROUP_CONCAT(day_letter) AS schedule,
+        time_start,
+        time_end,
+        CONCAT(time_start, ' ', time_end) AS meeting_times,
+        term_id,
         CONCAT(term_start_date, ' - ', term_end_date) AS term, 
         class_max_capacity,
         cpr.prerequisite AS prerequisites
@@ -158,15 +195,19 @@ BEFORE UPDATE ON classes FOR EACH ROW
 BEGIN
 
     -- room conflict
-    SET @location_existing_classes = get_num_class_by_location_term_time(NEW.building_name, NEW.room_number, NEW.term_id, NEW.time_start, NEW.time_end);
-    IF (@location_existing_classes <> 0) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class already exists at that location on that time';
+    IF (NEW.building_name <> OLD.building_name) OR (NEW.room_number <> OLD.room_number) THEN
+        SET @location_existing_classes = get_num_class_by_location_term_time(NEW.building_name, NEW.room_number, NEW.term_id, NEW.time_start, NEW.time_end);
+        IF (@location_existing_classes <> 0) THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class already exists at that location on that time';
+        END IF;
     END IF;
 
     -- professor conflict
-    SET @professor_existing_classes = get_num_class_by_professor_term_time(NEW.professor_id, NEW.term_id, NEW.time_start, NEW.time_end);
-    IF (@professor_existing_classes <> 0) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Professor is already teaching a class on that time';
+    IF (NEW.professor_id <> OLD.professor_id) THEN
+        SET @professor_existing_classes = get_num_class_by_professor_term_time(NEW.professor_id, NEW.term_id, NEW.time_start, NEW.time_end);
+        IF (@professor_existing_classes <> 0) THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Professor is already teaching a class on that time';
+        END IF;
     END IF;
 
 END; $$
