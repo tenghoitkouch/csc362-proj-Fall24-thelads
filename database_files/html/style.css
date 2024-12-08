@@ -26,7 +26,6 @@ nav{
     justify-content: space-evenly;
     flex-direction: row;
 
-    min-width: 50%;
     max-width: 100%;
     margin: 1rem;
 }
