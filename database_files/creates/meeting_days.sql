@@ -7,7 +7,7 @@ CREATE TABLE meeting_days(
 
 CREATE VIEW meeting_days_view AS
 SELECT  meeting_days_id,
-        GROUP_CONCAT(day_letter) AS schedule
+        GROUP_CONCAT(day_letter ORDER BY FIELD(day_letter, 'M', 'T', 'W', 'R', 'F') SEPARATOR '') AS schedule
 FROM    meeting_days
 GROUP BY meeting_days_id;
 

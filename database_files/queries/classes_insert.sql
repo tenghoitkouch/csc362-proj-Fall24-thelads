@@ -6,9 +6,10 @@ INSERT INTO classes (course_id,
                     room_number, 
                     meeting_days_id, 
                     time_start, 
-                    time_end
+                    time_end,
+                    class_max_capacity
                     )
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 -- make section 'a'
 -- if want to edit class_capacity, do on alters

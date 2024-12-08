@@ -16,7 +16,7 @@ CREATE TABLE professors (
 CREATE VIEW professors_view AS
 SELECT 
     professor_id, 
-    CONCAT(professor_first_name, ' ', professor_last_name) AS full_name,
+    CONCAT(professor_first_name, ' ', professor_last_name) AS professor_name,
     professor_email, 
     professor_phone_number, 
     professor_city, 

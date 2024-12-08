@@ -59,19 +59,20 @@
     //add recs
     if(array_key_exists('add_records', $_POST)){
 
-        $course_id = (int) $_POST["courses"];
+        $course_id = (int) $_POST["course_id"];
         $section = $_POST["section"];
-        $term_id = (int) $_POST["terms"];
-        $professor_id = (int) $_POST["professors"];
-        list($building_name, $room_number) = explode(',', $_POST["locations"]);
+        $term_id = (int) $_POST["term_id"];
+        $professor_id = (int) $_POST["professor_id"];
+        list($building_name, $room_number) = explode(',', $_POST["location"]);
         $room_number = (int) $room_number;
-        $meeting_day_id = (int) $_POST["meeting_days"];
+        $meeting_day_id = (int) $_POST["meeting_days_id"];
         list($time_start, $time_end) = explode(',', $_POST["meeting_times"]);
+        $class_max_capacity = (int) $_POST['class_max_capacity'];
 
         //query
         $add_query = file_get_contents($queries_dir . 'classes_insert.sql');
         $add_stmt = $conn->prepare($add_query);
-        $add_stmt->bind_param('isiisiiss', $course_id, $section, $term_id, $professor_id, $building_name, $room_number, $meeting_day_id, $time_start, $time_end);
+        $add_stmt->bind_param('isiisiissi', $course_id, $section, $term_id, $professor_id, $building_name, $room_number, $meeting_day_id, $time_start, $time_end, $class_max_capacity);
         $add_stmt->execute();
         
         //refresh
@@ -83,13 +84,51 @@
     //more sql setups
     $query = "SELECT * FROM classes_view";
     $select_stmt = $conn->prepare($query);
-    if (!$select_stmt) {
-        echo "Couldn't prepare statement!";
-        echo exit;
-    }
     $select_stmt->execute();
     $result = $select_stmt->get_result();
     $classes_list = $result->fetch_all(MYSQLI_BOTH);
+
+    // Query for Courses
+    $query_courses = "SELECT * FROM courses_view";
+    $select_stmt_courses = $conn->prepare($query_courses);
+    $select_stmt_courses->execute();
+    $courses_result = $select_stmt_courses->get_result();
+    $courses_list = $courses_result->fetch_all(MYSQLI_ASSOC);
+
+    // Query for Professors
+    $query_professors = "SELECT * FROM professors_view";
+    $select_stmt_professors = $conn->prepare($query_professors);
+    $select_stmt_professors->execute();
+    $professors_result = $select_stmt_professors->get_result();
+    $professors_list = $professors_result->fetch_all(MYSQLI_ASSOC);
+
+    // Query for Locations
+    $query_locations = "SELECT * FROM locations_view";
+    $select_stmt_locations = $conn->prepare($query_locations);
+    $select_stmt_locations->execute();
+    $locations_result = $select_stmt_locations->get_result();
+    $locations_list = $locations_result->fetch_all(MYSQLI_ASSOC);
+
+    // Query for Meeting Times
+    $query_meeting_times = "SELECT * FROM meeting_times_view";
+    $select_stmt_meeting_times = $conn->prepare($query_meeting_times);
+    $select_stmt_meeting_times->execute();
+    $meeting_times_result = $select_stmt_meeting_times->get_result();
+    $meeting_times_list = $meeting_times_result->fetch_all(MYSQLI_ASSOC);
+
+    $query_meeting_days = "SELECT * FROM meeting_days_view";
+    $select_stmt_meeting_days = $conn->prepare($query_meeting_days);
+    $select_stmt_meeting_days->execute();
+    $meeting_days_result = $select_stmt_meeting_days->get_result();
+    $meeting_days_list = $meeting_days_result->fetch_all(MYSQLI_ASSOC);
+    
+
+    // Query for Terms
+    $query_terms = "SELECT * FROM terms_view";
+    $select_stmt_terms = $conn->prepare($query_terms);
+    $select_stmt_terms->execute();
+    $terms_result = $select_stmt_terms->get_result();
+    $terms_list = $terms_result->fetch_all(MYSQLI_ASSOC);
 
     $need_reload = FALSE;
     //del rec
@@ -117,18 +156,17 @@
         exit();
     }
 
-    if(array_key_exists('edit_records', $_POST)){
+    if(array_key_exists('complete_edit_records', $_POST)){
 
-        $course_id = (int) $_POST["courses"];
+        $course_id = (int) $_POST["course_id"];
         $section = $_POST["section"];
-        $term_id = (int) $_POST["terms"];
-        $professor_id = (int) $_POST["professors"];
-        list($building_name, $room_number) = explode(',', $_POST["locations"]);
+        $term_id = (int) $_POST["term_id"];
+        $professor_id = (int) $_POST["professor_id"];
+        list($building_name, $room_number) = explode(',', $_POST["location"]);
         $room_number = (int) $room_number;
-        $meeting_day_id = (int) $_POST["meeting_days"];
+        $meeting_day_id = (int) $_POST["meeting_days_id"];
         list($time_start, $time_end) = explode(',', $_POST["meeting_times"]);
-        $class_max_capacity = (int) $_POST["class_max_capacity"];
-        $class_id = (int) $_POST["original_class_id"];
+        $class_max_capacity = (int) $_POST['class_max_capacity'];
 
         //query
         $edit_query = file_get_contents($queries_dir . 'classes_update.sql');
@@ -167,31 +205,170 @@
 
     <h2>Add Classes</h2>
     <?php
-        generate_select_fields($conn, ["courses", "section", "terms", "professors", "locations", "meeting_days", "meeting_times"]);
+        //generate_select_fields($conn, ["courses", "section", "terms", "professors", "locations", "meeting_days", "meeting_times"]);
     ?>
+    <form method="post">
+
+        <label for="course_id">Course</label>
+        <select name="course_id" id="course_id" required>
+            <option value="" selected disabled>Select a course</option>
+            <?php foreach ($courses_list as $course) : ?>
+                <option value="<?= $course['course_id'] ?>"><?= $course['course_discipline'] . ' ' . $course['course_number'] ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <!-- Section Select -->
+        <label for="section">Section</label>
+        <input type="text" name="section" id="section" value="a">
+
+        <!-- Term Select -->
+        <label for="term_id">Term</label>
+        <select name="term_id" id="term_id" required>
+            <option value="" selected disabled>Select a term</option>
+            <?php foreach ($terms_list as $term) : ?>
+                <option value="<?= $term['term_id'] ?>"><?= $term['term_start_date'] . ' ' . $term['term_end_date'] ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <!-- Professor Select -->
+        <label for="professor_id">Professor</label>
+        <select name="professor_id" id="professor_id" required>
+            <option value="" selected disabled>Select a professor</option>
+            <?php foreach ($professors_list as $professor) : ?>
+                <option value="<?= $professor['professor_id'] ?>"><?= $professor['professor_name'] ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <!-- Location Select -->
+        <label for="location">Location</label>
+        <select name="location" id="location" required>
+            <option value="" selected disabled>Select a location</option>
+            <?php foreach ($locations_list as $location) : ?>
+                <option value="<?= $location['building_name'] . ',' . $location['room_number'] ?>"><?= $location['building_name'] . ' ' . $location['room_number'] ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <!-- Meeting Days Select -->
+        <label for="meeting_days_id">Meeting Days</label>
+        <select name="meeting_days_id" id="meeting_days_id" required>
+            <option value="" selected disabled>Select meeting days</option>
+            <?php foreach ($meeting_days_list as $meeting_day) : ?>
+                <option value="<?php echo $meeting_day['meeting_days_id']; ?>"><?php echo $meeting_day['schedule']; ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <!-- Meeting Times Select -->
+        <label for="meeting_times">Meeting Times</label>
+        <select name="meeting_times" id="meeting_times" required>
+            <option value="" selected disabled>Select meeting time</option>
+            <?php foreach ($meeting_times_list as $meeting_time) : ?>
+                <option value="<?= $meeting_time['time_start'] . ',' . $meeting_time['time_end'] ?>"><?= $meeting_time['time_start'] . ' ' . $meeting_time['time_end'] ?></option>
+            <?php endforeach; ?>
+        </select>
+        
+        <label for="class_max_capacity">Max Capacity</label>
+        <input type="number" name="class_max_capacity" id="class_max_capacity" $value="25">
+
+        <!-- Submit Button -->
+        <button type="submit" name="add_records">Submit</button>
+    </form>
     
     <!-- more html -->  
     <h2>Delete Classes</h2>
     <?php 
-        $select_stmt->execute();
-        $result = $select_stmt->get_result();
-        result_to_html_table_with_del_checkbox($result); 
+        result_to_html_table_with_checkbox_edit($classes_list, 'Delete?', 'selected[]', 'class_id', 'Delete Courses', 'delete_records');
     ?>
 
     <h2>Edit Classes</h2>
     <?php
-        //edit recs
-        $select_stmt->execute();
-        $result = $select_stmt->get_result();
+        if(array_key_exists('edit_records', $_POST)){
+            $row_index = $_POST['edit_records'];
+            $original_record = $classes_list[$row_index];
 
-        if(array_key_exists('edit_records', $_GET)){
-            $row_index = $_GET['selected_record'];
-            $result_dict = $result->fetch_all(MYSQLI_ASSOC);
-            $_POST['original_class_id'] = $result_dict[$row_index]['class_id'];
-            generate_select_fields($conn, ["courses", "section", "terms", "professors", "locations", "meeting_days", "meeting_times", "class_max_capacity"], $result_dict[$row_index]);
-        }else{
-            generate_edit_selections($result);
+            ?>
+            <form method="post">
+
+                <!-- Course Select -->
+                <label for="course_id">Course</label>
+                <select name="course_id" id="course_id" required>
+                    <?php foreach ($courses_list as $course) : ?>
+                        <option value="<?= $course['course_id'] ?>" 
+                            <?= ($course['course_id'] == $original_record['course_id']) ? 'selected' : ''; ?> >
+                            <?= $course['course_discipline'] . ' ' . $course['course_number'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <!-- Section Input -->
+                <label for="section">Section</label>
+                <input type="text" name="section" id="section" value="<?= $original_record['section'] ?? 'a'; ?>" >
+
+                <!-- Term Select -->
+                <label for="term_id">Term</label>
+                <select name="term_id" id="term_id" required>
+                    <?php foreach ($terms_list as $term) : ?>
+                        <option value="<?= $term['term_id'] ?>" 
+                            <?= ($term['term_id'] == $original_record['term_id']) ? 'selected' : ''; ?> >
+                            <?= $term['term_start_date'] . ' ' . $term['term_end_date'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <!-- Professor Select -->
+                <label for="professor_id">Professor</label>
+                <select name="professor_id" id="professor_id" required>
+                    <?php foreach ($professors_list as $professor) : ?>
+                        <option value="<?= $professor['professor_id'] ?>" 
+                            <?= ($professor['professor_id'] == $original_record['professor_id']) ? 'selected' : ''; ?>>
+                            <?= $professor['professor_name'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <!-- Location Select -->
+                <label for="location">Location</label>
+                <select name="location" id="location" required>
+                    <?php foreach ($locations_list as $location) : ?>
+                        <option value="<?= $location['building_name'] . ',' . $location['room_number'] ?>" 
+                            <?= ($location['building_name'] == $original_record['building_name'] && $location['room_number'] == $original_record['room_number']) ? 'selected' : ''; ?>>
+                            <?= $location['building_name'] . ' ' . $location['room_number'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <!-- Meeting Days Select -->
+                <label for="meeting_days_id">Meeting Days</label>
+                <select name="meeting_days_id" id="meeting_days_id" required>
+                    <?php foreach ($meeting_days_list as $meeting_day) : ?>
+                        <option value="<?= $meeting_day['meeting_days_id'] ?>" 
+                            <?= ($meeting_day['meeting_days_id'] == $original_record['meeting_days_id']) ? 'selected' : ''; ?>>
+                            <?= $meeting_day['schedule'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <!-- Meeting Times Select -->
+                <label for="meeting_times">Meeting Times</label>
+                <select name="meeting_times" id="meeting_times" required>
+                    <?php foreach ($meeting_times_list as $meeting_time) : ?>
+                        <option value="<?= $meeting_time['time_start'] . ',' . $meeting_time['time_end'] ?>" 
+                            <?= ($meeting_time['time_start'] == $original_record['time_start'] && $meeting_time['time_end'] == $original_record['time_end']) ? 'selected' : ''; ?>>
+                            <?= $meeting_time['time_start'] . ' ' . $meeting_time['time_end'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <!-- Max Capacity -->
+                <label for="class_max_capacity">Max Capacity</label>
+                <input type="number" name="class_max_capacity" id="class_max_capacity" value="<?= $original_record['class_max_capacity'] ?? 25 ?>">
+
+                <!-- Submit Button -->
+                <button type="submit" name="complete_edit_records">Submit</button>
+                </form>
+
+            <?php
         }
+        
     ?>
     
     <?php $conn->close(); ?>
