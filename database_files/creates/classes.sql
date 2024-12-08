@@ -24,8 +24,8 @@ CREATE TABLE classes (
 
 CREATE VIEW classes_view AS
 SELECT  class_id, 
-        crs.course_discipline AS course_discipline
-        crs.course_number AS course_number
+        crs.course_discipline AS course_discipline,
+        crs.course_number AS course_number,
         cls.section AS section,
         crs.course_name AS course_name,
         CONCAT(professor_first_name, ' ', professor_last_name) AS professor_name, 
@@ -92,7 +92,7 @@ RETURN (
 
 DROP FUNCTION IF EXISTS get_num_class_by_location_term_time;
 CREATE FUNCTION get_num_class_by_location_term_time(
-    building_name_input VARCHAR, 
+    building_name_input VARCHAR(64), 
     room_number_input INT, 
     term_id_input INT,
     time_start_input TIME, 
@@ -142,7 +142,7 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class already exists at that location on that time';
     END IF;
 
-    --professor conflict
+    -- professor conflict
     SET @professor_existing_classes = get_num_class_by_professor_term_time(NEW.professor_id, NEW.term_id, NEW.time_start, NEW.time_end);
     IF (@professor_existing_classes <> 0) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Professor is already teaching a class on that time';
@@ -163,7 +163,7 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Class already exists at that location on that time';
     END IF;
 
-    --professor conflict
+    -- professor conflict
     SET @professor_existing_classes = get_num_class_by_professor_term_time(NEW.professor_id, NEW.term_id, NEW.time_start, NEW.time_end);
     IF (@professor_existing_classes <> 0) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Professor is already teaching a class on that time';

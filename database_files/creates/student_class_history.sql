@@ -32,11 +32,7 @@ CREATE VIEW student_class_history_view_min AS
 SELECT  *
 FROM    student_class_history
         JOIN classes
-        USING (class_id)
-ORDER BY    term DESC,
-            course_discipline ASC,
-            course_number ASC,
-            section ASC;
+        USING (class_id);
 
 
 DROP FUNCTION IF EXISTS get_class_current_size;
