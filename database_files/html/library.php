@@ -361,5 +361,35 @@ function result_to_html_table_with_checkbox_edit($result, $title, $array_name, $
 
 ?>
 
-
+<?php
+    function build_nav(){
+        echo '<a href="home.php">Home</a>';
+        if (isset($_SESSION['designation']) && $_SESSION['designation'] == 'student'){
+            ?>
+            <a href="transcript.php">Transcript</a>
+            <a href="">Schedule</a>
+            <a href="degree_requirements.php">Degree Requirements</a>
+            <a href="class_catalog.php">Class Catalog</a>
+            <a href="class_registration.php">Class Registration</a>
+        <?php
+        }elseif (isset($_SESSION['designation']) && $_SESSION['designation'] == 'admin'){
+            ?>
+            <a href="student_transcript.php">Transcript</a>
+            <a href="degree_req_edit.php">Degree Requirements</a>
+            <a href="courses_admin.php">Courses</a>
+            <a href="classes_admin.php">Classes</a>
+            <a href="">Buildings</a>
+            <a href="">Locations</a>
+            <a href="professors_admin.php">Professors</a>
+            <a href="students_admin.php">Students</a>
+            <a href="">Terms</a>
+            <a href="">Meeting Days</a>
+            <a href="">Meeting Times</a>
+        <?php
+        }
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == TRUE){
+            echo '<form method="post"><button type="submit" name="logout">Logout</button></form>';
+        }
+    }
+?>
 

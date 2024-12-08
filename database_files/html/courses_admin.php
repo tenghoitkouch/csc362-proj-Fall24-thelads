@@ -29,25 +29,12 @@
     require "library.php";
     session_start();
 
+    if(array_key_exists('logout', $_POST)){
+        session_unset();
+        $_SESSION['logged_in'] = FALSE;
 
-    // TOGGLE LIGHT/DARK MODE
-    $mode = 'mode';
-    $light = "light";
-    $dark = "dark";
-
-    if(!array_key_exists($mode, $_COOKIE)){
-        setcookie($mode, $light, 0, "/", "", false, true); //default
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
-    if(array_key_exists("toggle_mode", $_POST)){
-        $new_mode = $light;
-        if($_COOKIE[$mode] == $light){ $new_mode = $dark;}
-        if($_COOKIE[$mode] == $dark){ $new_mode = $light;}
-        setcookie($mode, $new_mode, 0, "/", "", false, true);
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
+        header("Location: home.php", true, 303);
+        exit;
     }
 
     //more sql setups
@@ -129,82 +116,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Courses</title>
-    <?php
-        if($_COOKIE[$mode] == $light){
-            ?><link rel="stylesheet" href="css/basic.css"><?php
-        }elseif($_COOKIE[$mode] == $dark){
-            ?><link rel="stylesheet" href="css/darkmode.css"><?php
-        }
-    ?>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <a href="home_page.php">Back to Home</a>
-    <h1>Courses</h1>
-    <form method="post">
-        <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
-    </form>
-    
-    <!-- more html -->  
-    <h2>Add Courses</h2>
-    <form method="post">
-        <label for="course_discipline">Course Discipline</label>
-        <input type="text" name="course_discipline" id="course_discipline" required>
+    <header>
+        <h1>Kendianawa University Registrar</h1>
+        <nav>
+            <?php build_nav(); ?>
+        </nav>
+    </header>
 
-        <label for="course_number">Course Number</label>
-        <input type="number" name="course_number" id="course_number" required>
-
-        <label for="course_name">Course Name</label>
-        <input type="text" name="course_name" id="course_name" required>
-
-        <label for="course_credits">Course Credits</label>
-        <input type="number" name="course_credits" id="course_credits" required>
-
-        <label for="course_description">Course Description</label>
-        <input type="text" name="course_description" id="course_description" required>
-
-        <button type="submit" name="add_records">Submit</button>
-    </form>
-
-    <h2>Delete Courses</h2>
-    <?php
+    <main>
+        <h2>Courses</h2>
+        <?php
+        //delete
         result_to_html_table_with_checkbox_edit($result_both, 'Delete?', 'selected[]', 'course_id', 'Delete Courses', 'delete_records');
-    ?>
 
-    <?php
+        //edit
         if(array_key_exists('edit_records', $_POST)){
             //generate_select_fields($conn, ["course_discipline", "course_number", "course_name", "course_credits", "course_description"], $result_both[$row_index]);
-            echo '<h2>Edit Course</h2>';
+            echo '<h3>Edit Course</h3>';
             $row_index = $_POST['edit_records'];
             $original_record = $result_both[$row_index];
             ?>
             <form method="post">
                 <label for="course_id">Course ID</label>
                 <input type="text" name="course_id" id="course_id" value="<?php echo $original_record['course_id']; ?>" readonly>
+                <br>
 
                 <label for="course_discipline">Course Discipline</label>
                 <input type="text" name="course_discipline" id="course_discipline" value="<?php echo $original_record['course_discipline']; ?>" required>
-                
+                <br>
+
                 <label for="course_number">Course Number</label>
                 <input type="number" name="course_number" id="course_number" value="<?php echo $original_record['course_number']; ?>" required>
-                
+                <br>
+
                 <label for="course_name">Course Name</label>
                 <input type="text" name="course_name" id="course_name" value="<?php echo $original_record['course_name']; ?>" required>
-                
+                <br>
+
                 <label for="course_credits">Course Credits</label>
                 <input type="number" name="course_credits" id="course_credits" value="<?php echo $original_record['course_credits']; ?>" required>
-                
+                <br>
+
                 <label for="course_description">Course Description</label>
                 <input type="text" name="course_description" id="course_description" value="<?php echo $original_record['course_description']; ?>" required>
-                
+                <br>
+
                 <button type="submit" name="complete_edit_records">Submit</button>
             </form>
             <?php
         }
+        ?>
 
-    ?>
+        <h3>Add Course</h3>
+        <form method="post">
+            <label for="course_discipline">Course Discipline</label>
+            <input type="text" name="course_discipline" id="course_discipline" required>
+            <br>
 
-    
+            <label for="course_number">Course Number</label>
+            <input type="number" name="course_number" id="course_number" required>
+            <br>
 
+            <label for="course_name">Course Name</label>
+            <input type="text" name="course_name" id="course_name" required>
+            <br>
+
+            <label for="course_credits">Course Credits</label>
+            <input type="number" name="course_credits" id="course_credits" required>
+            <br>
+
+            <label for="course_description">Course Description</label>
+            <input type="text" name="course_description" id="course_description" required>
+            <br>
+
+            <button type="submit" name="add_records">Submit</button>
+        </form>
+    </main>
+
+    <footer><p>&copy; 2024 Kendianawa University. All rights reserved.</p></footer>
     <?php $conn->close(); ?>
 </body>
 </html>

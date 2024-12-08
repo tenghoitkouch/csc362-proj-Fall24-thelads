@@ -189,98 +189,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Catalog</title>
-    <?php
-        if($_COOKIE[$mode] == $light){
-            ?><link rel="stylesheet" href="css/basic.css"><?php
-        }elseif($_COOKIE[$mode] == $dark){
-            ?><link rel="stylesheet" href="css/darkmode.css"><?php
-        }
-    ?>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <a href="home_page.php">Back to Home</a>
-    <h1>Class Catalog</h1>
-    <form method="post">
-        <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
-    </form> 
+    <header>
+        <h1>Kendianawa University Registrar</h1>
+        <nav>
+            <?php build_nav(); ?>
+        </nav>
+    </header>
 
-    <h2>Add Classes</h2>
-    <?php
-        //generate_select_fields($conn, ["courses", "section", "terms", "professors", "locations", "meeting_days", "meeting_times"]);
-    ?>
-    <form method="post">
-
-        <label for="course_id">Course</label>
-        <select name="course_id" id="course_id" required>
-            <option value="" selected disabled>Select a course</option>
-            <?php foreach ($courses_list as $course) : ?>
-                <option value="<?= $course['course_id'] ?>"><?= $course['course_discipline'] . ' ' . $course['course_number'] ?></option>
-            <?php endforeach; ?>
-        </select>
-
-        <!-- Section Select -->
-        <label for="section">Section</label>
-        <input type="text" name="section" id="section" value="a">
-
-        <!-- Term Select -->
-        <label for="term_id">Term</label>
-        <select name="term_id" id="term_id" required>
-            <option value="" selected disabled>Select a term</option>
-            <?php foreach ($terms_list as $term) : ?>
-                <option value="<?= $term['term_id'] ?>"><?= $term['term_start_date'] . ' ' . $term['term_end_date'] ?></option>
-            <?php endforeach; ?>
-        </select>
-
-        <!-- Professor Select -->
-        <label for="professor_id">Professor</label>
-        <select name="professor_id" id="professor_id" required>
-            <option value="" selected disabled>Select a professor</option>
-            <?php foreach ($professors_list as $professor) : ?>
-                <option value="<?= $professor['professor_id'] ?>"><?= $professor['professor_name'] ?></option>
-            <?php endforeach; ?>
-        </select>
-
-        <!-- Location Select -->
-        <label for="location">Location</label>
-        <select name="location" id="location" required>
-            <option value="" selected disabled>Select a location</option>
-            <?php foreach ($locations_list as $location) : ?>
-                <option value="<?= $location['building_name'] . ',' . $location['room_number'] ?>"><?= $location['building_name'] . ' ' . $location['room_number'] ?></option>
-            <?php endforeach; ?>
-        </select>
-
-        <!-- Meeting Days Select -->
-        <label for="meeting_days_id">Schedule</label>
-        <select name="meeting_days_id" id="meeting_days_id" required>
-            <option value="" selected disabled>Select schedule</option>
-            <?php foreach ($meeting_days_list as $meeting_day) : ?>
-                <option value="<?php echo $meeting_day['meeting_days_id']; ?>"><?php echo $meeting_day['schedule']; ?></option>
-            <?php endforeach; ?>
-        </select>
-
-        <!-- Meeting Times Select -->
-        <label for="meeting_times">Meeting Times</label>
-        <select name="meeting_times" id="meeting_times" required>
-            <option value="" selected disabled>Select meeting time</option>
-            <?php foreach ($meeting_times_list as $meeting_time) : ?>
-                <option value="<?= $meeting_time['time_start'] . ',' . $meeting_time['time_end'] ?>"><?= $meeting_time['time_start'] . ' ' . $meeting_time['time_end'] ?></option>
-            <?php endforeach; ?>
-        </select>
-        
-        <label for="class_max_capacity">Max Capacity</label>
-        <input type="number" name="class_max_capacity" id="class_max_capacity" $value="25">
-
-        <!-- Submit Button -->
-        <button type="submit" name="add_records">Submit</button>
-    </form>
-    
-    <!-- more html -->  
-    <h2>Delete Classes</h2>
-    <?php 
+    <main>
+        <h2>Classes</h2>
+        <?php 
         result_to_html_table_with_checkbox_edit($classes_list, 'Delete?', 'selected[]', 'class_id', 'Delete Courses', 'delete_records');
-    ?>
 
-    <?php
         if(array_key_exists('edit_records', $_POST)){
             $query_classes_full = "SELECT * FROM classes_view_full";
             $select_stmt_classes_full = $conn->prepare($query_classes_full);
@@ -292,7 +215,7 @@
             $original_record = $classes_full_list[$row_index];
 
             ?>
-            <h2>Edit Classes</h2>
+            <h3>Edit Classes</h3>
             <form method="post">
                 <label for="class_id">Course ID</label>
                 <input type="number" name="class_id" id="class_id" value="<?php echo $original_record['class_id']; ?>" readonly>
@@ -375,11 +298,76 @@
                 <button type="submit" name="complete_edit_records">Submit</button>
                 </form>
 
-            <?php
-        }
-        
-    ?>
-    
+        <?php } ?>
+
+        <h3>Add Class</h3>
+        <form method="post">
+
+            <label for="course_id">Course</label>
+            <select name="course_id" id="course_id" required>
+                <option value="" selected disabled>Select a course</option>
+                <?php foreach ($courses_list as $course) : ?>
+                    <option value="<?= $course['course_id'] ?>"><?= $course['course_discipline'] . ' ' . $course['course_number'] ?></option>
+                <?php endforeach; ?>
+            </select>
+
+            <!-- Section Select -->
+            <label for="section">Section</label>
+            <input type="text" name="section" id="section" value="a">
+
+            <!-- Term Select -->
+            <label for="term_id">Term</label>
+            <select name="term_id" id="term_id" required>
+                <option value="" selected disabled>Select a term</option>
+                <?php foreach ($terms_list as $term) : ?>
+                    <option value="<?= $term['term_id'] ?>"><?= $term['term_start_date'] . ' ' . $term['term_end_date'] ?></option>
+                <?php endforeach; ?>
+            </select>
+
+            <!-- Professor Select -->
+            <label for="professor_id">Professor</label>
+            <select name="professor_id" id="professor_id" required>
+                <option value="" selected disabled>Select a professor</option>
+                <?php foreach ($professors_list as $professor) : ?>
+                    <option value="<?= $professor['professor_id'] ?>"><?= $professor['professor_name'] ?></option>
+                <?php endforeach; ?>
+            </select>
+
+            <!-- Location Select -->
+            <label for="location">Location</label>
+            <select name="location" id="location" required>
+                <option value="" selected disabled>Select a location</option>
+                <?php foreach ($locations_list as $location) : ?>
+                    <option value="<?= $location['building_name'] . ',' . $location['room_number'] ?>"><?= $location['building_name'] . ' ' . $location['room_number'] ?></option>
+                <?php endforeach; ?>
+            </select>
+
+            <!-- Meeting Days Select -->
+            <label for="meeting_days_id">Schedule</label>
+            <select name="meeting_days_id" id="meeting_days_id" required>
+                <option value="" selected disabled>Select schedule</option>
+                <?php foreach ($meeting_days_list as $meeting_day) : ?>
+                    <option value="<?php echo $meeting_day['meeting_days_id']; ?>"><?php echo $meeting_day['schedule']; ?></option>
+                <?php endforeach; ?>
+            </select>
+
+            <!-- Meeting Times Select -->
+            <label for="meeting_times">Meeting Times</label>
+            <select name="meeting_times" id="meeting_times" required>
+                <option value="" selected disabled>Select meeting time</option>
+                <?php foreach ($meeting_times_list as $meeting_time) : ?>
+                    <option value="<?= $meeting_time['time_start'] . ',' . $meeting_time['time_end'] ?>"><?= $meeting_time['time_start'] . ' ' . $meeting_time['time_end'] ?></option>
+                <?php endforeach; ?>
+            </select>
+            
+            <label for="class_max_capacity">Max Capacity</label>
+            <input type="number" name="class_max_capacity" id="class_max_capacity" $value="25">
+
+            <!-- Submit Button -->
+            <button type="submit" name="add_records">Submit</button>
+        </form>
+    </main>
+
     <?php $conn->close(); ?>
 
 </body>
