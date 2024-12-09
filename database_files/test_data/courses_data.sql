@@ -9,4 +9,5 @@ VALUES
     ("MTH", 310, "Linear Algebra", 3, "This course covers matrices, vector spaces, linear transformations, eigenvalues, and eigenvectors, with applications to various fields."), -- 7
     ("PHY", 101, "Introduction to Physics", 4, "A beginner-level course in classical mechanics, waves, and thermodynamics, designed for students in the sciences."), -- 8
     ("ENG", 102, "English Composition", 3, "A foundational course in academic writing, critical thinking, and effective communication."), -- 9
-    ("HIS", 205, "World History", 3, "Explore significant events, civilizations, and cultural exchanges that shaped world history from ancient times to the modern era."); -- 10
+    ("HIS", 205, "World History", 3, "Explore significant events, civilizations, and cultural exchanges that shaped world history from ancient times to the modern era."), -- 10
+    ("ARS", 140, "Intro to Birdwatching", 4, "A beginner-level course in observing and documenting birds."); -- 11
