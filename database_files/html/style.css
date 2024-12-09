@@ -16,7 +16,8 @@ header, footer{
     justify-content: center;
     flex-direction: column;
 
-    background-color: #d4a017; /* Dark yellow */
+    /* background-color: #d4a017; Dark yellow */
+    background-color: teal;
 
 }
 

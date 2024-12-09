@@ -373,11 +373,11 @@ function result_to_html_table_with_checkbox_edit($result, $title, $array_name, $
             <a href="classes_admin.php">Classes</a>
             <a href="professors_admin.php">Professors</a>
             <a href="students_admin.php">Students</a>
-            <!-- <a href="">Buildings</a>
+            <a href="">Buildings</a>
             <a href="">Locations</a>
             <a href="">Terms</a>
             <a href="">Meeting Days</a>
-            <a href="">Meeting Times</a> -->
+            <a href="">Meeting Times</a>
         <?php
         }
         if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == TRUE){
