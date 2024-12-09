@@ -363,7 +363,7 @@ function result_to_html_table_with_checkbox_edit($result, $title, $array_name, $
             <a href="class_catalog.php">Class Catalog</a>
             <a href="degree_requirements.php">Degree Requirements</a>
             <a href="class_registration.php">Class Registration</a>
-            <a href="transcript.php">Transcript</a>
+            <a href="student_transcript.php">Transcript</a>
         <?php
         }elseif (isset($_SESSION['designation']) && $_SESSION['designation'] == 'admin'){
             ?>
