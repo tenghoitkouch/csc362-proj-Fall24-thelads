@@ -28,7 +28,6 @@ session_start();
 if (array_key_exists('logout', $_POST)) {
     session_unset();
     $_SESSION['logged_in'] = FALSE;
-
     header("Location: home.php", true, 303);
     exit;
 }
@@ -66,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch static data
+// Fetch data for forms
 $degrees = $conn->query("SELECT degree_id, degree_name FROM degrees")->fetch_all(MYSQLI_ASSOC);
 $courses = $conn->query("SELECT course_id, course_discipline, course_number FROM courses")->fetch_all(MYSQLI_ASSOC);
 $requirements = $conn->query("
