@@ -74,6 +74,19 @@ $requirements = $conn->query("
     JOIN degrees d ON dr.degree_id = d.degree_id
     JOIN courses c ON dr.course_id = c.course_id
 ")->fetch_all(MYSQLI_ASSOC);
+
+// Fetch degrees and courses currently associated in requirements
+$existing_degrees = $conn->query("
+    SELECT DISTINCT d.degree_id, d.degree_name
+    FROM degree_requirements dr
+    JOIN degrees d ON dr.degree_id = d.degree_id
+")->fetch_all(MYSQLI_ASSOC);
+
+$existing_courses = $conn->query("
+    SELECT DISTINCT c.course_id, c.course_discipline, c.course_number
+    FROM degree_requirements dr
+    JOIN courses c ON dr.course_id = c.course_id
+")->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -119,7 +132,7 @@ $requirements = $conn->query("
         <form method="POST">
             <label>Degree:</label>
             <select name="degree_id" required>
-                <?php foreach ($degrees as $row) { ?>
+                <?php foreach ($existing_degrees as $row) { ?>
                     <option value="<?= $row['degree_id'] ?>"><?= $row['degree_name'] ?></option>
                 <?php } ?>
             </select>
@@ -146,7 +159,7 @@ $requirements = $conn->query("
         <form method="POST">
             <label>Degree:</label>
             <select name="degree_id" required>
-                <?php foreach ($degrees as $row) { ?>
+                <?php foreach ($existing_degrees as $row) { ?>
                     <option value="<?= $row['degree_id'] ?>"><?= $row['degree_name'] ?></option>
                 <?php } ?>
             </select>
