@@ -93,10 +93,43 @@
 
         <?php
         if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == TRUE){
-            echo '<h2>Hi ' .  $_SESSION['user_name'] . '</h2>';
+            //echo '<h2>Hi ' .  $_SESSION['user_name'] . '</h2>';
 
             ?>
-            <p>page content</p>
+            <h2>Welcome to Kendianawa University Registrar</h2>
+            <p>
+                At Kendianawa University, we are dedicated to providing top-tier academic services to our students, faculty, and staff. 
+                Our registrar's office ensures seamless management of student records, course enrollments, and academic achievements.
+            </p>
+
+            <section>
+                <h3>What We Offer</h3>
+                <ul>
+                    <li><strong>Student Records:</strong> Secure and accurate record-keeping for all students.</li>
+                    <li><strong>Course Enrollment:</strong> Easily manage your semester schedule and course registrations.</li>
+                    <li><strong>Graduation Services:</strong> Guidance and support for a smooth transition to graduation.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Upcoming Deadlines</h3>
+                <ul>
+                    <li><strong>Spring Semester Registration:</strong> November 13, 2024</li>
+                    <li><strong>Last Day to Drop Courses:</strong> February 10, 2024</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Resources</h3>
+                <p>
+                    Need help? Explore our comprehensive resources to guide you through every step of your academic journey.
+                </p>
+                <ul>
+                    <li><a href="class_catalog.php">Class Catalog</a></li>
+                    <li><a href="#">Contact the Registrar</a></li>
+                </ul>
+            </section>
+
             <?php
         }
         ?>

@@ -42,6 +42,7 @@
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $result = $stmt->get_result();
+    $result = $result->fetch_all(MYSQLI_BOTH);
 
 ?>
 
@@ -62,7 +63,41 @@
     </header>
     <main>
         <h2>Class Catalog</h2>
-        <?php result_to_html_table($result); ?>
+        <?php //result_to_html_table($result); ?>
+        <form action="" method="get">
+
+        <table>
+            <thead>
+                <tr>
+                    <?php
+                        foreach(array_keys($result[0]) as $key){
+                            if (!is_numeric($key)) {
+                                echo '<td><b>' . $key . '</b></td>';
+                            }
+                        }
+                    ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    foreach($result as $row => $row_data){
+                        ?>
+                            <tr>
+                                <?php
+                                    foreach($row_data as $key => $value){
+                                        if (!is_numeric($key)) {
+                                            echo '<td>' . $value . '</td>';
+                                        }
+                                    }
+                                ?>
+                            </tr>
+                        <?php
+                    }
+                ?>
+            </tbody>
+        </table>
+        </form>
+
     </main>
     <footer><p>&copy; 2024 Kendianawa University. All rights reserved.</p></footer>
     <?php $conn->close(); ?>

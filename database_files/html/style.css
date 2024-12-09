@@ -56,7 +56,7 @@ form{
     overflow-x: auto;
 }
 
-table {
+table, thead, tbody {
     max-width: 100%;         
     overflow-x: auto;
     table-layout: auto;    
