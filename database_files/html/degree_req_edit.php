@@ -1,10 +1,10 @@
 <?php
-//error reporting for debugging
+// Error reporting for debugging
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//MySQLi error reporting
+// MySQLi error reporting
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // Database connection
@@ -21,11 +21,11 @@ if ($conn->connect_errno) {
     die("Error: Failed to connect to the database: " . $conn->connect_error);
 }
 
-// import our custom php functions
+// Import custom PHP functions
 require "library.php";
 session_start();
 
-if(array_key_exists('logout', $_POST)){
+if (array_key_exists('logout', $_POST)) {
     session_unset();
     $_SESSION['logged_in'] = FALSE;
 
@@ -66,15 +66,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch data
-$degrees = $conn->query("SELECT degree_id, degree_name FROM degrees");
-$courses = $conn->query("SELECT course_id, course_discipline, course_number FROM courses");
+// Fetch static data
+$degrees = $conn->query("SELECT degree_id, degree_name FROM degrees")->fetch_all(MYSQLI_ASSOC);
+$courses = $conn->query("SELECT course_id, course_discipline, course_number FROM courses")->fetch_all(MYSQLI_ASSOC);
 $requirements = $conn->query("
     SELECT dr.degree_id, d.degree_name, dr.course_id, c.course_discipline, c.course_number
     FROM degree_requirements dr
     JOIN degrees d ON dr.degree_id = d.degree_id
     JOIN courses c ON dr.course_id = c.course_id
-");
+")->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -94,19 +94,20 @@ $requirements = $conn->query("
     </header>
     <main>
         <h2>Degree Requirements Admin</h2>
+
         <!-- Add Degree Requirement -->
         <h2>Add Requirement</h2>
         <form method="POST">
             <label>Degree:</label>
             <select name="degree_id" required>
-                <?php while ($row = $degrees->fetch_assoc()) { ?>
+                <?php foreach ($degrees as $row) { ?>
                     <option value="<?= $row['degree_id'] ?>"><?= $row['degree_name'] ?></option>
                 <?php } ?>
             </select>
 
             <label>Course:</label>
             <select name="course_id" required>
-                <?php while ($row = $courses->fetch_assoc()) { ?>
+                <?php foreach ($courses as $row) { ?>
                     <option value="<?= $row['course_id'] ?>"><?= $row['course_discipline'] ?> - <?= $row['course_number'] ?></option>
                 <?php } ?>
             </select>
@@ -119,21 +120,21 @@ $requirements = $conn->query("
         <form method="POST">
             <label>Degree:</label>
             <select name="degree_id" required>
-                <?php while ($row = $degrees->fetch_assoc()) { ?>
+                <?php foreach ($degrees as $row) { ?>
                     <option value="<?= $row['degree_id'] ?>"><?= $row['degree_name'] ?></option>
                 <?php } ?>
             </select>
 
             <label>Old Course:</label>
             <select name="old_course_id" required>
-                <?php while ($row = $courses->fetch_assoc()) { ?>
-                    <option value="<?= $row['course_id'] ?>"><?= $row['course_discipline'] ?> - <?= $row['course_number'] ?></option>
+                <?php foreach ($requirements as $requirement) { ?>
+                    <option value="<?= $requirement['course_id'] ?>"><?= $requirement['course_discipline'] ?> - <?= $requirement['course_number'] ?></option>
                 <?php } ?>
             </select>
 
             <label>New Course:</label>
             <select name="new_course_id" required>
-                <?php while ($row = $courses->fetch_assoc()) { ?>
+                <?php foreach ($courses as $row) { ?>
                     <option value="<?= $row['course_id'] ?>"><?= $row['course_discipline'] ?> - <?= $row['course_number'] ?></option>
                 <?php } ?>
             </select>
@@ -146,15 +147,15 @@ $requirements = $conn->query("
         <form method="POST">
             <label>Degree:</label>
             <select name="degree_id" required>
-                <?php while ($row = $degrees->fetch_assoc()) { ?>
+                <?php foreach ($degrees as $row) { ?>
                     <option value="<?= $row['degree_id'] ?>"><?= $row['degree_name'] ?></option>
                 <?php } ?>
             </select>
 
             <label>Course:</label>
             <select name="course_id" required>
-                <?php while ($row = $courses->fetch_assoc()) { ?>
-                    <option value="<?= $row['course_id'] ?>"><?= $row['course_discipline'] ?> - <?= $row['course_number'] ?></option>
+                <?php foreach ($requirements as $requirement) { ?>
+                    <option value="<?= $requirement['course_id'] ?>"><?= $requirement['course_discipline'] ?> - <?= $requirement['course_number'] ?></option>
                 <?php } ?>
             </select>
 
@@ -174,7 +175,7 @@ $requirements = $conn->query("
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $requirements->fetch_assoc()) { ?>
+                <?php foreach ($requirements as $row) { ?>
                     <tr>
                         <td><?= $row['degree_id'] ?></td>
                         <td><?= $row['degree_name'] ?></td>
