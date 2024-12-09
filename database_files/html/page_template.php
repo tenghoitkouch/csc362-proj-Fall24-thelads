@@ -29,27 +29,13 @@
     require "library.php";
     session_start();
 
-    // TOGGLE LIGHT/DARK MODE
-    $mode = 'mode';
-    $light = "light";
-    $dark = "dark";
+    if(array_key_exists('logout', $_POST)){
+        session_unset();
+        $_SESSION['logged_in'] = FALSE;
 
-    if(!array_key_exists($mode, $_COOKIE)){
-        setcookie($mode, $light, 0, "/", "", false, true); //default
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
+        header("Location: home.php", true, 303);
+        exit;
     }
-
-    if(array_key_exists("toggle_mode", $_POST)){
-        $new_mode = $light;
-        if($_COOKIE[$mode] == $light){ $new_mode = $dark;}
-        if($_COOKIE[$mode] == $dark){ $new_mode = $light;}
-        setcookie($mode, $new_mode, 0, "/", "", false, true);
-        header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
-        exit();
-    }
-
-    //more sql setups
 
 
 ?>
@@ -60,25 +46,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <?php
-        if($_COOKIE[$mode] == $light){
-            ?><link rel="stylesheet" href="css/basic.css"><?php
-        }elseif($_COOKIE[$mode] == $dark){
-            ?><link rel="stylesheet" href="css/darkmode.css"><?php
-        }
-    ?>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <a href="home_page.php">Back to Home</a>
-    <h1>Title</h1>
-    <form method="post">
-        <p><input type="submit" name="toggle_mode" value="Toggle Light/Dark Mode" /></p>
-    </form>
-    
-    <!-- more html -->  
-
-    
-
+    <header>
+        <h1>Kendianawa University Registrar</h1>
+        <nav>
+            <?php build_nav(); ?>
+        </nav>
+    </header>
+    <main>
+        
+    </main>    
+    <footer><p>&copy; 2024 Kendianawa University. All rights reserved.</p></footer>
     <?php $conn->close(); ?>
 </body>
 </html>
