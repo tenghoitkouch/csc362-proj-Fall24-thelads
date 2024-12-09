@@ -85,28 +85,28 @@ $requirements = $conn->query("
         </nav>
     </header>
     <main>
-        <h2>Manage Degree Requirements</h2>
-        <h2>Add or Remove Degree Requirements</h2>
+        <h2>Degree Requirements</h2>
+        <!-- <h2>Add or Remove Degree Requirements</h2>
         <form method="POST">
             <label>Degree:</label>
             <select name="degree_id" required>
-                <?php while ($row = $degrees->fetch_assoc()) { ?>
+                <?php //while ($row = $degrees->fetch_assoc()) { ?>
                     <option value="<?= $row['degree_id'] ?>"><?= $row['degree_name'] ?></option>
-                <?php } ?>
+                <?php //} ?>
             </select>
 
             <label>Course:</label>
             <select name="course_id" required>
-                <?php while ($row = $courses->fetch_assoc()) { ?>
+                <?php //while ($row = $courses->fetch_assoc()) { ?>
                     <option value="<?= $row['course_id'] ?>"><?= $row['course_discipline'] ?> - <?= $row['course_number'] ?></option>
-                <?php } ?>
+                <?php //} ?>
             </select>
 
             <button type="submit" name="action" value="add">Add Requirement</button>
             <button type="submit" name="action" value="delete">Delete Requirement</button>
         </form>
 
-        <h2>Current Degree Requirements</h2>
+        <h2>Current Degree Requirements</h2> -->
         <?php result_to_html_table($requirements); ?>
     </main>
     <footer><p>&copy; 2024 Kendianawa University. All rights reserved.</p></footer>
