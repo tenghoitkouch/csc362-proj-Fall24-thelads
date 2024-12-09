@@ -113,22 +113,20 @@
 
     $need_reload = FALSE;
     //del rec
-    if(array_key_exists('delbtn', $_POST)){
+    if(array_key_exists('delete_records', $_POST)){
 
         $del_query = file_get_contents($queries_dir . "classes_delete.sql");
         $del_stmt = $conn->prepare($del_query);
-        $del_stmt->bind_param('i', $id);
+        $del_stmt->bind_param('i', $class_id);
 
-        // $get_all_instrument_ids = "SELECT instrument_id FROM instruments";
-        // $idlist = $conn->query($get_all_instrument_ids);
+        $class_ids = $_POST['selected'];  
 
-        for($i = 0; $i < $result->num_rows; $i++){
-            $id = $classes_list[$i][0];
-            if(array_key_exists('checkbox' . $id, $_POST)){
-                $need_reload = TRUE;
-                $del_stmt->execute();
-            }
+        foreach($class_ids as $value){
+            $class_id = (int) $value;            
+            $del_stmt->execute();
         }
+
+        $need_reload = TRUE;
     }
 
     // ----- Reload this page if the database was changed.
