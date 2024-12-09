@@ -4,7 +4,7 @@ CREATE TABLE courses (
   course_number       INT,
   course_name         VARCHAR(128),
   course_credits      INT,
-  course_description  VARCHAR(200),
+  course_description  VARCHAR(512),
   PRIMARY KEY (course_id),
   CONSTRAINT unique_course UNIQUE (course_discipline, course_number)
 );
