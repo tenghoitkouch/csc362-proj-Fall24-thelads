@@ -66,7 +66,7 @@
 
         $del_query = file_get_contents($queries_dir . "courses_delete.sql");
         $del_stmt = $conn->prepare($del_query);
-        $del_stmt->bind_param('i', $student_id, $course_id);
+        $del_stmt->bind_param('i', $course_id);
 
         $course_ids = $_POST['selected'];  
 

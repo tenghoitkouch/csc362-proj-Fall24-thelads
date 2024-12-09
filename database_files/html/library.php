@@ -367,17 +367,17 @@ function result_to_html_table_with_checkbox_edit($result, $title, $array_name, $
         <?php
         }elseif (isset($_SESSION['designation']) && $_SESSION['designation'] == 'admin'){
             ?>
-            <a href="student_transcript_admin.php">Student Transcripts</a>
-            <a href="degree_req_edit.php">Degree Requirements</a>
             <a href="courses_admin.php">Courses</a>
             <a href="classes_admin.php">Classes</a>
+            <a href="degree_req_edit.php">Degree Requirements</a>
             <a href="professors_admin.php">Professors</a>
             <a href="students_admin.php">Students</a>
-            <a href="">Buildings</a>
+            <a href="student_transcript_admin.php">Student Transcripts</a>
+            <!-- <a href="">Buildings</a>
             <a href="">Locations</a>
             <a href="">Terms</a>
             <a href="">Meeting Days</a>
-            <a href="">Meeting Times</a>
+            <a href="">Meeting Times</a> -->
         <?php
         }
         if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == TRUE){

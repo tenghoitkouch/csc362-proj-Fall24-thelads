@@ -11,6 +11,5 @@ SELECT    building_name,
           room_number,
           room_capacity
 FROM      locations
-GROUP BY  building_name
 ORDER BY  building_name ASC,
           room_number ASC;
