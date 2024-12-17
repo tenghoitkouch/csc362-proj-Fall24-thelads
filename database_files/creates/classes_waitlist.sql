@@ -8,8 +8,19 @@ CREATE TABLE classes_waitlist(
 );
 
 CREATE VIEW classes_waitlist_view AS
-SELECT *
+SELECT      student_id,
+            CONCAT(student_first_name, ' ', student_last_name) AS student_name,
+            class_id,
+            course_discipline, 
+            course_number,
+            section,
+            course_name,
+            term
 FROM        classes_waitlist
+            JOIN students
+            USING (student_id)
+            JOIN classes_view
+            USING (class_id)
 ORDER BY    class_id DESC,
             waitlist_timestamp DESC;
 
