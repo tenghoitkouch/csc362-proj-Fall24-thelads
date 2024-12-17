@@ -21,8 +21,10 @@ FROM        classes_waitlist
             USING (student_id)
             JOIN classes_view
             USING (class_id)
-ORDER BY    class_id DESC,
-            waitlist_timestamp DESC;
+ORDER BY    term DESC,
+            course_discipline ASC,
+            course_number ASC,
+            section ASC;
 
 
 
