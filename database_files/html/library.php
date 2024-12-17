@@ -75,6 +75,7 @@
 
 <?php
 function result_to_html_table_with_checkbox($result, $title, $array_name, $field_value, $submit_value, $submit_name){
+    if(count($result) == 0){return;}
     ?>
     <form method="post">
         <table>
@@ -117,6 +118,7 @@ function result_to_html_table_with_checkbox($result, $title, $array_name, $field
 }
 
 function result_to_html_table_with_checkbox_edit($result, $title, $array_name, $field_value, $submit_value, $submit_name){
+    if(count($result) == 0){return;}
     ?>
     <form method="post">
         <table>
@@ -361,6 +363,7 @@ function result_to_html_table_with_checkbox_edit($result, $title, $array_name, $
             ?>
             <a href="student_schedule.php">Schedule</a>
             <a href="class_catalog.php">Class Catalog</a>
+            <a href="class_waitlist.php">Class Waitlist</a>
             <a href="degree_requirements.php">Degree Requirements</a>
             <a href="class_registration.php">Class Registration</a>
             <a href="student_transcript.php">Transcript</a>
