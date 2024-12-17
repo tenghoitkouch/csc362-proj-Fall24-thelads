@@ -18,6 +18,7 @@ SOURCE creates/meeting_days.sql;
 SOURCE creates/course_prerequisites.sql;
 SOURCE creates/classes.sql;
 SOURCE creates/student_class_history.sql;
+SOURCE creates/classes_waitlist.sql;
 SOURCE creates/users.sql;
 
 -- test data, order matters here
@@ -50,5 +51,6 @@ SELECT * FROM degree_requirements_view;
 SELECT * FROM students_view;
 SELECT * FROM classes_view;
 SELECT * FROM student_class_history_view;
+SELECT * FROM classes_waitlist_view;
 SELECT * FROM users_view;
 
