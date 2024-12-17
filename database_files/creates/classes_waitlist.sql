@@ -11,6 +11,8 @@ CREATE VIEW classes_waitlist_view AS
 SELECT *
 FROM        classes_waitlist
 ORDER BY    class_id DESC,
-            waitlist_timestamp ASC;
+            waitlist_timestamp DESC;
+
+
 
             
