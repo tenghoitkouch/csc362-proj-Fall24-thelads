@@ -35,6 +35,7 @@ SOURCE test_data/degree_requirements_data.sql;
 SOURCE test_data/students_data.sql;
 SOURCE test_data/classes_data.sql;
 SOURCE test_data/student_class_history_data.sql;
+SOURCE test_data/classes_waitlist_data.sql;
 SOURCE test_data/users_data.sql;
 
 -- checking if everythings good
