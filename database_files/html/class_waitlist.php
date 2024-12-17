@@ -47,9 +47,9 @@
     $student_id = (int) $_SESSION['designation_id'];
 
     // Get all student's classes on the waitlist for the term
-    $classes_waitlist_query = file_get_contents($queries_dir . 'classes_waitlist_select_by_term.sql');
+    $classes_waitlist_query = file_get_contents($queries_dir . 'classes_waitlist_select.sql');
     $classes_waitlist_select_stmt = $conn->prepare($classes_waitlist_query);
-    $classes_waitlist_select_stmt->bind_param('is', $student_id, $term);
+    $classes_waitlist_select_stmt->bind_param('i', $student_id);
     $classes_waitlist_select_stmt->execute();
     $classes_waitlist_result = $classes_waitlist_select_stmt->get_result();
     $classes_waitlist_result_both = $classes_waitlist_result->fetch_all(MYSQLI_BOTH);
@@ -73,6 +73,14 @@
             }
         }
         $classes_result_both = $temp;
+
+        $temp = [];
+        foreach($classes_waitlist_result_both as $index => $record){
+            if($record['term'] == $term){
+                $temp[$index] = $record;
+            }
+        }
+        $classes_waitlist_result_both = $temp;
     }
 ?>
 
