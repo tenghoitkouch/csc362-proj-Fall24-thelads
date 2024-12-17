@@ -57,7 +57,6 @@
     </header>
     <main>
         <h2>Course Prerequisites</h2>
-        result_to_html_table_with_checkbox($)
     </main>    
     <footer><p>&copy; 2024 Kendianawa University. All rights reserved.</p></footer>
     <?php $conn->close(); ?>
