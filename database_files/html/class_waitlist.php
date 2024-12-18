@@ -44,7 +44,13 @@
     $terms_result = $terms_select_stmt->get_result();
     $terms_result_both = $terms_result->fetch_all(MYSQLI_BOTH);
 
-    $student_id = (int) $_SESSION['designation_id'];
+    if(isset($_SESSION['designation_id'])){
+        $student_id = (int) $_SESSION['designation_id'];
+    }else{
+        header("Location: home.php", true, 303);
+        exit;
+    }
+    
 
     // Get all student's classes on the waitlist for the term
     $classes_waitlist_query = file_get_contents($queries_dir . 'classes_waitlist_select.sql');
