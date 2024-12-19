@@ -69,7 +69,7 @@
 
         $del_query = file_get_contents($queries_dir . "course_prerequisites_delete.sql");
         $del_stmt = $conn->prepare($del_query);
-        $del_stmt->bind_param('i', $course_id);
+        $del_stmt->bind_param('ii', $course_id, $prerequisite_id);
 
         $course_ids = $_POST['selected'];  
 

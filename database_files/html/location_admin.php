@@ -117,7 +117,7 @@
     <main>
         <h2>Locations</h2>
         <?php
-        result_to_html_table_with_checkbox_edit($result_both, 'Delete?', 'selected[]', 'course_id', 'Delete Courses', 'delete_records');
+        result_to_html_table_with_checkbox_edit($result_both, 'Delete?', 'selected[]', 'building_name', 'Delete Locations', 'delete_records');
         if(array_key_exists('edit_records', $_POST)){
             echo '<h3>Edit Course</h3>';
             $row_index = $_POST['edit_records'];
