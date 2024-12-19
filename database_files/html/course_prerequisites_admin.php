@@ -57,7 +57,7 @@
 
         $add_query = file_get_contents($queries_dir . 'course_prerequisites_insert.sql');
         $add_stmt = $conn->prepare($add_query);
-        $add_stmt->bind_param('iisss', course_id, prerequisite_id);
+        $add_stmt->bind_param('ii', course_id, prerequisite_id);
         $add_stmt->execute();
 
         header("Location: {$_SERVER['REQUEST_URI']}", true, 303);
@@ -126,7 +126,7 @@
                 <?php endforeach; ?>
             </select>
         <br>
-        <label for="course_id">Course</label>
+        <label for="course_id">Prerequisite</label>
             <select name="prerequisite_id" id="course_id" required>
                 <option value="" selected disabled>Select a course</option>
                 <?php foreach ($courses_list as $course) : ?>
